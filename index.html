@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=3,user-scalable=yes">
+<meta name="theme-color" content="#070a10">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="操盤系統v2">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='80'>⚡</text></svg>">
+<title>操盤系統 v2 — 宏觀+微觀 完整閉環</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{--bg:#070a10;--card:#0f141e;--border:#263044;--text:#e8edf5;--dim:#8892a0;--gold:#f59e0b;--gold-bg:rgba(245,158,11,.1);--green:#22e070;--green-bg:rgba(34,224,112,.1);--red:#ef4444;--red-bg:rgba(239,68,68,.1);--blue:#60a5fa;--blue-bg:rgba(96,165,250,.1);--purple:#a78bfa;--orange:#fb923c}
+body{font-family:-apple-system,'PingFang TC','Helvetica Neue',sans-serif;background:var(--bg);color:var(--text);font-size:4.8vw;padding:0 0 30vw;min-height:100vh;overflow-x:hidden}
+.header{background:linear-gradient(180deg,#0d1220 0%,var(--bg));padding:8vw 5vw 5vw;text-align:center;border-bottom:1px solid rgba(255,255,255,.04)}
+.header .badge{display:inline-block;font-size:3.8vw;font-weight:800;color:var(--gold);background:var(--gold-bg);padding:1.8vw 5vw;border-radius:20px;margin-bottom:2.5vw;border:1.5px solid rgba(245,158,11,.15)}
+.header h1{font-size:10vw;font-weight:900;letter-spacing:-.3vw}
+.header h1 span{background:linear-gradient(135deg,#fff 20%,var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.header .sub{font-size:4.2vw;color:var(--dim);margin-top:1.5vw}
+.nav{display:flex;position:sticky;top:0;z-index:20;background:rgba(7,10,16,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);overflow-x:auto;-webkit-overflow-scrolling:touch}
+.nav .tab{flex-shrink:0;padding:3.5vw 4vw;font-size:3.5vw;font-weight:700;color:var(--dim);border-bottom:3px solid transparent;transition:all .2s;white-space:nowrap}
+.nav .tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+.section{display:none;padding:3vw 3.5vw 5vw}
+.section.active{display:block}
+.card{background:var(--card);border:1.5px solid var(--border);border-radius:4vw;padding:4.5vw 5vw;margin-bottom:3vw}
+.card-title{font-size:4.8vw;font-weight:800;display:flex;align-items:center;gap:2.5vw;margin-bottom:2vw}
+.card .d{font-size:4vw;color:var(--dim);line-height:1.7}
+.card .d strong,.card .d b{color:var(--text)}
+.label{display:inline-block;font-size:3vw;padding:.8vw 2.2vw;border-radius:6px;font-weight:700}
+.chk{display:flex;align-items:flex-start;gap:2.5vw;padding:2.8vw 0;border-bottom:1px solid rgba(255,255,255,.03)}
+.chk:last-child{border-bottom:none}
+.chk input[type=checkbox]{display:none}
+.chk .box{width:5vw;height:5vw;border:2.5px solid var(--border);border-radius:3px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:3.5vw;transition:all .2s;margin-top:.3vw}
+.chk input:checked+.box{background:var(--green);border-color:var(--green);color:var(--bg)}
+.chk .lbl{font-size:4vw;line-height:1.5;flex:1}
+.chk input:checked~.lbl{color:var(--dim);opacity:.5;text-decoration:line-through}
+input,select{width:100%;padding:3.5vw;font-size:4.2vw;background:var(--bg);border:1.5px solid var(--border);border-radius:2.5vw;color:var(--text);outline:none;margin-bottom:2.5vw}
+input:focus,select:focus{border-color:var(--gold)}
+.btn{display:block;width:100%;padding:3.8vw;font-size:4.2vw;font-weight:700;border:none;border-radius:2.5vw;cursor:pointer;margin-top:2vw;transition:all .2s;text-align:center}
+.btn-gold{background:var(--gold);color:#000}.btn-gold:active{opacity:.7}
+.btn-outline{background:transparent;border:1.5px solid var(--border);color:var(--dim)}
+.btn-red{background:var(--red);color:#fff}.btn-red:active{opacity:.7}
+.btn-green{background:var(--green);color:#000}.btn-green:active{opacity:.7}
+.flex{display:flex;gap:2.5vw}
+.flex>div{flex:1}
+.tag-g{background:var(--green-bg);color:var(--green)}
+.tag-r{background:var(--red-bg);color:var(--red)}
+.tag-y{background:var(--gold-bg);color:var(--gold)}
+.tag-b{background:var(--blue-bg);color:var(--blue)}
+.mt{margin-top:3vw}
+.footer{text-align:center;padding:6vw;font-size:3.2vw;color:var(--dim);border-top:1px solid rgba(255,255,255,.04);margin-top:5vw;line-height:1.8}
+
+/* Meter */
+.meter{height:3vw;background:var(--border);border-radius:1.5vw;overflow:hidden;margin:1vw 0 2.5vw}
+.meter .fill{height:100%;border-radius:1.5vw;transition:width .5s}
+.meter .fill.g{background:var(--green)}
+.meter .fill.r{background:var(--red)}
+.meter .fill.y{background:var(--gold)}
+
+/* Grid */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:2.5vw}
+.stat{background:var(--card);border:1.5px solid var(--border);border-radius:3vw;padding:3.5vw;text-align:center}
+.stat .num{font-size:6.5vw;font-weight:900;line-height:1.2}
+.stat .subl{font-size:3.2vw;color:var(--dim);margin-top:.5vw}
+.stat .num.g{color:var(--green)}.stat .num.r{color:var(--red)}.stat .num.gold{color:var(--gold)}
+
+/* Signal */
+.signal{display:flex;align-items:center;gap:2.5vw;padding:3.5vw;border-radius:3vw;margin-bottom:2.5vw}
+.signal .dot{width:4vw;height:4vw;border-radius:50%;flex-shrink:0}
+.signal .dot.r{background:var(--red);box-shadow:0 0 8px var(--red)}
+.signal .dot.g{background:var(--green);box-shadow:0 0 8px var(--green)}
+.signal .dot.y{background:var(--gold);box-shadow:0 0 8px var(--gold)}
+.signal .info{flex:1}.signal .info .t{font-size:4.2vw;font-weight:700}.signal .info .d{font-size:3.5vw;color:var(--dim);margin-top:.5vw}
+
+/* Trade log */
+.entry-item{background:var(--card);border:1.5px solid var(--border);border-radius:3vw;padding:4vw;margin-bottom:2.5vw;position:relative}
+.entry-item .del{position:absolute;top:2.5vw;right:3.5vw;font-size:4vw;color:var(--dim);background:none;border:none;cursor:pointer}
+.entry-item .info{font-size:3.8vw;color:var(--dim);margin-bottom:1vw}
+.entry-item .info strong{color:var(--text)}
+
+/* Macro dashboard */
+.macro-bar{background:var(--card);border:1.5px solid var(--border);border-radius:3vw;padding:4vw;margin-bottom:2.5vw}
+.macro-bar .row{display:flex;justify-content:space-between;align-items:center;padding:2.5vw 0;border-bottom:1px solid rgba(255,255,255,.03)}
+.macro-bar .row:last-child{border-bottom:none}
+.macro-bar .row .name{font-size:3.8vw;color:var(--dim)}
+.macro-bar .row .val{font-size:4vw;font-weight:700}
+@media(min-width:600px){
+body{font-size:2.5vw;padding-bottom:10vw}
+.header{padding:3vw 5vw 2.5vw}.header h1{font-size:5vw}.header .badge{font-size:2vw}
+.nav .tab{font-size:2vw;padding:1.5vw 2.5vw}
+.card{padding:2.5vw 3vw;margin-bottom:1.5vw}.card-title{font-size:2.5vw}.card .d{font-size:2.2vw}
+.chk{padding:1.5vw 0}.chk .box{width:2.5vw;height:2.5vw;font-size:1.8vw}.chk .lbl{font-size:2.2vw}
+input,select{font-size:2.2vw;padding:1.5vw}.btn{font-size:2.2vw;padding:1.5vw}
+.stat .num{font-size:3.5vw}.stat .subl{font-size:1.8vw}
+.signal .info .t{font-size:2.2vw}.signal .info .d{font-size:1.8vw}
+.entry-item .info{font-size:2vw}.grid2{gap:1.5vw}
+.macro-bar .row .name{font-size:2vw}.macro-bar .row .val{font-size:2.2vw}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="badge">⚡ 操盤系統 v2</div>
+  <h1><span>宏觀+微觀<br>完整閉環</span></h1>
+  <div class="sub">彬哥六條 · 莊主警示 · 波動率校正 · 週期適配</div>
+</div>
+
+<div class="nav">
+  <div class="tab active" data-tab="profile">👤 我的設定</div>
+  <div class="tab" data-tab="macro">🌍 宏觀儀表板</div>
+  <div class="tab" data-tab="rules">🎯 升級六條</div>
+  <div class="tab" data-tab="calc">🧮 部位計算機</div>
+  <div class="tab" data-tab="track">📊 交易日誌</div>
+  <div class="tab" data-tab="ref">📖 完整心法</div>
+</div>
+
+<!-- ============= 我的設定 ============= -->
+<div class="section active" id="s-profile">
+  <div class="card">
+    <div class="card-title">👤 你的投資設定</div>
+    <div class="d" style="margin-bottom:3vw">所有規則會根據你的資金規模與風險承受度，自動調整參數。</div>
+    <label>💰 總資金（萬元）</label>
+    <input type="number" id="p-capital" value="2400" oninput="saveProfile();updateAll()">
+    <label>📈 操作風格</label>
+    <select id="p-style" onchange="saveProfile();updateAll()">
+      <option value="long">長期持有 + 定期定額</option>
+      <option value="swing">波段操作（1-3月）</option>
+      <option value="mixed" selected>混合（長線核心+波段衛星）</option>
+    </select>
+    <label>🏦 質押槓桿倍數</label>
+    <select id="p-pledge" onchange="saveProfile();updateAll()">
+      <option value="0">無質押（純自有資金）</option>
+      <option value="1.029" selected>質押 2.9%（當前設定）</option>
+      <option value="1.05">質押 5%</option>
+      <option value="1.1">質押 10%</option>
+    </select>
+    <label>📅 定期定額標的（每月）</label>
+    <input type="text" id="p-dca" value="TSMC、0050、VOO、QQQ" oninput="saveProfile()">
+  </div>
+
+  <div class="card" style="border-color:rgba(250,204,21,.2)">
+    <div class="card-title" style="color:var(--gold)">📊 你目前的投資組合速覽</div>
+    <div class="d" id="portfolio-summary" style="font-size:3.8vw;line-height:2">
+      核心持股：TSMC、鴻海、MU、GOOGL、NVDA、VOO、QQQ、GLD<br>
+      凱基證券（質押2.9%）、國泰證券、Firstrade
+    </div>
+  </div>
+
+  <div class="card" style="border-color:var(--green-bg)">
+    <div class="card-title" style="color:var(--green)">✅ 本日開盤前檢查</div>
+    <div id="daily-chk">
+      <div class="chk"><input type="checkbox" id="dc1"><label class="box" for="dc1">✓</label><label class="lbl" for="dc1">宏觀儀表板確認（紅燈？黃燈？綠燈？）</label></div>
+      <div class="chk"><input type="checkbox" id="dc2"><label class="box" for="dc2">✓</label><label class="lbl" for="dc2">質押成數是否安全（<60%）</label></div>
+      <div class="chk"><input type="checkbox" id="dc3"><label class="box" for="dc3">✓</label><label class="lbl" for="dc3">進行中的DCA本月已扣款</label></div>
+      <div class="chk"><input type="checkbox" id="dc4"><label class="box" for="dc4">✓</label><label class="lbl" for="dc4">每檔個股確認停損/停利條件</label></div>
+      <div class="chk"><input type="checkbox" id="dc5"><label class="box" for="dc5">✓</label><label class="lbl" for="dc5">今日波動率是否異常？（VIX>35留意）</label></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============= 宏觀儀表板 ============= -->
+<div class="section" id="s-macro">
+  <div class="macro-bar" id="macro-status">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3vw">
+      <div style="font-size:4.5vw;font-weight:700">🌍 市場狀態</div>
+      <div id="macro-signal" style="padding:1.5vw 3vw;border-radius:2vw;font-size:3.5vw;font-weight:800"></div>
+    </div>
+    <div class="row">
+      <span class="name">台股巴菲特指標</span>
+      <select id="m-buffett" onchange="updateMacro()" style="width:auto;padding:1.5vw 2.5vw;font-size:3.5vw;margin:0">
+        <option value="safe">< 200%（安全）</option>
+        <option value="watch">200-350%（警戒）</option>
+        <option value="danger" selected>> 350%（過熱）</option>
+      </select>
+    </div>
+    <div class="row">
+      <span class="name">聯準會動向</span>
+      <select id="m-fed" onchange="updateMacro()" style="width:auto;padding:1.5vw 2.5vw;font-size:3.5vw;margin:0">
+        <option value="dove">鴿派（降息預期）</option>
+        <option value="neutral" selected>中性</option>
+        <option value="hawk">鷹派（加息預期）</option>
+      </select>
+    </div>
+    <div class="row">
+      <span class="name">VIX 波動率</span>
+      <select id="m-vix" onchange="updateMacro()" style="width:auto;padding:1.5vw 2.5vw;font-size:3.5vw;margin:0">
+        <option value="low">< 20（平穩）</option>
+        <option value="mid">20-30（警戒）</option>
+        <option value="high" selected>30-40（極端）</option>
+        <option value="panic">> 40（恐慌）</option>
+      </select>
+    </div>
+    <div class="row">
+      <span class="name">半導體板塊</span>
+      <select id="m-semi" onchange="updateMacro()" style="width:auto;padding:1.5vw 2.5vw;font-size:3.5vw;margin:0">
+        <option value="strong">強勢上漲</option>
+        <option value="normal" selected>正常震盪</option>
+        <option value="weak">明顯回調</option>
+      </select>
+    </div>
+    <div class="row">
+      <span class="name">市場氣氛</span>
+      <select id="m-sentiment" onchange="updateMacro()" style="width:auto;padding:1.5vw 2.5vw;font-size:3.5vw;margin:0">
+        <option value="fear">恐懼</option>
+        <option value="neutral" selected>中性</option>
+        <option value="greed">貪婪/狂熱</option>
+      </select>
+    </div>
+  </div>
+
+  <div id="macro-advice" class="card" style="border-left:8px solid var(--gold)">
+    <div class="card-title" style="font-size:4.5vw">📋 當前建議</div>
+    <div class="d" id="macro-text" style="font-size:3.8vw;line-height:1.8">
+      請設定上方指標以產生建議。
+    </div>
+  </div>
+
+  <div class="card" style="border-color:rgba(245,158,11,.15)">
+    <div class="card-title" style="font-size:4.5vw">🔐 宏觀→微觀 切換規則</div>
+    <div class="d" style="font-size:3.8vw;line-height:1.9">
+      <span class="label tag-g">🟢 綠燈</span> → 正常執行彬哥六條，滿倉操作<br>
+      <span class="label tag-y">🟡 黃燈</span> → 彬哥六條啟動波動率校正，部位打8折<br>
+      <span class="label tag-r">🔴 紅燈</span> → 強制啟動防守模式：部位縮至5成、暫不加碼<br>
+      <span class="label" style="background:var(--red-bg);color:var(--red)">⚫ 極端</span> → 現金>60%，僅DCA不停扣，不開新倉
+    </div>
+  </div>
+</div>
+
+<!-- ============= 升級六條 ============= -->
+<div class="section" id="s-rules">
+  <div style="background:var(--gold-bg);border:1px solid rgba(245,158,11,.12);border-radius:3vw;padding:3.5vw;margin-bottom:3vw;font-size:3.8vw;color:var(--dim);line-height:1.7">
+    <strong style="color:var(--gold)">⚡ 波動率校正已開啟：</strong><br>
+    目前波動等級：<span id="vix-label" style="color:var(--red)">極端 (VIX 30-40)</span><br>
+    2%停損上限自動校正為：<span id="adjusted-stop" style="color:var(--gold);font-weight:800">1.0%</span>（原始2% × 波動校正係數）
+  </div>
+
+  <div class="card" data-rule="1">
+    <div class="card-title"><span class="label tag-y" style="font-size:3.5vw">①</span> 波動率校正停損</div>
+    <div class="d">
+      <strong>升級版：</strong>單筆虧損上限 = 總資金 × 2% × 波動校正係數<br><br>
+      <div id="rule1-detail" style="font-size:3.8vw;color:var(--dim);line-height:1.7">
+        VIX<20: 係數 1.5（容許3%）<br>
+        VIX 20-30: 係數 1.0（標準2%）<br>
+        VIX 30-40: 係數 <strong style="color:var(--gold)">0.75（現行1.5%）</strong><br>
+        VIX>40: 係數 0.5（僅1%）
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-rule="2">
+    <div class="card-title"><span class="label tag-b" style="font-size:3.5vw">②</span> 計畫性加碼 vs 攤平</div>
+    <div class="d">
+      <strong>升級版：</strong>禁止情緒性攤平，但允許事先規劃的<b>金字塔加碼</b><br><br>
+      <div style="background:var(--green-bg);border-radius:2.5vw;padding:3vw;font-size:3.8vw;line-height:1.7;margin-bottom:2vw">
+        ✅ <strong style="color:var(--green)">計畫性加碼：</strong>進場前寫好劇本，股價跌到某價格 → 按計畫分批加。加碼後總部位不得超過原計劃的2倍。
+      </div>
+      <div style="background:var(--red-bg);border-radius:2.5vw;padding:3vw;font-size:3.8vw;line-height:1.7">
+        ❌ <strong style="color:var(--red)">情緒性攤平：</strong>虧損後不甘心，無計劃地往下買。紅燈區禁止任何加碼動作。
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-rule="3">
+    <div class="card-title"><span class="label tag-y" style="font-size:3.5vw">③</span> 策略分時：長線 ≠ 波段 ≠ 短線</div>
+    <div class="d">
+      <strong>升級版：</strong>不同時間框架，用不同規則<br><br>
+      <div style="border-left:4px solid var(--green);padding-left:3vw;margin-bottom:2.5vw">
+        <strong style="color:var(--green)">📗 長線核心（TSMC、VOO、QQQ）</strong><br>
+        <span style="font-size:3.8vw;color:var(--dim)">不停損 — 跌10%以上評估是否加碼DCA<br>
+        停利：偏離均值2個標準差或基本面惡化<br>
+        時間停損：不適用</span>
+      </div>
+      <div style="border-left:4px solid var(--gold);padding-left:3vw;margin-bottom:2.5vw">
+        <strong style="color:var(--gold)">📙 波段衛星（個股波段操作）</strong><br>
+        <span style="font-size:3.8vw;color:var(--dim)">停損：2% × 波動係數<br>
+        時間停損：進場後<b>20個交易日</b>沒創波段高 → 檢視<br>
+        移動停損：賺15%移到成本，賺30%移到獲利10%</span>
+      </div>
+      <div style="border-left:4px solid var(--red);padding-left:3vw">
+        <strong style="color:var(--red)">📕 短線操作</strong><br>
+        <span style="font-size:3.8vw;color:var(--dim)">紅燈區禁止短線操作<br>
+        嚴格遵守彬哥八條實戰心法<br>
+        單筆最大虧損：總資金 × 1%</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-rule="4">
+    <div class="card-title"><span class="label tag-g" style="font-size:3.5vw">④</span> 質押槓桿安全線</div>
+    <div class="d">
+      <strong>升級版：</strong>你的質押倍數 <span id="pledge-show" style="color:var(--gold)">1.029x (2.9%)</span><br><br>
+      <div id="pledge-meter" class="meter"><div class="fill g" style="width:20%"></div></div>
+      <div style="font-size:3.8vw;color:var(--dim);line-height:1.8">
+        <span class="label tag-g">安全</span> 質押成數 < 40%<br>
+        <span class="label tag-y">警戒</span> 質押成數 40-60% → 不動新倉<br>
+        <span class="label tag-r">危險</span> 質押成數 > 60% → 需降槓桿<br><br>
+        <strong>質押調整規則：</strong>宏觀紅燈時，質押成數目標降至30%以下
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-rule="5">
+    <div class="card-title"><span class="label tag-y" style="font-size:3.5vw">⑤</span> DCA 不停扣原則</div>
+    <div class="d">
+      <strong>升級版：</strong>定期定額是長期策略，宏觀紅燈也不停扣<br><br>
+      <div style="background:var(--green-bg);border-radius:2.5vw;padding:3vw;font-size:3.8vw;line-height:1.7;margin-bottom:2vw">
+        ✅ 無論什麼市場狀態，TSMC/0050/VOO/QQQ 的定期定額不中斷<br>
+        大跌時反而是累積更多單位的機會
+      </div>
+      <div style="font-size:3.8vw;color:var(--dim)">
+        <strong>可選優化：</strong>紅燈區可考慮將DCA金額提高10-20%（恐慌時加碼）
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-rule="6">
+    <div class="card-title"><span class="label tag-g" style="font-size:3.5vw">⑥</span> 期望值追蹤 + 行動閾值</div>
+    <div class="d">
+      <strong>升級版：</strong>不只紀錄，還有具體行動觸發<br><br>
+      <div style="font-size:3.8vw;line-height:1.8">
+        <strong>連二週期望值為負</strong> → <span style="color:var(--gold)">檢視策略，不做新部位</span><br>
+        <strong>連四週期望值為負</strong> → <span style="color:var(--red)">強制縮部位至50%</span><br>
+        <strong>單月總虧損 > 總資金6%</strong> → <span style="color:var(--red)">暫停交易一週，強制冷卻</span><br><br>
+        <span style="color:var(--dim)">* 長線核心持股（TSMC/VOO/QQQ）不計入期望值計算</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="border-left:8px solid var(--gold)">
+    <div class="card-title" style="font-size:4.5vw;color:var(--gold)">📌 每日執行檢查表</div>
+    <div id="daily-chk2">
+      <div class="chk"><input type="checkbox" id="dc21"><label class="box" for="dc21">✓</label><label class="lbl" for="dc21">今日宏觀信號確認（儀表板）</label></div>
+      <div class="chk"><input type="checkbox" id="dc22"><label class="box" for="dc22">✓</label><label class="lbl" for="dc22">質押成數在安全範圍內</label></div>
+      <div class="chk"><input type="checkbox" id="dc23"><label class="box" for="dc23">✓</label><label class="lbl" for="dc23">波動率係數套用到停損設定</label></div>
+      <div class="chk"><input type="checkbox" id="dc24"><label class="box" for="dc24">✓</label><label class="lbl" for="dc24">波段/短線部位確認時間停損</label></div>
+      <div class="chk"><input type="checkbox" id="dc25"><label class="box" for="dc25">✓</label><label class="lbl" for="dc25">本週期望值趨勢檢視</label></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============= 部位計算機 ============= -->
+<div class="section" id="s-calc">
+  <div class="card">
+    <div class="card-title" style="font-size:4.5vw">🧮 波動率校正停損計算機</div>
+    <div style="background:var(--gold-bg);border-radius:2.5vw;padding:3vw;margin-bottom:3vw;font-size:3.8vw;color:var(--dim)">
+      當前校正係數：<strong id="cf-show" style="color:var(--gold);font-size:5vw">0.75</strong>（VIX 30-40）
+    </div>
+    <label>💰 總資金（萬元）</label>
+    <input type="number" id="c-capital" value="2400" oninput="calcAll()">
+    <label>📈 進場股價（元）</label>
+    <input type="number" id="c-price" value="1000" oninput="calcAll()">
+    <label>🔻 停損價格（元）</label>
+    <input type="number" id="c-stop" value="900" oninput="calcAll()">
+    <label>🎯 操作類型</label>
+    <select id="c-type" onchange="calcAll()">
+      <option value="long">長線核心（不停損，看基本面）</option>
+      <option value="swing" selected>波段衛星（套用波動校正）</option>
+      <option value="short">短線操作（嚴格1%上限）</option>
+    </select>
+    <div style="background:var(--card);border:1.5px solid var(--border);border-radius:2.5vw;padding:3.5vw;margin-top:2vw">
+      <div style="font-size:7vw;font-weight:900;text-align:center;color:var(--gold)" id="c-result">—</div>
+      <div style="font-size:3.5vw;color:var(--dim);text-align:center;margin-top:1vw">📄 最大可買張數</div>
+      <div style="font-size:3.5vw;color:var(--dim);text-align:center;margin-top:2vw;line-height:1.7">
+        單筆最大虧損：<strong id="c-loss" style="color:var(--red)">—</strong> 元<br>
+        佔總資金：<strong id="c-pct" style="color:var(--gold)">—</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="border-color:rgba(250,204,21,.2)">
+    <div class="card-title" style="font-size:4.5vw">🔐 彬哥金句（升級版）</div>
+    <div class="d" style="font-size:3.8vw;line-height:1.8">
+      「青山是停損守住的，不是硬拗來的。」<br>
+      「虧70%要賺233%才回本。」<br>
+      「部位大小由波動率決定，不是由信心決定。」← <strong style="color:var(--gold)">v2 新增</strong>
+    </div>
+  </div>
+</div>
+
+<!-- ============= 交易日誌 ============= -->
+<div class="section" id="s-track">
+  <div class="card">
+    <div class="card-title" style="font-size:4.5vw">📊 交易期望值追蹤</div>
+    <div class="d" style="font-size:3.5vw;color:var(--dim);margin-bottom:2.5vw">
+      * 長線核心持股（TSMC/VOO/QQQ）不計入，僅記錄波段與短線操作
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="stat"><div class="num gold" id="t-winrate">0%</div><div class="subl">勝率</div></div>
+    <div class="stat"><div class="num g" id="t-avgwin">0</div><div class="subl">平均獲利%</div></div>
+    <div class="stat"><div class="num r" id="t-avgloss">0</div><div class="subl">平均虧損%</div></div>
+    <div class="stat"><div class="num gold" id="t-expect">0</div><div class="subl">期望值</div></div>
+  </div>
+
+  <div style="background:var(--card);border:1.5px solid var(--border);border-radius:3vw;padding:4vw;margin:3vw 0">
+    <div style="font-size:4.5vw;font-weight:700;margin-bottom:2.5vw">📝 新增記錄</div>
+    <select id="t-result">
+      <option value="win">✅ 獲利</option>
+      <option value="loss">❌ 虧損</option>
+    </select>
+    <input type="number" id="t-ret" placeholder="收益率 %（如：5.2 或 -3.8）">
+    <div class="flex">
+      <button class="btn btn-gold" onclick="addTrade()">➕ 記錄</button>
+      <button class="btn btn-outline" onclick="resetTrades()">🗑️ 清空</button>
+    </div>
+  </div>
+
+  <div id="trade-list"></div>
+
+  <div id="action-zone" style="display:none;background:var(--red-bg);border:1px solid rgba(239,68,68,.2);border-radius:3vw;padding:3.5vw;margin-top:3vw">
+    <div style="font-size:4.5vw;font-weight:700;color:var(--red)">⚠️ 需要行動</div>
+    <div class="d" id="action-text" style="font-size:3.8vw;margin-top:1.5vw"></div>
+  </div>
+</div>
+
+<!-- ============= 完整心法 ============= -->
+<div class="section" id="s-ref">
+  <div class="card" style="border-left:8px solid var(--gold)">
+    <div class="card-title" style="font-size:4.5vw">📜 系統設計哲學</div>
+    <div class="d" style="font-size:3.8vw;line-height:1.8">
+      原始版本（彬哥六條）是頂級的散戶風控框架，但有三個根本問題：
+
+      <div style="background:var(--card);border:1.5px solid var(--border);border-radius:2.5vw;padding:3vw;margin:2.5vw 0">
+        1️⃣ <strong>靜態風險，沒有波動率校正</strong> — VIX 40時正常股票日波動就可能觸發2%停損<br>
+        2️⃣ <strong>不區分時間框架</strong> — TSMC長線持有跟短線飆股用同一套規則<br>
+        3️⃣ <strong>缺少宏觀→微觀連動</strong> — 只看個股不看大局
+      </div>
+
+      <strong style="color:var(--gold)">v2 升級方向：</strong><br>
+      ✅ 波動率校正係數 → 高波動自動縮小部位<br>
+      ✅ 三種時間框架 → 長線核心免停、波段嚴格、短線更嚴<br>
+      ✅ 宏觀儀表板 → 紅黃綠燈直接綁定操作規則<br>
+      ✅ 質押安全線 → 有槓桿的資金要額外保護<br>
+      ✅ DCA不停扣 → 長期策略不受短期噪音影響<br>
+      ✅ 期望值觸發行動 → 不只紀錄，還有具體閾值
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔴 彬哥原始六條（記憶輔助）</div>
+    <div class="d" style="font-size:3.8vw;line-height:2">
+      ① 單筆虧損 ≤ 總資金 2%<br>
+      ② 禁止攤平，輸錢不加碼<br>
+      ③ 連三週期望值為負 → 縮部位50%<br>
+      ④ AI股設時間停損（10日沒創高）<br>
+      ⑤ 移動停損讓獲利奔跑<br>
+      ⑥ 輸少贏多，青山在魚永遠是你的
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⚡ 八條實戰心法（速查）</div>
+    <div class="d" style="font-size:3.8vw;line-height:2.2">
+      ① 開盤30分沒波動 → 放棄<br>
+      ② 先漲後跌破開盤價 → 騙線出貨<br>
+      ③ 先漲後跌守住開盤 → 洗盤等第二波<br>
+      ④ 先跌後漲突破開盤 → 破底翻跟進<br>
+      ⑤ 先跌後漲沒突破 → 弱反彈不參與<br>
+      ⑥ 尾盤13:23後進場（最後7分鐘）<br>
+      ⑦ 微型飆股篩選條件<br>
+      ⑧ 不接掉下來的刀子
+    </div>
+  </div>
+
+  <div class="card" style="border-color:rgba(245,158,11,.2)">
+    <div class="card-title" style="color:var(--gold)">🚨 莊主警示（速查）</div>
+    <div class="d" style="font-size:3.8vw;line-height:1.8">
+      <strong>巴菲特11字：</strong>「現在大家的賭博心態，真的是前所未有的狂熱。」<br><br>
+      <strong>四大風險信號：</strong><br>
+      ① 台股巴菲特指標逼近500%<br>
+      ② 半導體2日跌11%，AI泡沫爭議<br>
+      ③ 聯準會轉鷹，年底可能加息<br>
+      ④ 零日期權被點名為純粹賭博<br><br>
+      <strong>Q3策略：</strong>持倉5-6成，轉向防禦板塊，HALO概念股
+    </div>
+  </div>
+
+  <div class="card" style="border-color:rgba(250,204,21,.2)">
+    <div class="card-title" style="font-size:4.5vw;color:var(--gold)">🏆 彬哥結語</div>
+    <div class="d" style="font-size:3.8vw;line-height:1.8">
+      「每一筆單，都當作最後一筆資金在操作。」<br>
+      「青山是停損守住的，不是硬拗來的。」<br>
+      「股價是錢堆出來的，不是畫線畫出來的。」<br>
+      「我們贏的不是預測準，而是比誰更耐得住性子。」
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <p>⚡ 操盤系統 v2 — 彬哥六條 · 波動率校正 · 莊主宏觀聯動</p>
+  <p>基於銀河投資論壇 彬哥副會長 & 莊主 分析框架</p>
+  <p style="margin-top:1.5vw;font-size:2.8vw;opacity:.5">2026年7月 · 僅供研究參考，不構成買賣建議</p>
+</div>
+
+<script>
+// ===== PERSISTENCE =====
+const S = key => localStorage.getItem('v2_'+key);
+const SS = (key,val) => localStorage.setItem('v2_'+key,val);
+
+// ===== TABS =====
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById('s-'+t.dataset.tab).classList.add('active');
+  });
+});
+
+// ===== PROFILE =====
+function saveProfile(){
+  ['capital','style','pledge','dca'].forEach(k=>{
+    SS('p_'+k, document.getElementById('p_'+k).value);
+  });
+}
+function loadProfile(){
+  ['capital','style','pledge','dca'].forEach(k=>{
+    const v = S('p_'+k);
+    if(v) document.getElementById('p_'+k).value = v;
+  });
+}
+loadProfile();
+
+// ===== MACRO =====
+function updateMacro(){
+  const b = document.getElementById('m-buffett').value;
+  const f = document.getElementById('m-fed').value;
+  const v = document.getElementById('m-vix').value;
+  const s = document.getElementById('m-semi').value;
+  const sn = document.getElementById('m-sentiment').value;
+
+  let reds = [b,f,v,s,sn].filter(x=>x==='danger'||x==='hawk'||x==='high'||x==='weak'||x==='greed'||x==='panic').length;
+  let greens = [b,f,v,s,sn].filter(x=>x==='safe'||x==='dove'||x==='low'||x==='strong'||x==='fear').length;
+  let signal, color, advice;
+
+  if(reds >= 3 || (b==='danger' && f==='hawk') || sn==='greed'){
+    signal = '🔴 紅燈 — 全面防守';
+    color = '#ef4444';
+    advice = '🚨 <strong>宏觀紅燈啟動防守模式：</strong><br><br>'+
+      '• 持倉降至 <strong>5-6成</strong><br>'+
+      '• 暫不加碼波段/短線部位<br>'+
+      '• 質押成數目標降至30%以下<br>'+
+      '• DCA不停扣（恐慌反而是機會）<br>'+
+      '• 轉向防禦板塊：醫療、金融、高股息<br>'+
+      '• 波動率校正係數自動縮小部位';
+  } else if(reds >= 2 || sn==='greed' || f==='hawk'){
+    signal = '🟡 黃燈 — 波動警戒';
+    color = '#f59e0b';
+    advice = '⚠️ <strong>黃燈警戒：</strong><br><br>'+
+      '• 波動率校正係數啟用，部位打8折<br>'+
+      '• 暫不開新波段倉位<br>'+
+      '• 檢視質押成數<br>'+
+      '• 長線DCA正常執行';
+  } else {
+    signal = '🟢 綠燈 — 正常操作';
+    color = '#22e070';
+    advice = '✅ <strong>綠燈——正常操作環境</strong><br><br>'+
+      '• 正常執行彬哥六條<br>'+
+      '• 標準波動率係數（1.0）<br>'+
+      '• 可適度開新倉位<br>'+
+      '• 嚴格執行停損紀律';
+  }
+
+  document.getElementById('macro-signal').textContent = signal;
+  document.getElementById('macro-signal').style.background = color+'22';
+  document.getElementById('macro-signal').style.color = color;
+  document.getElementById('macro-text').innerHTML = advice;
+
+  // Save macro state for other tabs
+  SS('macro_state', JSON.stringify({signal, color, reds}));
+}
+updateMacro();
+
+// ===== VIX LABEL & ADJUSTMENTS =====
+function getVixLevel(){
+  const v = document.getElementById('m-vix').value;
+  const labels = {low:'低 (VIX<20)',mid:'警戒 (VIX 20-30)',high:'極端 (VIX 30-40)',panic:'恐慌 (VIX>40)'};
+  const coeffs = {low:1.5,mid:1.0,high:0.75,panic:0.5};
+  document.getElementById('vix-label').textContent = labels[v];
+  const c = coeffs[v];
+  const pct = (2*c).toFixed(1);
+  document.getElementById('adjusted-stop').textContent = pct + '%';
+  document.getElementById('cf-show').textContent = c;
+  return c;
+}
+document.getElementById('m-vix').addEventListener('change', ()=>{
+  getVixLevel();
+  updateMacro();
+  calcAll();
+});
+getVixLevel();
+
+// ===== CHECKBOXES =====
+document.querySelectorAll('#daily-chk input, #daily-chk2 input').forEach(cb=>{
+  const k = 'v2_'+cb.id;
+  cb.checked = localStorage.getItem(k)==='true';
+  cb.addEventListener('change',()=>localStorage.setItem(k,cb.checked));
+});
+
+// ===== CALCULATOR =====
+function calcAll(){
+  const coeff = getVixLevel();
+  const cap = parseFloat(document.getElementById('c-capital').value) || 2400;
+  const price = parseFloat(document.getElementById('c-price').value) || 0;
+  const stop = parseFloat(document.getElementById('c-stop').value) || 0;
+  const type = document.getElementById('c-type').value;
+
+  let maxLossPct;
+  if(type === 'long'){
+    document.getElementById('c-result').textContent = '∞ (不停損)';
+    document.getElementById('c-loss').textContent = '—';
+    document.getElementById('c-pct').textContent = '—';
+    return;
+  } else if(type === 'short'){
+    maxLossPct = 0.01;
+  } else {
+    maxLossPct = 0.02 * coeff;
+  }
+
+  const maxLoss = cap * 10000 * maxLossPct;
+  const lossPerShare = Math.abs(price - stop);
+  const maxShares = lossPerShare > 0 ? Math.floor(maxLoss / (lossPerShare * 1000)) : 0;
+
+  document.getElementById('c-result').textContent = maxShares;
+  document.getElementById('c-loss').textContent = Math.round(maxLoss).toLocaleString();
+  document.getElementById('c-pct').textContent = (maxLossPct*100).toFixed(1) + '%';
+}
+calcAll();
+
+// ===== TRADES =====
+let trades = JSON.parse(S('trades') || '[]');
+function renderTrades(){
+  const el = document.getElementById('trade-list');
+  if(trades.length===0){
+    el.innerHTML = '<div style="text-align:center;padding:6vw;font-size:3.8vw;color:var(--dim)">尚無交易記錄（僅記錄波段/短線，不含長線核心）</div>';
+    updateStats(); return;
+  }
+  el.innerHTML = trades.map((t,i)=>
+    '<div class="entry-item"><button class="del" onclick="delTrade('+i+')">✕</button>'+
+    '<div class="info"><strong>'+(t.result==='win'?'✅ 獲利':'❌ 虧損')+'</strong> · '+t.ret+'%</div>'+
+    '<div class="info">'+t.date+'</div></div>'
+  ).join('');
+  updateStats();
+}
+function addTrade(){
+  const ret = parseFloat(document.getElementById('t-ret').value);
+  if(isNaN(ret)){alert('請輸入收益率'); return;}
+  trades.push({result:ret>=0?'win':'loss', ret, date:new Date().toLocaleDateString('zh-TW')});
+  SS('trades', JSON.stringify(trades));
+  document.getElementById('t-ret').value='';
+  renderTrades();
+}
+function delTrade(i){trades.splice(i,1); SS('trades', JSON.stringify(trades)); renderTrades();}
+function resetTrades(){if(confirm('清空所有交易記錄？')){trades=[];SS('trades','[]');renderTrades();}}
+
+function updateStats(){
+  if(trades.length===0){
+    ['t-winrate','t-avgwin','t-avgloss','t-expect'].forEach(id=>document.getElementById(id).textContent='0');
+    document.getElementById('action-zone').style.display='none';
+    return;
+  }
+  const wins=trades.filter(t=>t.result==='win'), losses=trades.filter(t=>t.result==='loss');
+  const wr=wins.length/trades.length*100;
+  const aw=wins.length>0?wins.reduce((s,t)=>s+t.ret,0)/wins.length:0;
+  const al=losses.length>0?losses.reduce((s,t)=>s+t.ret,0)/losses.length:0;
+  const exp=wr/100*aw+(1-wr/100)*al;
+  document.getElementById('t-winrate').textContent=wr.toFixed(0)+'%';
+  document.getElementById('t-avgwin').textContent=aw.toFixed(2)+'%';
+  document.getElementById('t-avgloss').textContent=al.toFixed(2)+'%';
+  document.getElementById('t-expect').textContent=exp.toFixed(2);
+
+  // Action zone
+  const zone = document.getElementById('action-zone');
+  const txt = document.getElementById('action-text');
+  if(exp < -0.5 && trades.length >= 3){
+    zone.style.display='block';
+    txt.innerHTML = '⚠️ 期望值低於 -0.5，建議檢視策略<br>'+
+      (trades.length >= 8 ? '🔴 已達連四週水準，<strong>強制縮部位至50%</strong>' : '🟡 暫不開新倉位，觀察下週');
+  } else if(wr < 30 && trades.length >= 5){
+    zone.style.display='block';
+    txt.innerHTML = '⚠️ 勝率低於30%，可能是策略與市場環境不匹配，建議降低部位規模';
+  } else if(exp > 1.5 && trades.length >= 5){
+    zone.style.display='block';
+    txt.innerHTML = '✅ 期望值良好（'+exp.toFixed(2)+'），策略有效，繼續執行';
+  } else {
+    zone.style.display='none';
+  }
+}
+renderTrades();
+
+// ===== PLEDGE DISPLAY =====
+function updatePledge(){
+  const v = parseFloat(document.getElementById('p-pledge').value) || 1;
+  document.getElementById('pledge-show').textContent = v+'x ('+((v-1)*100).toFixed(1)+'%)';
+  const pct = (v-1)*100;
+  const bar = document.getElementById('pledge-meter').querySelector('.fill');
+  if(pct < 5){bar.style.width='20%'; bar.className='fill g';}
+  else if(pct < 15){bar.style.width='45%'; bar.className='fill y';}
+  else {bar.style.width='75%'; bar.className='fill r';}
+}
+document.getElementById('p-pledge').addEventListener('change', updatePledge);
+updatePledge();
+
+// ===== UPDATE ALL =====
+function updateAll(){calcAll(); getVixLevel(); updatePledge();}
+</script>
+</body>
+</html>

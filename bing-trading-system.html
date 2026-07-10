@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=3,user-scalable=yes">
+<meta name="theme-color" content="#0a0c10">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="彬哥操盤系統">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='80'>♠️</text></svg>">
+<title>操盤系統 — 彬哥六條 + 莊主警示</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{--bg:#0a0c10;--card:#11161e;--border:#2a3242;--text:#edf2f7;--dim:#8892a0;--gold:#f59e0b;--gold-bg:rgba(245,158,11,.12);--green:#22e070;--green-bg:rgba(34,224,112,.12);--red:#ef4444;--red-bg:rgba(239,68,68,.12);--blue:#60a5fa;--blue-bg:rgba(96,165,250,.12);--purple:#a78bfa}
+body{font-family:-apple-system,'PingFang TC','Noto Sans TC','Helvetica Neue',sans-serif;background:var(--bg);color:var(--text);padding:0 0 30vw;min-height:100vh;overflow-x:hidden;font-size:5vw}
+
+/* Header */
+.header{background:linear-gradient(180deg,#0f141e 0%,var(--bg));padding:10vw 5vw 6vw;text-align:center;border-bottom:1px solid rgba(255,255,255,.05)}
+.header .badge{display:inline-block;font-size:4vw;font-weight:800;color:var(--gold);background:var(--gold-bg);padding:2vw 5vw;border-radius:20px;margin-bottom:3vw;border:1.5px solid rgba(245,158,11,.2)}
+.header h1{font-size:11vw;font-weight:900;letter-spacing:-.3vw;line-height:1.15}
+.header h1 span{background:linear-gradient(135deg,#fff 20%,var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.header .sub{font-size:4.5vw;color:var(--dim);margin-top:2vw;line-height:1.6}
+.header .meta{font-size:3.5vw;color:var(--dim);margin-top:1.5vw;opacity:.6}
+
+/* Nav Tabs */
+.nav{display:flex;position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--border);overflow-x:auto;-webkit-overflow-scrolling:touch}
+.nav .tab{flex:1;min-width:20vw;text-align:center;padding:4vw 2vw;font-size:3.8vw;font-weight:700;color:var(--dim);border-bottom:3px solid transparent;transition:all .2s;white-space:nowrap}
+.nav .tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+
+/* Sections */
+.section{display:none;padding:3vw 4vw 5vw}
+.section.active{display:block}
+
+/* Cards */
+.card{background:var(--card);border:1.5px solid var(--border);border-radius:4vw;padding:5vw 6vw;margin-bottom:3.5vw;transition:all .2s}
+.card-title{font-size:5vw;font-weight:800;margin-bottom:2vw;display:flex;align-items:center;gap:2.5vw}
+.card-title .num{display:inline-flex;align-items:center;justify-content:center;width:7vw;height:7vw;border-radius:50%;font-size:3.8vw;font-weight:900;flex-shrink:0}
+.card .desc{font-size:4.2vw;color:var(--dim);line-height:1.7;margin-bottom:2vw}
+.card .action{font-size:3.8vw;color:var(--gold);font-weight:700;margin-top:1.5vw}
+.card .tag{display:inline-block;font-size:3.2vw;padding:1vw 2.5vw;border-radius:8px;font-weight:600}
+
+/* Checklists */
+.chk{display:flex;align-items:flex-start;gap:3vw;padding:3vw 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.chk:last-child{border-bottom:none}
+.chk input[type=checkbox]{display:none}
+.chk .box{width:5.5vw;height:5.5vw;border:2.5px solid var(--border);border-radius:3px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:4vw;color:var(--bg);transition:all .2s;margin-top:.5vw}
+.chk input:checked+.box{background:var(--green);border-color:var(--green);color:var(--bg)}
+.chk .lbl{font-size:4.2vw;line-height:1.6;flex:1}
+.chk input:checked~.lbl{color:var(--dim);text-decoration:line-through;opacity:.5}
+
+/* Calculator */
+.calc{background:var(--card);border:1.5px solid var(--border);border-radius:4vw;padding:5vw;margin-bottom:3.5vw}
+.calc label{font-size:4vw;color:var(--dim);display:block;margin-bottom:1.5vw;font-weight:600}
+.calc input{width:100%;padding:3.5vw 4vw;font-size:4.5vw;background:var(--bg);border:1.5px solid var(--border);border-radius:2.5vw;color:var(--text);outline:none;margin-bottom:3vw;font-weight:700}
+.calc input:focus{border-color:var(--gold)}
+.calc .result{background:var(--gold-bg);border:1px solid rgba(245,158,11,.2);border-radius:2.5vw;padding:3.5vw;text-align:center;margin-top:1vw}
+.calc .result .big{font-size:7vw;font-weight:900;color:var(--gold)}
+.calc .result .lbl{font-size:3.8vw;color:var(--dim);margin-top:1vw}
+
+/* Journal */
+.journal textarea{width:100%;padding:4vw;font-size:4.2vw;background:var(--card);border:1.5px solid var(--border);border-radius:3vw;color:var(--text);outline:none;min-height:25vw;font-family:inherit;line-height:1.6;resize:vertical}
+.journal textarea:focus{border-color:var(--gold)}
+.journal .btn{display:block;width:100%;padding:4vw;font-size:4.5vw;font-weight:700;border:none;border-radius:3vw;cursor:pointer;margin-top:2.5vw;transition:all .2s}
+.btn-gold{background:var(--gold);color:#000}
+.btn-gold:active{opacity:.7}
+.btn-outline{background:transparent;border:1.5px solid var(--border);color:var(--dim)}
+.entries{margin-top:3vw}
+.entry{background:var(--card);border:1.5px solid var(--border);border-radius:3vw;padding:4vw;margin-bottom:2.5vw}
+.entry .date{font-size:3.5vw;color:var(--dim);margin-bottom:1.5vw}
+.entry .txt{font-size:4vw;line-height:1.6;color:var(--text);white-space:pre-wrap}
+
+/* Stats */
+.stat-row{display:flex;gap:2.5vw;margin-bottom:3.5vw}
+.stat-box{flex:1;background:var(--card);border:1.5px solid var(--border);border-radius:3vw;padding:3.5vw;text-align:center}
+.stat-box .val{font-size:6vw;font-weight:900}
+.stat-box .lbl{font-size:3.5vw;color:var(--dim);margin-top:1vw}
+.stat-box .val.g{color:var(--green)}.stat-box .val.r{color:var(--red)}.stat-box .val.gold{color:var(--gold)}
+
+/* Trade Log */
+.trade-entry{background:var(--card);border:1.5px solid var(--border);border-radius:3vw;padding:4vw;margin-bottom:2.5vw;position:relative}
+.trade-entry .del{position:absolute;top:3vw;right:4vw;font-size:5vw;color:var(--dim);background:none;border:none;cursor:pointer}
+.trade-entry .info{font-size:3.8vw;color:var(--dim);margin-bottom:1vw}
+.trade-entry .info strong{color:var(--text)}
+
+/* Rules flow */
+.flow-step{display:flex;gap:3vw;padding:3.5vw 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.flow-step:last-child{border-bottom:none}
+.flow-step .icon{width:8vw;height:8vw;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:4.5vw;flex-shrink:0;margin-top:.5vw}
+.flow-step .content{flex:1}
+.flow-step .title{font-size:4.5vw;font-weight:700;margin-bottom:1vw}
+.flow-step .info{font-size:3.8vw;color:var(--dim);line-height:1.6}
+
+/* Footer */
+.footer{text-align:center;padding:6vw;font-size:3.5vw;color:var(--dim);border-top:1px solid rgba(255,255,255,.04);margin-top:5vw;line-height:1.8}
+
+/* Responsive */
+@media(min-width:600px){
+body{font-size:2.8vw;padding-bottom:10vw}
+.header{padding:4vw 5vw 3vw}.header h1{font-size:5.5vw}.header .badge{font-size:2vw}
+.nav .tab{font-size:2.2vw;padding:2vw 1.5vw}
+.card,.calc{padding:2.5vw 3vw}.card-title{font-size:2.8vw}.card .desc,.chk .lbl{font-size:2.2vw}.card .action{font-size:2vw}
+.chk{padding:1.5vw 0}.chk .box{width:2.8vw;height:2.8vw;font-size:2vw}
+.calc input{font-size:2.5vw;padding:1.5vw 2vw}.calc .result .big{font-size:3.5vw}
+.stat-box{padding:1.5vw}.stat-box .val{font-size:3vw}.stat-box .lbl{font-size:1.8vw}
+.flow-step .title{font-size:2.5vw}.flow-step .info{font-size:2vw}
+.journal textarea{font-size:2.2vw;min-height:12vw}.journal .btn{font-size:2.2vw;padding:1.5vw}
+.entry .txt{font-size:2.2vw}.entry .date{font-size:1.8vw}
+.trade-entry .info{font-size:2vw}.trade-entry .del{font-size:2.5vw}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="badge">♠️ 銀河投資論壇</div>
+  <h1><span>彬哥操盤系統</span></h1>
+  <div class="sub">彬哥六條準則 · 八式實戰 · 莊主宏觀警示</div>
+  <div class="meta">銀河投資論壇 · 2026年7月</div>
+</div>
+
+<div class="nav">
+  <div class="tab active" data-tab="rules">🎯 六條準則</div>
+  <div class="tab" data-tab="calc">🧮 停損計算機</div>
+  <div class="tab" data-tab="intraday">⚡ 八式實戰</div>
+  <div class="tab" data-tab="track">📊 期望值追蹤</div>
+  <div class="tab" data-tab="daily">📝 每日功課</div>
+  <div class="tab" data-tab="warning">🚨 莊主警示</div>
+</div>
+
+<!-- ===== 六條準則 ===== -->
+<div class="section active" id="s-rules">
+  <div style="background:var(--gold-bg);border:1px solid rgba(245,158,11,.15);border-radius:3vw;padding:4vw;margin-bottom:4vw;font-size:3.8vw;color:var(--dim);line-height:1.7">
+    <strong style="color:var(--gold)">💡 彬哥心法：</strong>控制壞牌損失，放大好牌獲利。以下六條，每一筆單都嚴格遵守。
+  </div>
+
+  <div class="card" data-rule="1">
+    <div class="card-title"><span class="num" style="background:var(--gold-bg);color:var(--gold)">1</span>單筆最大虧損 ≤ 總資金 2%</div>
+    <div class="desc">你的部位大小，由停損決定，不是由這把感覺會贏決定。500萬資金 → 單筆最多輸10萬。買100元股票，停損設90元(賠10元) → 最多買10張。</div>
+    <div class="action">📐 使用停損計算機算出你的最大張數</div>
+  </div>
+
+  <div class="card" data-rule="2">
+    <div class="card-title"><span class="num" style="background:var(--red-bg);color:var(--red)">2</span>❌ 禁止攤平 — 輸錢不加碼</div>
+    <div class="desc">攤平是賭氣，不是策略。加碼是順勢增加獲利，才是王道。拿到一對3輸了，不蓋牌反而All-in？把攤平從字典刪掉，換成移動停損後的加碼。</div>
+    <div class="action">✅ 加碼條件：確認牌面走勢有利才推籌碼</div>
+  </div>
+
+  <div class="card" data-rule="3">
+    <div class="card-title"><span class="num" style="background:var(--blue-bg);color:var(--blue)">3</span>連三週期望值為負 → 強制縮部位50%</div>
+    <div class="desc">職業賭徒記錄每一把決策好壞。你要算：勝率、平均獲利%、平均虧損%、期望值。連三週為負？縮到50%部位。這是自覺，不是認輸。</div>
+    <div class="action">📊 使用期望值追蹤器監控</div>
+  </div>
+
+  <div class="card" data-rule="4">
+    <div class="card-title"><span class="num" style="background:var(--green-bg);color:var(--green)">4</span>AI股設時間停損 — 好牌不漲就是爛牌</div>
+    <div class="desc">產業對，股價不一定對。進場後10個交易日沒創新高，或漲幅低於停損幅度，先出場觀望。等牌不來第三張，果斷蓋牌。</div>
+    <div class="action">⏱ 進場後計數10個交易日</div>
+  </div>
+
+  <div class="card" data-rule="5">
+    <div class="card-title"><span class="num" style="background:var(--gold-bg);color:var(--gold)">5</span>移動停損 — 讓獲利奔跑</div>
+    <div class="desc">賺30% → 停損移到成本之上。賺50% → 停損移到獲利20%位置。用贏來的籌碼賭更大的行情。好牌一定要贏到大，但不是凹單。</div>
+    <div class="action">📈 每漲一段就把停損往上拉</div>
+  </div>
+
+  <div class="card" data-rule="6">
+    <div class="card-title"><span class="num" style="background:var(--gold-bg);color:var(--gold)">6</span>輸少贏多 — 青山在，魚永遠是你的</div>
+    <div class="desc">輸少 = 停損 + 2%上限 + 不攤平 + 期望值監控 + 時間停損<br>贏多 = 移動停損讓獲利奔跑<br>高手與輸家差別：判斷錯誤時損失更小，判斷正確時獲利更大。</div>
+    <div class="action">🏆 記住：虧70%要賺233%才回本</div>
+  </div>
+
+  <div class="card" style="border-color:rgba(245,158,11,.3)">
+    <div class="card-title" style="color:var(--gold)">📋 每日執行檢查表</div>
+    <div id="daily-chk">
+      <div class="chk"><input type="checkbox" id="chk1"><label class="box" for="chk1">✓</label><label class="lbl" for="chk1">確認每檔股票停損點已設定</label></div>
+      <div class="chk"><input type="checkbox" id="chk2"><label class="box" for="chk2">✓</label><label class="lbl" for="chk2">本筆虧損是否在總資金2%以內？</label></div>
+      <div class="chk"><input type="checkbox" id="chk3"><label class="box" for="chk3">✓</label><label class="lbl" for="chk3">今天沒有攤平動作</label></div>
+      <div class="chk"><input type="checkbox" id="chk4"><label class="box" for="chk4">✓</label><label class="lbl" for="chk4">AI/題材股確認是否超過10日未創高</label></div>
+      <div class="chk"><input type="checkbox" id="chk5"><label class="box" for="chk5">✓</label><label class="lbl" for="chk5">移動停損已檢查（獲利>30%？>50%？）</label></div>
+      <div class="chk"><input type="checkbox" id="chk6"><label class="box" for="chk6">✓</label><label class="lbl" for="chk6">本週期望值是否為正？</label></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 停損計算機 ===== -->
+<div class="section" id="s-calc">
+  <div class="calc">
+    <label>💰 總資金（萬元）</label>
+    <input type="number" id="capital" placeholder="例如：500" value="500">
+    <label>📈 進場股價（元）</label>
+    <input type="number" id="price" placeholder="例如：100" value="100">
+    <label>🔻 停損價格（元）</label>
+    <input type="number" id="stop" placeholder="例如：90" value="90">
+    <div class="result">
+      <div class="big" id="max-shares">10</div>
+      <div class="lbl">📄 最大可買張數（單筆虧損 ≤ 2%）</div>
+    </div>
+    <div style="font-size:3.8vw;color:var(--dim);margin-top:3vw;line-height:1.7">
+      單筆最大虧損：<strong id="max-loss" style="color:var(--red)">100,000</strong> 元<br>
+      每股虧損：<strong id="loss-per-share" style="color:var(--gold)">10</strong> 元
+    </div>
+  </div>
+
+  <div class="card" style="border-color:rgba(250,204,21,.2)">
+    <div class="card-title" style="font-size:4.5vw">🔐 彬哥金句</div>
+    <div class="desc" style="font-size:4vw">青山是停損守住的，不是硬拗來的。虧70%要賺233%才回本——這是數學，更是人性。</div>
+  </div>
+</div>
+
+<!-- ===== 八式實戰 ===== -->
+<div class="section" id="s-intraday">
+  <div style="background:var(--card);border:1.5px solid var(--border);border-radius:4vw;padding:4vw;margin-bottom:3.5vw">
+    <div style="font-size:4.5vw;font-weight:700;margin-bottom:2.5vw;color:var(--gold)">⚡ 盤中實戰八條心法</div>
+    <div id="intraday-rules">
+      <div class="flow-step">
+        <div class="icon" style="background:var(--blue-bg);color:var(--blue)">①</div>
+        <div class="content">
+          <div class="title">開盤30分鐘沒波動 → 當日放棄</div>
+          <div class="info">若波動小、量比低於0.8，場外大戶沒下單，當日就是散戶行情。尾盤掛被動單撿便宜，絕不主動拉抬。</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="icon" style="background:var(--red-bg);color:var(--red)">②</div>
+        <div class="content">
+          <div class="title">先漲後跌、跌破開盤價 → 騙線出貨</div>
+          <div class="info">早盤誘多手法，拉高讓散戶追，再緩跌出貨。跌破時5分鐘K線爆量 → 主力倒貨，進場等於幫人接籌碼。</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="icon" style="background:var(--green-bg);color:var(--green)">③</div>
+        <div class="content">
+          <div class="title">先漲後跌但守住開盤價 → 洗盤完畢等第二波</div>
+          <div class="info">主力刻意壓回測試散戶耐受力，若縮量守穩，浮額已輕。等第二次帶量突破早盤高點才按下買入鍵。</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="icon" style="background:var(--green-bg);color:var(--green)">④</div>
+        <div class="content">
+          <div class="title">先跌後漲、突破開盤價 → 破底翻，強勢吸籌</div>
+          <div class="info">主力開盤下殺製造恐慌，趁機吃貨。突破時量能倍增 + 期貨價差收斂 → 果斷跟進。這是真攻擊。</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="icon" style="background:var(--gold-bg);color:var(--gold)">⑤</div>
+        <div class="content">
+          <div class="title">先跌後漲卻沒突破開盤價 → 弱反彈不參與</div>
+          <div class="info">反彈無力且分時圖呈鋸齒狀，上方賣壓沉重。若持倉，減碼或佈局避險單。</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="icon" style="background:var(--purple);color:#fff">⑥</div>
+        <div class="content">
+          <div class="title">尾盤最後7分鐘進場（13:23後）</div>
+          <div class="info">當沖客強制出場，賣壓最輕。若最後一筆佔全日量能5%以上 → 主力進駐，隔日開高即收割。</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="icon" style="background:var(--red-bg);color:var(--red)">⑦</div>
+        <div class="content">
+          <div class="title">微型飆股篩選：換手3-8% + 量比>1.5 + 市值<5億</div>
+          <div class="info">籌碼活絡但未過熱。務必檢查集保戶數是否下降（籌碼集中），否則容易踩地雷。⚠️ 注意流動性風險。</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="icon" style="background:var(--gold-bg);color:var(--gold)">⑧</div>
+        <div class="content">
+          <div class="title">長期下行股先放生 → 不接掉下來的刀子</div>
+          <div class="info">股價在年線下方且季線下彎，反彈都是逃命波。唯一例外：窒息量（<百日均量40%）才考慮試單。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" style="font-size:4.5vw">🧠 彬哥提醒</div>
+    <div class="desc" style="font-size:4vw">若大盤5日線 < 10日線，上述所有做多訊號成功率打七折，直接降低持股水位。</div>
+  </div>
+</div>
+
+<!-- ===== 期望值追蹤 ===== -->
+<div class="section" id="s-track">
+  <div class="stat-row">
+    <div class="stat-box"><div class="val gold" id="win-rate">0%</div><div class="lbl">勝率</div></div>
+    <div class="stat-box"><div class="val g" id="avg-win">0</div><div class="lbl">平均獲利%</div></div>
+    <div class="stat-box"><div class="val r" id="avg-loss">0</div><div class="lbl">平均虧損%</div></div>
+    <div class="stat-box"><div class="val gold" id="expectancy">0</div><div class="lbl">期望值</div></div>
+  </div>
+
+  <div style="background:var(--card);border:1.5px solid var(--border);border-radius:4vw;padding:4vw;margin-bottom:3.5vw">
+    <div style="font-size:4.5vw;font-weight:700;margin-bottom:3vw">📝 新增交易記錄</div>
+    <div style="display:flex;gap:2.5vw;margin-bottom:2.5vw">
+      <select id="trade-result" style="flex:1;padding:3.5vw 4vw;font-size:4vw;background:var(--bg);border:1.5px solid var(--border);border-radius:2.5vw;color:var(--text);outline:none;-webkit-appearance:none">
+        <option value="win">✅ 獲利</option>
+        <option value="loss">❌ 虧損</option>
+      </select>
+    </div>
+    <label style="font-size:3.8vw;color:var(--dim);display:block;margin-bottom:1.5vw">收益率（%，正數=獲利，負數=虧損）</label>
+    <input type="number" id="trade-return" placeholder="例如：5.2 或 -3.8" style="width:100%;padding:3.5vw 4vw;font-size:4.5vw;background:var(--bg);border:1.5px solid var(--border);border-radius:2.5vw;color:var(--text);outline:none;margin-bottom:2.5vw">
+    <button class="btn btn-gold" onclick="addTrade()">➕ 記錄這筆交易</button>
+  </div>
+
+  <div id="trade-list"></div>
+
+  <div style="background:var(--gold-bg);border:1px solid rgba(245,158,11,.15);border-radius:3vw;padding:4vw;margin-top:3vw;font-size:3.8vw;color:var(--dim);line-height:1.7">
+    <strong style="color:var(--gold)">⚠️ 彬哥規則：</strong>連三週期望值為負 → 強制縮部位到50%。這是自覺，不是認輸。輸錢時縮手，是為了等真正的好牌出現。
+  </div>
+</div>
+
+<!-- ===== 每日功課 ===== -->
+<div class="section" id="s-daily">
+  <div class="card">
+    <div class="card-title">📋 收盤必修功課</div>
+    <div class="desc" style="font-size:4vw">每天收盤後，做這兩件事：</div>
+  </div>
+
+  <div class="card" style="border-left:8px solid var(--blue)">
+    <div class="card-title" style="font-size:4.8vw">🔍 功課一：看前五大買賣券商</div>
+    <div class="desc" style="font-size:4vw">
+      買方是<strong style="color:var(--green)">凱基-台北</strong>？<br>
+      賣方是<strong style="color:var(--red)">元大-總公司</strong>？<br>
+      若兩者成立 → 隔日開盤前30分鐘就是決戰點。
+    </div>
+    <div class="chk" style="border:none;padding-top:2vw">
+      <input type="checkbox" id="hw1"><label class="box" for="hw1">✓</label><label class="lbl" for="hw1">今日已完成券商分析</label>
+    </div>
+  </div>
+
+  <div class="card" style="border-left:8px solid var(--gold)">
+    <div class="card-title" style="font-size:4.8vw">📉 功課二：對照大盤多空</div>
+    <div class="desc" style="font-size:4vw">
+      大盤5日線 <strong style="color:var(--gold)">?</strong> 10日線<br>
+      若5日線 < 10日線 → 做多訊號成功率打七折，降低持股水位。
+    </div>
+    <div class="chk" style="border:none;padding-top:2vw">
+      <input type="checkbox" id="hw2"><label class="box" for="hw2">✓</label><label class="lbl" for="hw2">今日已完成大盤多空判斷</label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" style="font-size:4.8vw">✍️ 操盤日記</div>
+    <div class="journal">
+      <textarea id="journal-input" placeholder="記錄今天的操作心得、犯的錯、學到的教訓…"></textarea>
+      <button class="btn btn-gold" onclick="saveJournal()">💾 儲存今日日記</button>
+      <div class="entries" id="journal-entries"></div>
+    </div>
+  </div>
+
+  <div class="card" style="border-color:rgba(245,158,11,.3)">
+    <div class="card-title" style="color:var(--gold);font-size:4.8vw">🏆 彬哥結語</div>
+    <div class="desc" style="font-size:4vw;line-height:1.8">
+      「每一筆單，都當作最後一筆資金在操作。」<br><br>
+      2026年的AI大浪潮，活得下來的，不是最會選股的人，是最懂停損的人。<br><br>
+      股價是錢堆出來的，不是畫線畫出來的。<br>
+      我們贏的不是預測準，而是比誰更耐得住性子。
+    </div>
+  </div>
+</div>
+
+<!-- ===== 莊主警示 ===== -->
+<div class="section" id="s-warning">
+  <div style="background:var(--red-bg);border:1px solid rgba(239,68,68,.2);border-radius:3vw;padding:4vw;margin-bottom:4vw;font-size:3.8vw;color:var(--dim);line-height:1.7">
+    <strong style="color:var(--red)">🔴 巴菲特11字警告：</strong>「現在大家的賭博心態，真的是前所未有的狂熱。」— 2026年7月4日 CNBC<br><br>
+    基於公開市場資訊與數據分析，僅供參考，不構成買賣建議。
+  </div>
+
+  <div class="card" style="border-left:8px solid var(--red)">
+    <div class="card-title" style="font-size:4.8vw">🏦 波克夏現金儲備 3,974億美元 創歷史新高</div>
+    <div class="desc" style="font-size:4vw">
+      巴菲特手握近4,000億美元現金卻不進場，說明他認為當前市場估值過高。<br><br>
+      <strong style="color:var(--gold)">「最適合買東西的時機，往往是別人不接電話的時候。」</strong>
+    </div>
+  </div>
+
+  <div style="font-size:4.5vw;font-weight:700;margin:4vw 0 3vw;color:var(--gold)">📊 四大風險信號</div>
+
+  <div class="card" style="border-left:8px solid var(--red)">
+    <div class="card-title" style="font-size:4.5vw">1️⃣ 台股巴菲特指標逼近500%</div>
+    <div class="desc" style="font-size:4vw">
+      股市總市值÷GDP 已達 <strong style="color:var(--red)">~500%</strong>（歷史均值167%，合理值75-90%）<br>
+      <strong style="color:var(--gold)">彬哥預估Q3震盪往下修正15%</strong>，會員必須嚴守50%現金部位。
+    </div>
+  </div>
+
+  <div class="card" style="border-left:8px solid var(--red)">
+    <div class="card-title" style="font-size:4.5vw">2️⃣ 半導體2日暴跌11% — AI泡沫爭議升溫</div>
+    <div class="desc" style="font-size:4vw">
+      標普500未來一年利潤預期上調近20%（2021年來最強）<br>
+      瑞銀提出<strong style="color:var(--gold)">「盈利泡沫」</strong>概念：股價已提前透支超常盈利預期<br>
+      當盈利預期與資本開支假設難以為繼 → AI板塊估值回調可能觸發連鎖反應。
+    </div>
+  </div>
+
+  <div class="card" style="border-left:8px solid var(--red)">
+    <div class="card-title" style="font-size:4.5vw">3️⃣ 聯準會轉鷹 — 年底前可能加息</div>
+    <div class="desc" style="font-size:4vw">
+      市場已消化年底前至少加息1次<br>
+      美銀更預測今年可能<strong style="color:var(--red)">加息三次</strong><br>
+      利率路徑逆轉對高估值科技股是沉重打擊。
+    </div>
+  </div>
+
+  <div class="card" style="border-left:8px solid var(--red)">
+    <div class="card-title" style="font-size:4.5vw">4️⃣ 巴菲特點名：零日期權就是賭博</div>
+    <div class="desc" style="font-size:4vw">
+      沒有人能說清楚為什麼要買只有一天有效期的期權。<br>
+      市場參與者把聰明才智用在鑽規則空隙上。
+    </div>
+  </div>
+
+  <div style="font-size:4.5vw;font-weight:700;margin:4vw 0 3vw;color:var(--gold)">🎯 Q3 策略建議</div>
+
+  <div class="card" style="border-left:8px solid var(--green)">
+    <div class="card-title" style="font-size:4.5vw">✅ 要做</div>
+    <div class="desc" style="font-size:4vw">
+      • 持倉降至 <strong style="color:var(--green)">5-6成</strong>，保留充足現金<br>
+      • 轉向防禦性板塊：<strong>醫療保健</strong>（高盛首選）、金融、能源、高股息<br>
+      • 關注 <strong style="color:var(--gold)">HALO概念股</strong>（重資產、低淘汰、防禦+成長雙優勢）<br>
+      • 耐心等待真正的好機會
+    </div>
+  </div>
+
+  <div class="card" style="border-left:8px solid var(--red)">
+    <div class="card-title" style="font-size:4.5vw">❌ 不要做</div>
+    <div class="desc" style="font-size:4vw">
+      • 🚫 零日期權 — 巴菲特：<strong style="color:var(--red)">純粹賭博</strong><br>
+      • 🚫 高槓桿衍生品、借貸投資、開槓做多<br>
+      • 🚫 追高AI與半導體個股<br>
+      • 🚫 連續開16個大還繼續壓大
+    </div>
+  </div>
+
+  <div class="card" style="border-color:rgba(250,204,21,.3)">
+    <div class="card-title" style="font-size:4.8vw;color:var(--gold)">🧠 攻守循環：彬哥 + 莊主 完整閉環</div>
+    <div style="font-size:4vw;line-height:1.8;color:var(--dim)">
+      <div style="background:var(--green-bg);border-radius:2.5vw;padding:3vw;margin-bottom:2.5vw">
+        <strong style="color:var(--green)">📗 進攻模式（微觀）— 彬哥六條</strong><br>
+        平時用六條準則執行每一筆交易：2%停損、不攤平、移動停損、時間停損…
+      </div>
+      <div style="background:var(--red-bg);border-radius:2.5vw;padding:3vw;margin-bottom:2.5vw">
+        <strong style="color:var(--red)">📕 防守模式（宏觀）— 莊主警示</strong><br>
+        當大局出現風險信號（巴菲特指標500%、聯準會轉鷹…），啟動防禦：縮部位、保留現金、轉向防禦性板塊。
+      </div>
+      <div style="background:var(--gold-bg);border-radius:2.5vw;padding:3vw">
+        <strong style="color:var(--gold)">🔄 切換邏輯</strong><br>
+        宏觀訊號亮紅燈 → 啟動防守模式 → 彬哥第③條「連三週期望值為負縮部位」強制執行<br>
+        宏觀訊號恢復正常 → 回到進攻模式照彬哥系統操盤
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="border-color:rgba(239,68,68,.2)">
+    <div class="card-title" style="font-size:4.8vw;color:var(--red)">⚠️ 莊主結語</div>
+    <div class="desc" style="font-size:4vw;line-height:1.8">
+      恐懼沒有必要，但要耐心等待非恐慌出逃。莊主並非建議全面清倉，當前市場仍有基本面支撐，AI需求強勁，企業獲利以兩位數速度成長。<br><br>
+      <strong style="color:var(--gold)">策略核心：控制風險、精選個股、留有餘地。</strong><br><br>
+      保住本金，永遠比追求暴利更重要。未來一季，讓我們以謹慎之心面對市場，以耐心之姿等待真正的好機會。
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <p>♠️ 彬哥操盤系統 · 基於大老二心法</p>
+  <p>資料來源：銀河投資論壇 副會長 彬哥 上任感言</p>
+  <p style="margin-top:2vw;font-size:3vw;opacity:.5">2026年7月4日</p>
+</div>
+
+<script>
+// ===== Tab Switching =====
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('s-' + tab.dataset.tab).classList.add('active');
+  });
+});
+
+// ===== 2% Calculator =====
+function calcStop() {
+  const cap = parseFloat(document.getElementById('capital').value) || 0;
+  const price = parseFloat(document.getElementById('price').value) || 0;
+  const stop = parseFloat(document.getElementById('stop').value) || 0;
+  const maxLoss = cap * 10000 * 0.02;
+  const lossPerShare = Math.abs(price - stop);
+  const maxShares = lossPerShare > 0 ? Math.floor(maxLoss / (lossPerShare * 1000)) : 0;
+  document.getElementById('max-shares').textContent = maxShares;
+  document.getElementById('max-loss').textContent = maxLoss.toLocaleString();
+  document.getElementById('loss-per-share').textContent = lossPerShare;
+}
+document.getElementById('capital').addEventListener('input', calcStop);
+document.getElementById('price').addEventListener('input', calcStop);
+document.getElementById('stop').addEventListener('input', calcStop);
+calcStop();
+
+// ===== Checkboxes Persistence =====
+document.querySelectorAll('#daily-chk input[type=checkbox]').forEach(cb => {
+  const key = 'bing_' + cb.id;
+  cb.checked = localStorage.getItem(key) === 'true';
+  cb.addEventListener('change', () => localStorage.setItem(key, cb.checked));
+});
+
+document.querySelectorAll('#s-daily input[type=checkbox]').forEach(cb => {
+  const key = 'bing_' + cb.id;
+  cb.checked = localStorage.getItem(key) === 'true';
+  cb.addEventListener('change', () => localStorage.setItem(key, cb.checked));
+});
+
+// ===== Trade Log =====
+let trades = JSON.parse(localStorage.getItem('bing_trades') || '[]');
+
+function renderTrades() {
+  const el = document.getElementById('trade-list');
+  if (trades.length === 0) {
+    el.innerHTML = '<div style="text-align:center;padding:7vw;font-size:4vw;color:var(--dim)">尚無交易記錄</div>';
+    updateStats();
+    return;
+  }
+  el.innerHTML = trades.map((t,i) => `
+    <div class="trade-entry">
+      <button class="del" onclick="delTrade(${i})">✕</button>
+      <div class="info"><strong>${t.result === 'win' ? '✅ 獲利' : '❌ 虧損'}</strong> · ${t.ret}%</div>
+      <div class="info">${t.date}</div>
+    </div>
+  `).join('');
+  updateStats();
+}
+
+function addTrade() {
+  const ret = parseFloat(document.getElementById('trade-return').value);
+  if (isNaN(ret)) { alert('請輸入收益率'); return; }
+  trades.push({ result: ret >= 0 ? 'win' : 'loss', ret: ret, date: new Date().toLocaleDateString('zh-TW') });
+  localStorage.setItem('bing_trades', JSON.stringify(trades));
+  document.getElementById('trade-return').value = '';
+  renderTrades();
+}
+
+function delTrade(i) {
+  trades.splice(i, 1);
+  localStorage.setItem('bing_trades', JSON.stringify(trades));
+  renderTrades();
+}
+
+function updateStats() {
+  if (trades.length === 0) {
+    document.getElementById('win-rate').textContent = '0%';
+    document.getElementById('avg-win').textContent = '0';
+    document.getElementById('avg-loss').textContent = '0';
+    document.getElementById('expectancy').textContent = '0';
+    return;
+  }
+  const wins = trades.filter(t => t.result === 'win');
+  const losses = trades.filter(t => t.result === 'loss');
+  const winRate = (wins.length / trades.length * 100).toFixed(0);
+  const avgWin = wins.length > 0 ? (wins.reduce((s,t) => s + t.ret, 0) / wins.length).toFixed(2) : 0;
+  const avgLoss = losses.length > 0 ? (losses.reduce((s,t) => s + t.ret, 0) / losses.length).toFixed(2) : 0;
+  const exp = (winRate/100 * avgWin) + ((1-winRate/100) * avgLoss);
+  document.getElementById('win-rate').textContent = winRate + '%';
+  document.getElementById('avg-win').textContent = avgWin + '%';
+  document.getElementById('avg-loss').textContent = avgLoss + '%';
+  document.getElementById('expectancy').textContent = exp.toFixed(2);
+}
+renderTrades();
+
+// ===== Journal =====
+let entries = JSON.parse(localStorage.getItem('bing_journal') || '[]');
+
+function renderJournal() {
+  const el = document.getElementById('journal-entries');
+  if (entries.length === 0) {
+    el.innerHTML = '<div style="text-align:center;padding:5vw;font-size:3.8vw;color:var(--dim)">尚無日記記錄</div>';
+    return;
+  }
+  el.innerHTML = entries.map(e => `
+    <div class="entry">
+      <div class="date">📅 ${e.date}</div>
+      <div class="txt">${e.text}</div>
+    </div>
+  `).join('');
+}
+
+function saveJournal() {
+  const txt = document.getElementById('journal-input').value.trim();
+  if (!txt) { alert('請輸入日記內容'); return; }
+  entries.unshift({ date: new Date().toLocaleDateString('zh-TW', { year:'numeric',month:'2-digit',day:'2-digit',weekday:'long' }), text: txt });
+  localStorage.setItem('bing_journal', JSON.stringify(entries));
+  document.getElementById('journal-input').value = '';
+  renderJournal();
+}
+renderJournal();
+</script>
+</body>
+</html>

@@ -1,0 +1,344 @@
+<!DOCTYPE html><html lang="zh-Hant"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes, viewport-fit=cover">
+<meta name="theme-color" content="#030405">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="習慣追蹤">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2322e070'/%3E%3Ctext x='50' y='72' font-size='60' text-anchor='middle' fill='white'%3E12%3C/text%3E%3C/svg%3E">
+<title>12習慣追蹤</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,'PingFang TC','Noto Sans TC','Helvetica Neue',sans-serif;background:#030405;color:#fff;padding:0 0 28vw;min-height:100dvh;overflow-x:hidden;font-size:5.5vw;-webkit-font-smoothing:antialiased}
+.top-bar{background:linear-gradient(180deg,#0a0e14,#030405);padding:calc(env(safe-area-inset-top,3vw)+6vw)5vw 5vw;text-align:center;position:sticky;top:0;z-index:10;border-bottom:1px solid rgba(255,255,255,.05)}
+.top-bar .badge{display:inline-block;font-size:4.2vw;font-weight:800;color:#22e070;background:rgba(34,224,112,.15);padding:2.2vw 6vw;border-radius:24px;letter-spacing:.5vw;margin-bottom:3vw;border:1.5px solid rgba(34,224,112,.2)}
+.top-bar h1{font-size:12vw;font-weight:900;letter-spacing:-.3vw;line-height:1.15;background:linear-gradient(135deg,#fff 20%,#22e070);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.top-bar .sub{font-size:4.2vw;color:#b0b8c8;margin-top:2vw;line-height:1.6}
+.score-wrap{display:flex;justify-content:center;padding:6vw 0 2vw}
+.score-ring{position:relative;width:48vw;height:48vw}
+.score-ring svg{transform:rotate(-90deg);width:100%;height:100%}
+.score-ring .bg{fill:none;stroke:#10141c;stroke-width:7}
+.score-ring .prog{fill:none;stroke:#22e070;stroke-width:7;stroke-linecap:round;stroke-dasharray:400;stroke-dashoffset:100;transition:stroke-dashoffset 1.2s;filter:drop-shadow(0 0 10px rgba(34,224,112,.25))}
+.score-ring .c{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
+.score-ring .c .n{font-size:18vw;font-weight:900;color:#22e070;line-height:1;text-shadow:0 0 25px rgba(34,224,112,.2)}
+.score-ring .c .l{font-size:4.5vw;color:#b0b8c8;font-weight:600;margin-top:1vw}
+.leg{display:flex;justify-content:center;gap:8vw;font-size:4.5vw;color:#b0b8c8;padding:1vw 0 2vw;font-weight:500}
+.leg span{display:flex;align-items:center;gap:2.5vw}
+.d{width:4.5vw;height:4.5vw;border-radius:50%;display:inline-block}
+.d.g{background:#22e070;box-shadow:0 0 8px #22e070}
+.d.y{background:#facc15;box-shadow:0 0 8px #facc15}
+.d.x{background:#6b7280}
+.leg .n{font-weight:800;color:#fff;font-size:5vw}
+
+/* ===== WEEKLY REPORT BANNER ===== */
+.wr-banner{margin:2vw 4vw;background:linear-gradient(135deg,rgba(96,165,250,.1),rgba(34,224,112,.05));border:1.5px solid rgba(96,165,250,.2);border-radius:5vw;overflow:hidden}
+.wr-hdr{padding:4vw;display:flex;justify-content:space-between;align-items:center;cursor:pointer}
+.wr-hdr:active{background:rgba(255,255,255,.03)}
+.wr-hdr .wr-left{display:flex;align-items:center;gap:2.5vw}
+.wr-hdr .wr-left .wr-icon{font-size:6vw}
+.wr-hdr .wr-left .wr-title{font-size:4.5vw;font-weight:700;color:#60a5fa}
+.wr-hdr .wr-left .wr-count{font-size:3.5vw;color:#4b5563;margin-top:.3vw}
+.wr-hdr .wr-arr{font-size:4vw;color:#4b5563;transition:transform .3s}
+.wr-banner.exp .wr-arr{transform:rotate(180deg)}
+.wr-body{max-height:0;overflow:hidden;transition:max-height .5s;padding:0 4vw}
+.wr-banner.exp .wr-body{max-height:600vw;padding:0 4vw 4vw}
+.wr-body .wr-empty{text-align:center;padding:6vw 2vw;color:#4b5563;font-size:4vw;line-height:2}
+.wr-body .wr-empty .big{font-size:8vw;margin-bottom:2vw}
+.wr-body .wr-group{margin-bottom:3vw}
+.wr-body .wr-group:last-child{margin-bottom:0}
+.wr-body .wr-group .wg-hdr{font-size:4vw;font-weight:700;color:#22e070;margin-bottom:1.5vw;display:flex;align-items:center;gap:2vw}
+.wr-body .wr-group .wg-item{background:rgba(255,255,255,.02);border-radius:3vw;padding:2.5vw;margin-bottom:1.5vw}
+.wr-body .wr-group .wg-item .wg-date{font-size:3vw;color:#4b5563;margin-bottom:.5vw}
+.wr-body .wr-group .wg-item .wg-text{font-size:3.8vw;color:#d1d5db;line-height:1.5}
+.wr-body .wr-copy-btn{display:block;width:100%;padding:3.5vw;border:1.5px solid rgba(96,165,250,.3);border-radius:3vw;background:rgba(96,165,250,.08);color:#60a5fa;font-size:4vw;font-weight:700;text-align:center;cursor:pointer;font-family:inherit;margin-top:2vw}
+.wr-body .wr-copy-btn:active{background:rgba(96,165,250,.15)}
+
+/* ===== CARDS ===== */
+.cards{padding:2vw 4vw 4vw;display:flex;flex-direction:column;gap:2.5vw}
+.card{background:#10141c;border:2px solid #2a3140;border-radius:5vw;overflow:hidden;transition:all .3s}
+.card[data-s=green]{border-color:rgba(34,224,112,.25)}
+.card[data-s=yellow]{border-color:rgba(250,204,21,.25)}
+.card[data-s=gray]{border-color:rgba(107,114,128,.2)}
+.card-hdr{padding:4vw 4.5vw 4vw 5vw;display:flex;align-items:center;gap:2.5vw;cursor:pointer;position:relative;min-height:15vw}
+.card-hdr:active{background:rgba(255,255,255,.03)}
+.card-hdr .sb{position:absolute;left:0;top:4vw;bottom:4vw;width:4px;border-radius:0 2px 2px 0}
+.card[data-s=green] .sb{background:#22e070;box-shadow:0 0 6px rgba(34,224,112,.3)}
+.card[data-s=yellow] .sb{background:#facc15;box-shadow:0 0 6px rgba(250,204,21,.3)}
+.card[data-s=gray] .sb{background:#6b7280}
+.card-hdr .ci{font-size:6.5vw;flex-shrink:0}
+.card-hdr .cn{font-size:3.2vw;font-weight:700;color:#4b5563;letter-spacing:.3vw;width:5vw;flex-shrink:0}
+.card-hdr .ct{flex:1}
+.card-hdr .ct h3{font-size:5.2vw;font-weight:800;color:#fff;letter-spacing:-.1vw}
+.card-hdr .ct .cs{font-size:3.2vw;color:#b0b8c8;margin-top:.3vw}
+.card-hdr .arr{font-size:4vw;color:#4b5563;transition:transform .3s;flex-shrink:0;width:5vw;text-align:center}
+.card.exp .arr{transform:rotate(180deg)}
+.card-body{max-height:0;overflow:hidden;transition:max-height .45s ease,padding .3s;padding:0 5vw}
+.card.exp .card-body{max-height:350vw;padding:0 5vw 5vw}
+.card-body .sep{height:1px;background:linear-gradient(90deg,rgba(255,255,255,.05),rgba(255,255,255,.02));margin:0 0 3.5vw}
+.card-body .sub-desc{font-size:3.8vw;color:#9ca3af;line-height:1.6;margin-bottom:3.5vw;padding:0 1vw}
+.card-body .al-title{font-size:3.8vw;font-weight:700;color:#22e070;margin-bottom:2vw}
+.card-body .al{display:flex;flex-direction:column;gap:1.5vw;margin-bottom:3vw}
+.card-body .al .ai{display:flex;align-items:center;gap:2.5vw;padding:2.2vw 2vw;border-radius:3vw;background:rgba(255,255,255,.02);cursor:pointer;transition:all .2s}
+.card-body .al .ai:active{background:rgba(255,255,255,.05)}
+.card-body .al .ai .cb{width:4.5vw;height:4.5vw;border-radius:1.5vw;border:2px solid #4b5563;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:3vw;transition:all .2s}
+.card-body .al .ai.done .cb{background:#22e070;border-color:#22e070;color:#fff}
+.card-body .al .ai .at{font-size:3.8vw;color:#d1d5db;flex:1}
+.card-body .al .ai.done .at{color:#4b5563;text-decoration:line-through}
+.card-body .st-toggle{display:flex;gap:1.5vw;margin:3vw 0}
+.card-body .st-btn{flex:1;padding:2.5vw;border-radius:3vw;text-align:center;font-size:3.5vw;font-weight:700;border:2px solid #2a3140;background:transparent;color:#4b5563;cursor:pointer;font-family:inherit;transition:all .2s}
+.card-body .st-btn:active{transform:scale(.95)}
+.card-body .st-btn.sg{border-color:rgba(34,224,112,.3);color:#22e070;background:rgba(34,224,112,.08)}
+.card-body .st-btn.sy{border-color:rgba(250,204,21,.3);color:#facc15;background:rgba(250,204,21,.08)}
+.card-body .st-btn.sx{border-color:rgba(107,114,128,.3);color:#9ca3af;background:rgba(107,114,128,.08)}
+.ns-title{font-size:3.8vw;font-weight:700;color:#60a5fa;margin-bottom:0;display:flex;align-items:center;gap:2vw;padding:0 1vw}
+.ns-title::before{content:'📝';font-size:4vw}
+.voice-row{display:flex;gap:2vw;align-items:stretch;margin:2.5vw 0}
+.voice-row textarea{flex:1;background:#080b10;border:2px solid #2a3140;border-radius:3vw;padding:3vw;font-size:4vw;color:#fff;font-family:inherit;line-height:1.5;resize:none;min-height:18vw;outline:none;transition:border-color .2s}
+.voice-row textarea:focus{border-color:#60a5fa}
+.voice-row textarea::placeholder{color:#4b5563}
+.voice-row .mic-btn{width:16vw;border-radius:3vw;border:2px solid #2a3140;background:#080b10;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;flex-shrink:0;font-size:2.8vw;color:#b0b8c8;gap:.5vw}
+.voice-row .mic-btn:active{transform:scale(.92)}
+.voice-row .mic-btn.recording{border-color:#f43f5e;background:rgba(244,63,94,.1);color:#f43f5e}
+.voice-row .mic-btn .mic-icon{font-size:7vw;line-height:1}
+.voice-row .mic-btn .mic-label{font-size:2.8vw;font-weight:600}
+.voice-row .mic-btn.recording .mic-icon{animation:pulse 1s infinite}
+@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.2)}100%{transform:scale(1)}}
+.voice-row .save-btn{width:12vw;border-radius:3vw;border:2px solid #22e070;background:rgba(34,224,112,.08);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;font-size:5.5vw;color:#22e070;transition:all .2s}
+.voice-row .save-btn:active{transform:scale(.88);background:rgba(34,224,112,.2)}
+.note-history{margin-top:2vw;max-height:0;overflow:hidden;transition:max-height .3s}
+.note-history.show{max-height:200vw}
+.note-history .nh-title{font-size:3.5vw;font-weight:600;color:#4b5563;cursor:pointer;padding:2vw 1vw;display:flex;justify-content:space-between;align-items:center}
+.note-history .nh-title:active{opacity:.7}
+.note-history .nh-list{display:flex;flex-direction:column;gap:1.5vw}
+.note-history .nh-item{background:rgba(255,255,255,.02);border-radius:3vw;padding:3vw;position:relative}
+.note-history .nh-item .nh-date{font-size:3vw;color:#4b5563;margin-bottom:1vw}
+.note-history .nh-item .nh-text{font-size:3.8vw;color:#d1d5db;line-height:1.5}
+.card-body .tips-title{font-size:3.5vw;font-weight:700;color:#facc15;margin-bottom:1.5vw;margin-top:3vw}
+.card-body .tips{font-size:3.5vw;color:#9ca3af;line-height:1.7;padding:0 1vw;margin-bottom:2vw}
+.ws{padding:2vw 4vw 8vw}
+.ws .wh{display:flex;justify-content:space-between;align-items:center;padding:3vw 2vw 3vw}
+.ws .wh h4{font-size:5vw;font-weight:700}
+.ws .wh .w{font-size:4vw;color:#b0b8c8}
+.wgg{background:#10141c;border:2px solid #2a3140;border-radius:5vw;padding:3.5vw;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.wgh{display:grid;grid-template-columns:22vw repeat(7,1fr);gap:2vw;text-align:center;font-size:3.8vw;font-weight:800;color:#b0b8c8;margin-bottom:2.5vw}
+.wgh .hl{text-align:left;color:transparent;font-size:0}
+.wgr{display:grid;grid-template-columns:22vw repeat(7,1fr);gap:2vw;margin-bottom:2.5vw;align-items:center}
+.wgr:last-child{margin-bottom:0}
+.wgr .hl{font-size:3.5vw;font-weight:600;color:#b0b8c8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:2vw}
+.wgr .cl{aspect-ratio:1;border-radius:3.5vw;background:#030405;border:2px solid #2a3140;cursor:pointer;min-height:10vw;position:relative;transition:all .15s}
+.wgr .cl:active{transform:scale(.88)}
+.wgr .cl.d{background:#22e070;border-color:#22e070;box-shadow:0 0 10px rgba(34,224,112,.25)}
+.wgr .cl.t{border-color:#60a5fa;border-width:2.5px}
+.wgr .cl.d::after{content:'✓';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:5.5vw;color:#fff;font-weight:900}
+.whint{text-align:center;font-size:4vw;color:#b0b8c8;margin-top:2.5vw}
+.bb{position:fixed;bottom:0;left:0;right:0;background:linear-gradient(0deg,#030405 50%,transparent);padding:3vw 4vw calc(env(safe-area-inset-bottom,0)+5vw);display:flex;gap:3vw;justify-content:center;z-index:20}
+.bb button{flex:1;max-width:44vw;padding:4.5vw 0;border:2px solid #2a3140;border-radius:14px;background:#10141c;color:#b0b8c8;font-size:4.2vw;font-weight:700;cursor:pointer;font-family:inherit;letter-spacing:.3vw}
+.bb button:active{background:#1a202c;transform:scale(.96)}
+.bb button.p{border-color:#22e070;color:#22e070;background:rgba(34,224,112,.1)}
+.toast{position:fixed;bottom:28vw;left:50%;transform:translateX(-50%) translateY(10vw);background:#10141c;border:1.5px solid #2a3140;border-radius:14px;padding:3vw 8vw;font-size:4.5vw;color:#fff;opacity:0;transition:all .4s;pointer-events:none;z-index:99;white-space:nowrap;box-shadow:0 4px 30px rgba(0,0,0,.6);backdrop-filter:blur(20px)}
+.toast.s{opacity:1;transform:translateX(-50%) translateY(0)}
+</style></head><body>
+<div class="top-bar">
+<div class="badge">哈佛大學 · 75年追蹤</div>
+<h1>12 習慣追蹤</h1>
+<div class="sub">👆 點標題展開　🎤 語音記錄　📊 每週筆記總覽</div></div>
+<div class="score-wrap"><div class="score-ring">
+<svg viewBox="0 0 140 140"><circle class="bg" cx="70" cy="70" r="65"/><circle class="prog" id="sc" cx="70" cy="70" r="65"/></svg>
+<div class="c"><div class="n" id="sn">8</div><div class="l">/ 12</div></div></div></div>
+<div class="leg">
+<span><span class="d g"></span><span class="n" id="gc">7</span> 已內化</span>
+<span><span class="d y"></span><span class="n" id="yc">4</span> 可強化</span>
+<span><span class="d x"></span><span class="n" id="xc">1</span> 待建立</span></div>
+
+<!-- ===== WEEKLY NOTES REPORT ===== -->
+<div class="wr-banner" id="wrBanner">
+<div class="wr-hdr" id="wrHdr">
+<div class="wr-left">
+<span class="wr-icon">📊</span>
+<div><div class="wr-title">本週筆記總覽</div>
+<div class="wr-count" id="wrCount">載入中⋯</div></div></div>
+<span class="wr-arr" id="wrArr">▾</span></div>
+<div class="wr-body" id="wrBody">
+<div id="wrContent"></div>
+<button class="wr-copy-btn" id="wrCopyBtn">📋 複製本週筆記</button></div></div>
+
+<div class="cards" id="cds"></div>
+<div class="ws">
+<div class="wh"><h4>📅 本週記錄</h4><span class="w">第 <span id="wn"></span> 週</span></div>
+<div class="wgg">
+<div class="wgh"><span class="hl"></span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div>
+<div id="wg"></div></div>
+<div class="whint">👆 按格子打 ✓ 記錄當日完成</div></div>
+<div class="bb">
+<button id="rb">🔄 重設本週</button>
+<button class="p" id="sb">📸 截圖存檔</button></div>
+<div class="toast" id="tt">💾 已儲存</div>
+
+<script>
+const HH=[
+{ic:'🌅',t:'規律早起',s:'green',sd:'早起者的決策品質與生產力明顯優於夜貓族。',al:['起床喝一杯溫水醒身體','做5分鐘伸展或冥想','規劃今天最重要的3件事','起床30分鐘內不滑手機'],ti:'固定起床時間（含假日），前一晚準備好明天衣物，減少早晨決策。'},
+{ic:'🎯',t:'單任務專注',s:'yellow',sd:'頻繁切換任務每次損失40%生產力。深層專注才是稀缺競爭力。',al:['關閉手機所有非必要通知','番茄鐘25分專注+5分休息','一次只開一個瀏覽器分頁','完成當前任務才切換'],ti:'創建「專注歌單」啟動大腦。實體時鐘比手機計時更有效。'},
+{ic:'🔄',t:'每日計畫復盤',s:'green',sd:'沒有復盤的一天只是盲目忙碌。每天10分鐘閉環拉開差距。',al:['早上列出最重要的3件事','中午快速檢視進度','晚上回顧完成度與原因','記錄今天學到的小收穫'],ti:'復盤不是檢討是解鎖。問「什麼做得好？什麼可更好？」非「哪裡錯了」。'},
+{ic:'📚',t:'深度閱讀學習',s:'green',sd:'每天30分鐘閱讀，一年182小時。深耕經典建立認知框架。',al:['安排固定閱讀時段（如睡前）','讀完用3句話寫摘要','一個月完成2本書','不看碎片資訊代替閱讀'],ti:'讀完一章闔上書，用自己的話講一遍，記憶留存率提高70%。'},
+{ic:'🏃',t:'規律運動',s:'gray',sd:'每週3-4次運動者大腦年輕10歲。運動是對未來的健康投資。',al:['本週完成3次運動','每次至少30分鐘','混合有氧+重量訓練','記錄運動類型和感受'],ti:'30分鐘HIIT效果優於1小時慢跑。最難的是穿上鞋的那一刻。'},
+{ic:'✍️',t:'主動記錄筆記',s:'green',sd:'隨時記錄是將經歷轉化為智慧的唯一途徑。',al:['隨手記下靈感或金句','每週整理一次筆記','建立新舊知識的連結','翻閱上週筆記'],ti:'不追求完美，關鍵字即可。事後整理比當下完美更重要。'},
+{ic:'🔨',t:'拆解任務控時',s:'green',sd:'拖延的根源是任務模糊。拆成微小步驟，化繁為簡。',al:['把大目標拆成3個小步驟','每個步驟設定完成時間','先做最困難的那一件','完成後給自己小獎勵'],ti:'2分鐘法則：能2分鐘做完的事立刻做。超過的拆成更小步驟。'},
+{ic:'🚫',t:'學會勇敢拒絕',s:'yellow',sd:'高成就者都有強大的拒絕能力。每個「好」背後都有一個「不好」。',al:['拒絕一個無意義邀約','保護連續2小時專注時間','不在非優先事項花超過15分','練習說「我現在沒辦法」'],ti:'拒絕不需解釋。「我還有安排」已足夠。保護時間不是自私。'},
+{ic:'💛',t:'常懷感恩善意',s:'green',sd:'每日感恩練習讓幸福指數高出25%。成功是帶著溫度前行。',al:['用心感謝一個人','寫下一件感恩的事','主動做一件不求回報的小事','對家人說一句溫暖的話'],ti:'感恩不必宏大。一杯好咖啡、一路綠燈——注意到微小美好的人運氣不差。'},
+{ic:'📢',t:'持續輸出',s:'yellow',sd:'費曼學習法：教是最好的學。輸入輸出形成閉環。',al:['本週寫一篇文章或筆記','用自己的話解釋一個概念','把學到的分享出去','收集一個反饋並優化'],ti:'先完成再完美。第一篇粗糙沒關係，第十篇會讓你驚訝。'},
+{ic:'🧠',t:'獨立思考',s:'green',sd:'不被算法和輿論牽著走。理性思辨才是真正的自由。',al:['看到新聞先問來源是誰','想事情的底層邏輯與目的','不被情緒帶走先停10秒','寫下自己觀點再查資料'],ti:'每天5分鐘讀一篇與自己立場相反的文章。理解對方為什麼這樣想。'},
+{ic:'🚀',t:'擁抱挑戰未知',s:'green',sd:'舒適區是安全的牢籠。成長永遠在舒適區之外。',al:['做一件讓自己害怕的事','學一個過去覺得太難的東西','記錄這次挑戰學到的教訓','慶祝自己跨出這一步'],ti:'每天進步1%，一年後強37倍。舒適區邊緣的「學習區」最適合成長。'}
+];
+const SL={green:'✅ 已內化',yellow:'🔶 可強化',gray:'⚪️ 待建立'};const SC={green:'g',yellow:'y',gray:'x'};
+let st=load();let exp={};let nhOpen={};let wrOpen=false;
+
+function load(){try{const d=JSON.parse(localStorage.getItem('h12v2'));if(d&&d.habits&&d.habits.length===12)return d}catch(e){}return{habits:HH.map(h=>h.status),weekly:{},actions:{},notes:{}}}
+function sv(){localStorage.setItem('h12v2',JSON.stringify(st));const t=document.getElementById('tt');t.classList.add('s');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('s'),1500)}
+function wk(){const n=new Date(),s=new Date(n.getFullYear(),0,1);return n.getFullYear()+'-W'+String(Math.ceil(((n-s)/86400000+s.getDay()+1)/7)).padStart(2,'0')}
+function di(){return(new Date().getDay()+6)%7}
+function nowStr(){const d=new Date();return d.getFullYear()+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+String(d.getDate()).padStart(2,'0')+' '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')}
+
+// ===== WEEK DATE RANGE =====
+function getWeekRange(){
+ const n=new Date();const day=n.getDay();const mon=new Date(n);mon.setDate(n.getDate()-(day===0?6:day-1));
+ const sun=new Date(mon);sun.setDate(mon.getDate()+6);
+ const fmt=d=>d.getFullYear()+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+String(d.getDate()).padStart(2,'0');
+ return{start:fmt(mon),end:fmt(sun),mon,sun};
+}
+function isThisWeek(dateStr){
+ // dateStr format: "2026/06/26 14:30"
+ const d=new Date(dateStr);const r=getWeekRange();
+ return d>=r.mon&&d<=r.sun;
+}
+
+// ===== BUILD WEEKLY REPORT =====
+function buildWeeklyReport(){
+ const notes=st.notes||{};let total=0;let allItems=[];
+ HH.forEach((h,i)=>{
+  const ns=notes[i]||[];
+  const weekNotes=ns.filter(n=>isThisWeek(n.date));
+  if(weekNotes.length>0){
+   allItems.push({idx:i,habit:h,notes:weekNotes});total+=weekNotes.length;
+  }
+ });
+ document.getElementById('wrCount').textContent='📝 '+total+' 則心得';
+
+ if(total===0){
+  document.getElementById('wrContent').innerHTML=
+   '<div class="wr-empty"><div class="big">📝</div>本週還沒有記錄心得<br>展開習慣卡片，用語音或文字記錄吧！</div>';
+  return;
+ }
+ let html='';
+ allItems.forEach(({idx,habit:h,notes:ns})=>{
+  const status=st.habits[idx]||'gray';
+  const icon={green:'✅',yellow:'🔶',gray:'⚪️'};
+  html+='<div class="wr-group"><div class="wg-hdr">'+icon[status]+' '+h.ic+' '+h.t+' <span style="color:#4b5563;font-weight:400;font-size:3.2vw">('+ns.length+' 則)</span></div>';
+  ns.forEach(n=>{html+='<div class="wg-item"><div class="wg-date">'+n.date+'</div><div class="wg-text">'+escHtml(n.text)+'</div></div>';});
+  html+='</div>';
+ });
+ document.getElementById('wrContent').innerHTML=html;
+}
+
+function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+
+// ===== COPY WEEKLY NOTES =====
+function copyWeeklyNotes(){
+ const notes=st.notes||{};const r=getWeekRange();
+ let text='📊 本週習慣筆記總覽\n'+r.start+' ~ '+r.end+'\n'+'─'.repeat(20)+'\n\n';
+ let total=0;
+ HH.forEach((h,i)=>{
+  const ns=notes[i]||[];const weekNotes=ns.filter(n=>isThisWeek(n.date));
+  if(weekNotes.length>0){
+   const status=st.habits[i]||'gray';const icon={green:'✅',yellow:'🔶',gray:'⚪️'};
+   text+=icon[status]+' '+h.ic+' '+h.t+'\n';
+   weekNotes.forEach(n=>{text+='  ['+n.date+'] '+n.text+'\n';});
+   text+='\n';total+=weekNotes.length;
+  }
+ });
+ if(total===0){text+='本週尚未記錄任何心得 📝\n\n展開習慣卡片開始記錄吧！';}
+ text+='─'.repeat(20)+'\n'+'共 '+total+' 則心得\n\nvia 12習慣追蹤';
+
+ if(navigator.clipboard&&navigator.clipboard.writeText){
+  navigator.clipboard.writeText(text).then(()=>showToast('📋 已複製到剪貼簿！'));
+ }else{
+  // Fallback for older iOS
+  const ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';
+  document.body.appendChild(ta);ta.select();
+  try{document.execCommand('copy');showToast('📋 已複製！');}catch(e){showToast('⚠️ 複製失敗，請手動選取');}
+  document.body.removeChild(ta);
+ }
+}
+
+function showToast(msg){const t=document.getElementById('tt');t.textContent=msg;t.classList.add('s');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('s'),1800)}
+
+// ===== RENDER =====
+function render(){rC();rW();uS();document.getElementById('wn').textContent=wk();buildWeeklyReport()}
+
+// ===== RENDER CARDS =====
+function rC(){
+ const g=document.getElementById('cds');g.innerHTML='';
+ HH.forEach((h,i)=>{
+  const s=st.habits[i];const e=!!exp[i];const c=document.createElement('div');
+  c.className='card'+(e?' exp':'');c.dataset.s=i;
+  c.innerHTML='<div class="card-hdr"><div class="sb"></div><div class="ci">'+h.ic+'</div><div class="cn">'+String(i+1).padStart(2,'0')+'</div><div class="ct"><h3>'+h.t+'</h3><div class="cs">'+SL[s]+'</div></div><div class="arr">▾</div></div><div class="card-body"></div>';
+  const hdr=c.querySelector('.card-hdr');
+  hdr.addEventListener('click',(e)=>{
+   if(e.target.closest('.st-btn')||e.target.closest('.mic-btn')||e.target.closest('.save-btn')||e.target.tagName==='TEXTAREA')return;
+   exp[i]=!exp[i];c.classList.toggle('exp');
+  });
+  buildBody(c.querySelector('.card-body'),i,h,s,c);g.appendChild(c);
+ });
+ document.querySelectorAll('.card').forEach((c,i)=>{const s=st.habits[i];if(!s)return;const b=c.querySelector('.card-body');if(!b)return;const btn=b.querySelector('.st-btn[data-st="'+s+'"]');if(btn){btn.className='st-btn s'+s[0];btn.style.borderColor='';btn.style.color='';btn.style.background='';}});
+}
+
+function buildBody(body,i,h,s,c){
+ const ad=st.actions||{};const notes=(st.notes||{})[i]||[];
+ body.innerHTML='<div class="sep"></div><div class="sub-desc">'+h.sd+'</div><div class="al-title">☐ 每日行動清單</div><div class="al">'
+ +h.al.map((a,ai)=>{const k=i+'-'+ai;const d=!!ad[k];return '<div class="ai'+(d?' done':'')+'" data-ak="'+k+'"><span class="cb">'+(d?'✓':'')+'</span><span class="at">'+a+'</span></div>';}).join('')
+ +'</div><div class="st-toggle"><button class="st-btn" data-si="'+i+'" data-st="green">✅ 已內化</button><button class="st-btn" data-si="'+i+'" data-st="yellow">🔶 可強化</button><button class="st-btn" data-si="'+i+'" data-st="gray">⚪️ 待建立</button></div>'
+ +'<div class="ns-title">個人心得筆記</div><div class="voice-row"><textarea placeholder="🎤 按麥克風說話，或打字記錄今天的心得⋯" id="note-ta-'+i+'"></textarea><div class="mic-btn" data-mi="'+i+'"><span class="mic-icon">🎤</span><span class="mic-label">錄音</span></div><div class="save-btn" data-si="'+i+'">💾</div></div>'
+ +'<div class="note-history'+(nhOpen[i]?' show':'')+'"><div class="nh-title" data-nh="'+i+'"><span>📋 歷史記錄 ('+notes.length+')</span><span>'+(nhOpen[i]?'▲':'▼')+'</span></div><div class="nh-list"></div></div>'
+ +'<div class="tips-title">💡 小提醒</div><div class="tips">'+h.ti+'</div>';
+
+ body.querySelectorAll('.ai').forEach(el=>{el.addEventListener('click',()=>{const k=el.dataset.ak;const ad2=st.actions||{};st.actions=st.actions||{};if(ad2[k]){delete ad2[k];el.classList.remove('done');el.querySelector('.cb').textContent='';}else{ad2[k]=true;el.classList.add('done');el.querySelector('.cb').textContent='✓';}sv();});});
+ body.querySelectorAll('.st-btn').forEach(btn=>{btn.addEventListener('click',(e)=>{e.stopPropagation();const nst=btn.dataset.st;const idx=parseInt(btn.dataset.si);st.habits[idx]=nst;c.dataset.s=nst;c.querySelector('.cs').textContent=SL[nst];body.querySelectorAll('.st-btn').forEach(b=>{b.className='st-btn';b.style.borderColor='#2a3140';b.style.color='#4b5563';b.style.background='transparent'});btn.className='st-btn s'+nst[0];btn.style.borderColor='';btn.style.color='';btn.style.background='';uS();sv();});});
+
+ const ta=body.querySelector('textarea');const micBtn=body.querySelector('.mic-btn');const saveBtn=body.querySelector('.save-btn');let recognition=null;let isRecording=false;
+ micBtn.addEventListener('click',(e)=>{e.stopPropagation();
+  if(isRecording){if(recognition)recognition.stop();micBtn.classList.remove('recording');micBtn.querySelector('.mic-icon').textContent='🎤';micBtn.querySelector('.mic-label').textContent='錄音';isRecording=false;return;}
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){ta.focus();ta.placeholder='瀏覽器不支援語音，請打字⋯';return;}
+  recognition=new SR();recognition.lang='zh-TW';recognition.continuous=false;recognition.interimResults=true;
+  recognition.onstart=()=>{isRecording=true;micBtn.classList.add('recording');micBtn.querySelector('.mic-icon').textContent='🔴';micBtn.querySelector('.mic-label').textContent='傾聽中';ta.placeholder='🎤 正在聽您說話⋯';};
+  recognition.onresult=(event)=>{let t='';for(let i=event.resultIndex;i<event.results.length;i++)t+=event.results[i][0].transcript;ta.value=t;ta.style.height='auto';ta.style.height=ta.scrollHeight+'px';};
+  recognition.onerror=(event)=>{micBtn.classList.remove('recording');micBtn.querySelector('.mic-icon').textContent='🎤';micBtn.querySelector('.mic-label').textContent='錄音';isRecording=false;if(event.error==='not-allowed')ta.placeholder='⚠️ 請允許麥克風權限（設定→Safari→麥克風）';else if(event.error==='no-speech')ta.placeholder='🔇 沒聽到聲音，請再試';};
+  recognition.onend=()=>{micBtn.classList.remove('recording');micBtn.querySelector('.mic-icon').textContent='🎤';micBtn.querySelector('.mic-label').textContent='錄音';isRecording=false;ta.placeholder=ta.value?'✅ 語音完成！按 💾 儲存':'🎤 按麥克風說話或打字⋯';};
+  try{recognition.start();}catch(err){ta.placeholder='⚠️ 語音啟動失敗，請打字';}
+ });
+ saveBtn.addEventListener('click',(e)=>{e.stopPropagation();const text=ta.value.trim();if(!text)return;if(!st.notes)st.notes={};if(!st.notes[i])st.notes[i]=[];st.notes[i].unshift({date:nowStr(),text:text});ta.value='';ta.style.height='auto';
+  const hc=body.querySelector('.note-history');const list=hc.querySelector('.nh-list');
+  list.innerHTML='';const allN=st.notes[i];renderNotesList(list,allN);
+  hc.querySelector('.nh-title span:first-child').textContent='📋 歷史記錄 ('+allN.length+')';hc.classList.add('show');nhOpen[i]=true;
+  sv();showToast('✅ 心得已儲存！');buildWeeklyReport();
+ });
+ ta.addEventListener('input',()=>{ta.style.height='auto';ta.style.height=ta.scrollHeight+'px';});
+ ta.addEventListener('keydown',(e)=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();saveBtn.click();}});
+ const nhT=body.querySelector('.nh-title');nhT.addEventListener('click',(e)=>{e.stopPropagation();const idx=parseInt(nhT.dataset.nh);nhOpen[idx]=!nhOpen[idx];body.querySelector('.note-history').classList.toggle('show');nhT.querySelector('span:last-child').textContent=nhOpen[idx]?'▲':'▼';});
+ const list=body.querySelector('.nh-list');if(notes.length>0)renderNotesList(list,notes);
+}
+function renderNotesList(list,notes){if(!notes||notes.length===0){list.innerHTML='<div style="text-align:center;padding:4vw;color:#4b5563;font-size:3.5vw">尚無記錄</div>';return;}list.innerHTML=notes.map(n=>'<div class="nh-item"><div class="nh-date">'+n.date+'</div><div class="nh-text">'+escHtml(n.text)+'</div></div>').join('');}
+
+function rW(){const g=document.getElementById('wg');g.innerHTML='';const k=wk();HH.forEach((h,i)=>{const r=document.createElement('div');r.className='wgr';const l=document.createElement('span');l.className='hl';l.textContent=h.ic+h.t.slice(0,2);r.appendChild(l);for(let d=0;d<7;d++){const c=document.createElement('div');c.className='cl';const y=k+'-'+i+'-'+d;if(st.weekly[y])c.classList.add('d');if(d===di())c.classList.add('t');c.addEventListener('click',()=>{if(st.weekly[y]){delete st.weekly[y];c.classList.remove('d')}else{st.weekly[y]=true;c.classList.add('d')}sv()});r.appendChild(c)}g.appendChild(r)})}
+
+function uS(){const c={green:0,yellow:0,gray:0};st.habits.forEach(s=>c[s]++);document.getElementById('gc').textContent=c.green;document.getElementById('yc').textContent=c.yellow;document.getElementById('xc').textContent=c.gray;document.getElementById('sn').textContent=c.green;const p=c.green/12;const ci=document.getElementById('sc');ci.style.strokeDashoffset=400*(1-p);ci.style.stroke=p>=0.75?'#22e070':p>=0.5?'#facc15':'#f43f5e';}
+
+// ===== WEEKLY REPORT TOGGLE =====
+document.getElementById('wrHdr').addEventListener('click',()=>{
+ wrOpen=!wrOpen;document.getElementById('wrBanner').classList.toggle('exp');if(wrOpen)buildWeeklyReport();
+});
+document.getElementById('wrCopyBtn').addEventListener('click',copyWeeklyNotes);
+
+document.getElementById('rb').addEventListener('click',()=>{if(!confirm('確定重設本週？'))return;const k=wk();Object.keys(st.weekly).forEach(y=>{if(y.startsWith(k+'-'))delete st.weekly[y]});rW();sv();showToast('🔄 本週已重設');});
+document.getElementById('sb').addEventListener('click',()=>alert('📸 請截圖保存本週進度'));
+render();window.addEventListener('beforeunload',sv);
+</script></body></html>
