@@ -197,6 +197,84 @@ body{
   color:#b45309;
 }
 
+/* ===== NOTE SECTION ===== */
+.note-section{
+  margin-top:3vw;
+  border-top:1px dashed #e0e0e0;
+  padding-top:2.5vw;
+  display:none;
+}
+.note-section.has-text{display:block}
+.item.has-note .note-section{display:block}
+
+.note-row{
+  display:flex;
+  gap:2vw;
+  align-items:flex-start;
+}
+.note-input{
+  flex:1;
+  border:1.5px solid #d4d4d4;
+  border-radius:3vw;
+  padding:2.5vw 3vw;
+  font-size:clamp(14px, 4vw, 19px);
+  font-family:inherit;
+  background:#fff;
+  color:#1a1a1a;
+  resize:none;
+  outline:none;
+  min-height:clamp(36px, 11vw, 50px);
+  line-height:1.5;
+  transition:border-color 0.2s;
+}
+.note-input:focus{
+  border-color:#d97706;
+  box-shadow:0 0 0 2px rgba(217,119,6,0.15);
+}
+.note-input::placeholder{
+  color:#bbb;
+  font-size:clamp(13px, 3.5vw, 17px);
+}
+
+.mic-btn{
+  min-width:clamp(36px, 11vw, 50px);
+  height:clamp(36px, 11vw, 50px);
+  border-radius:50%;
+  border:1.5px solid #d4d4d4;
+  background:#fff;
+  font-size:clamp(18px, 5.5vw, 26px);
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:all 0.2s;
+  flex-shrink:0;
+}
+.mic-btn:active{
+  transform:scale(0.9);
+  background:#fef3c7;
+  border-color:#d97706;
+}
+
+.listening-badge{
+  margin-top:2vw;
+  font-size:clamp(12px, 3.5vw, 16px);
+  color:#d97706;
+  font-weight:600;
+  animation:pulse 1.5s ease-in-out infinite;
+}
+@keyframes pulse{
+  0%,100%{opacity:1}
+  50%{opacity:0.5}
+}
+
+.note-status{
+  margin-top:1.5vw;
+  font-size:clamp(11px, 3vw, 14px);
+  color:#059669;
+  font-weight:600;
+} 
+
 /* ===== RESET BUTTON ===== */
 .actions{
   display:flex;
@@ -619,29 +697,72 @@ function render(){
   const list = document.getElementById('checklist');
   list.innerHTML = '';
   ITEMS.forEach(item => {
-    const isDone = dayData.done[item.id] || false;
-    const div = document.createElement('div');
-    div.className = 'item' + (isDone ? ' done' : '');
-    div.dataset.id = item.id;
-    div.innerHTML = `
-      <div class="check">${isDone ? '✓' : ''}</div>
-      <div class="num">${String(item.id).padStart(2,'0')}</div>
-      <div class="txt">
-        <span class="highlight">${item.title}</span>
-        <span class="desc">${item.desc}</span>
+  const isDone = dayData.done[item.id] || false;
+  const note = dayData.notes && dayData.notes[item.id] ? dayData.notes[item.id] : '';
+  const isListening = dayData.listening === item.id;
+  const showNotes = note || isListening;
+  const div = document.createElement('div');
+  div.className = 'item' + (isDone ? ' done' : '') + (showNotes ? ' has-note' : '');
+  div.dataset.id = item.id;
+  div.innerHTML = `
+    <div class="check">${isDone ? '✓' : ''}</div>
+    <div class="num">${String(item.id).padStart(2,'0')}</div>
+    <div class="txt">
+      <span class="highlight">${item.title}</span>
+      <span class="desc">${item.desc}</span>
+      <div class="note-section ${note ? 'has-text' : ''}">
+        <div class="note-row">
+          <textarea class="note-input" rows="${note ? 3 : 1}" placeholder="📝 記錄今天的執行細節或心得…" data-id="${item.id}">${note}</textarea>
+          <button class="mic-btn" data-id="${item.id}">${isListening ? '🔴' : '🎤'}</button>
+        </div>
+        ${isListening ? '<div class="listening-badge">🎤 語音輸入中… 說完會自動停止</div>' : ''}
+        ${note ? '<div class="note-status">📌 已記錄</div>' : ''}
       </div>
-    `;
-    div.addEventListener('click', ()=>{
-      dayData.done[item.id] = !dayData.done[item.id];
-      dayData.ts = Date.now();
-      saveDay(today, dayData);
-      updateHistory();
-      render();
-      if(dayData.done[item.id] && doneCount+1 === ITEMS.length){
-        fireConfetti();
-      }
-    });
-    list.appendChild(div);
+    </div>
+  `;
+
+  // Click on item (not textarea/button) toggles checkbox
+  div.addEventListener('click', (e)=>{
+    if(e.target.closest('.note-section')) return;
+    dayData.done[item.id] = !dayData.done[item.id];
+    dayData.ts = Date.now();
+    saveDay(today, dayData);
+    updateHistory();
+    render();
+    if(dayData.done[item.id] && Object.values(dayData.done).filter(Boolean).length === ITEMS.length){
+      fireConfetti();
+    }
+  });
+  list.appendChild(div);
+  });
+
+  // Attach note auto-save + mic events after render
+  document.querySelectorAll('.note-input').forEach(ta => {
+  ta.addEventListener('input', function(){
+    if(!dayData.notes) dayData.notes = {};
+    dayData.notes[this.dataset.id] = this.value;
+    dayData.ts = Date.now();
+    saveDay(today, dayData);
+    // Update has-note class on parent
+    this.closest('.item').classList.toggle('has-note', this.value.trim().length > 0);
+  });
+  // Auto-resize
+  ta.addEventListener('input', function(){
+    this.style.height = 'auto';
+    this.style.height = this.scrollHeight + 'px';
+  });
+  setTimeout(()=>{
+    ta.style.height = 'auto';
+    ta.style.height = ta.scrollHeight + 'px';
+  }, 0);
+  });
+
+  document.querySelectorAll('.mic-btn').forEach(btn => {
+  btn.addEventListener('click', function(e){
+    e.stopPropagation();
+    const id = this.dataset.id;
+    startVoiceInput(id);
+  });
   });
 
   // History
@@ -671,8 +792,10 @@ function updateHistory(){
 
 // ===== ACTIONS =====
 document.getElementById('resetTodayBtn').addEventListener('click', ()=>{
-  if(confirm('確定要重設今日進度？')){
+  if(confirm('確定要重設今日進度？筆記也會一併清除。')){
     dayData.done = {};
+    dayData.notes = {};
+    dayData.listening = null;
     dayData.ts = Date.now();
     saveDay(today, dayData);
     render();
@@ -685,6 +808,103 @@ document.getElementById('completeAllBtn').addEventListener('click', ()=>{
   updateHistory();
   render();
   fireConfetti();
+});
+
+// ===== VOICE INPUT =====
+let recognition = null;
+function startVoiceInput(itemId){
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SpeechRecognition){
+    alert('您的瀏覽器不支援語音輸入。請用 Chrome 或 Android 瀏覽器。');
+    return;
+  }
+  // If already listening for this item, stop
+  if(dayData.listening === itemId && recognition){
+    recognition.stop();
+    dayData.listening = null;
+    saveDay(today, dayData);
+    render();
+    return;
+  }
+  // Stop any existing recognition first
+  if(recognition) recognition.stop();
+
+  recognition = new SpeechRecognition();
+  recognition.lang = 'zh-TW';
+  recognition.continuous = true;
+  recognition.interimResults = true;
+
+  dayData.listening = itemId;
+  saveDay(today, dayData);
+  render();
+
+  let finalTranscript = '';
+  const ta = document.querySelector(`.note-input[data-id="${itemId}"]`);
+
+  recognition.onresult = function(event){
+    let interim = '';
+    for(let i = event.resultIndex; i < event.results.length; i++){
+      const result = event.results[i];
+      if(result.isFinal){
+        finalTranscript += result[0].transcript;
+      } else {
+        interim += result[0].transcript;
+      }
+    }
+    if(ta){
+      const existing = dayData.notes && dayData.notes[itemId] ? dayData.notes[itemId] : '';
+      // Only update with final results
+      if(finalTranscript){
+        const newVal = existing + (existing && !existing.endsWith(' ') && !existing.endsWith('\n') ? ' ' : '') + finalTranscript;
+        ta.value = newVal;
+        ta.style.height = 'auto';
+        ta.style.height = ta.scrollHeight + 'px';
+        if(!dayData.notes) dayData.notes = {};
+        dayData.notes[itemId] = newVal;
+        dayData.ts = Date.now();
+        saveDay(today, dayData);
+        finalTranscript = '';
+      }
+    }
+  };
+
+  recognition.onerror = function(event){
+    console.log('Speech error:', event.error);
+    dayData.listening = null;
+    saveDay(today, dayData);
+    render();
+    if(event.error === 'not-allowed'){
+      alert('請允許麥克風權限才能使用語音輸入。');
+    }
+  };
+
+  recognition.onend = function(){
+    dayData.listening = null;
+    saveDay(today, dayData);
+    render();
+    // If there's leftover final transcript, save it
+    if(finalTranscript && ta){
+      const existing = dayData.notes && dayData.notes[itemId] ? dayData.notes[itemId] : '';
+      const newVal = existing + (existing && !existing.endsWith(' ') && !existing.endsWith('\n') ? ' ' : '') + finalTranscript;
+      if(!dayData.notes) dayData.notes = {};
+      dayData.notes[itemId] = newVal;
+      dayData.ts = Date.now();
+      saveDay(today, dayData);
+    }
+  };
+
+  try {
+    recognition.start();
+  } catch(e){
+    dayData.listening = null;
+    saveDay(today, dayData);
+    render();
+  }
+}
+
+// Also stop on page unload
+window.addEventListener('beforeunload', ()=>{
+  if(recognition) recognition.stop();
 });
 
 // ===== CONFETTI =====
