@@ -132,6 +132,7 @@ body{
   cursor:pointer;
   -webkit-user-select:none;
   user-select:none;
+  overflow:hidden;
 }
 .item:active{transform:scale(0.98);background:#f0f0f0}
 .item.done{
@@ -179,6 +180,9 @@ body{
   font-size:clamp(16px, 4.8vw, 22px);
   line-height:1.5;
   flex:1;
+  min-width:0;
+  overflow-wrap:break-word;
+  word-break:break-word;
 }
 .txt .highlight{
   display:inline;
@@ -193,6 +197,8 @@ body{
   margin-top:2vw;
   line-height:1.6;
   text-align:left;
+  overflow-wrap:break-word;
+  word-break:break-word;
 }
 .txt .desc b{
   color:#b45309;
@@ -225,6 +231,7 @@ body{
   min-height:clamp(36px, 11vw, 50px);
   line-height:1.5;
   text-align:left;
+  overflow-wrap:break-word;
   transition:border-color 0.2s;
 }
 .note-input:focus{
