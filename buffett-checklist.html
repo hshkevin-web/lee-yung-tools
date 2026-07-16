@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0d0d0d">
+<title>巴菲特人生清單 · 每日追蹤</title>
+<link rel="manifest" href="data:application/json,{
+  &quot;name&quot;: &quot;巴菲特人生清單&quot;,
+  &quot;short_name&quot;: &quot;人生清單&quot;,
+  &quot;start_url&quot;: &quot;./buffett-checklist.html&quot;,
+  &quot;display&quot;: &quot;standalone&quot;,
+  &quot;background_color&quot;: &quot;#0d0d0d&quot;,
+  &quot;theme_color&quot;: &quot;#0d0d0d&quot;,
+  &quot;icons&quot;: [{
+    &quot;src&quot;: &quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230d0d0d'/%3E%3Ctext x='50' y='68' text-anchor='middle' font-size='55' fill='%23fbbf24'%3E🧾%3C/text%3E%3C/svg%3E&quot;,
+    &quot;sizes&quot;: &quot;192x192&quot;,
+    &quot;type&quot;: &quot;image/svg+xml&quot;
+  },{
+    &quot;src&quot;: &quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230d0d0d'/%3E%3Ctext x='50' y='68' text-anchor='middle' font-size='55' fill='%23fbbf24'%3E🧾%3C/text%3E%3C/svg%3E&quot;,
+    &quot;sizes&quot;: &quot;512x512&quot;,
+    &quot;type&quot;: &quot;image/svg+xml&quot;
+  }]
+}">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  background:#0d0d0d;
+  color:#e5e5e5;
+  min-height:100vh;
+  padding:6vw 5vw 20vw;
+  max-width:600px;
+  margin:0 auto;
+}
+
+/* ===== HEADER ===== */
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:4vw 0 2vw;
+  border-bottom:1px solid #222;
+  margin-bottom:5vw;
+}
+.header h1{
+  font-size:clamp(20px, 7vw, 32px);
+  font-weight:700;
+  color:#fbbf24;
+  letter-spacing:0.5px;
+}
+.header .sub{
+  font-size:clamp(12px, 3.5vw, 16px);
+  color:#888;
+  text-align:right;
+}
+.header .sub .date{color:#e5e5e5;font-weight:600}
+
+/* ===== PROGRESS BAR ===== */
+.progress-wrap{
+  background:#1a1a1a;
+  border-radius:100px;
+  height:clamp(16px, 5vw, 24px);
+  overflow:hidden;
+  margin-bottom:3vw;
+  position:relative;
+}
+.progress-bar{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,#fbbf24,#f59e0b);
+  border-radius:100px;
+  transition:width 0.4s ease;
+}
+.progress-label{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  font-size:clamp(10px, 3vw, 14px);
+  font-weight:600;
+  color:#000;
+  white-space:nowrap;
+}
+
+/* ===== STATS ROW ===== */
+.stats{
+  display:flex;
+  gap:3vw;
+  margin-bottom:5vw;
+}
+.stat-card{
+  flex:1;
+  background:#141414;
+  border:1px solid #222;
+  border-radius:3vw;
+  padding:3vw;
+  text-align:center;
+}
+.stat-card .num{
+  font-size:clamp(18px, 8vw, 36px);
+  font-weight:700;
+  color:#fbbf24;
+  line-height:1.2;
+}
+.stat-card .lbl{
+  font-size:clamp(9px, 2.8vw, 13px);
+  color:#666;
+  margin-top:0.5vw;
+}
+.stat-card.streak .num{color:#34d399}
+.stat-card.streak .lbl{color:#6ee7b7}
+
+/* ===== CHECKLIST ===== */
+.checklist{display:flex;flex-direction:column;gap:2.5vw}
+
+.item{
+  display:flex;
+  align-items:center;
+  gap:3.5vw;
+  background:#141414;
+  border:1px solid #222;
+  border-radius:3vw;
+  padding:3vw 4vw;
+  transition:all 0.2s;
+  cursor:pointer;
+  -webkit-user-select:none;
+  user-select:none;
+}
+.item:active{transform:scale(0.98)}
+.item.done{
+  border-color:#2a2a2a;
+  background:#1a1a1a;
+  opacity:0.7;
+}
+.item.done .num{color:#fbbf24;opacity:0.5}
+.item.done .txt{text-decoration:line-through;color:#555}
+
+/* Checkbox circle */
+.check{
+  width:clamp(22px, 7vw, 32px);
+  height:clamp(22px, 7vw, 32px);
+  min-width:clamp(22px, 7vw, 32px);
+  border-radius:50%;
+  border:2px solid #444;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:clamp(12px, 4vw, 18px);
+  transition:all 0.2s;
+  flex-shrink:0;
+}
+.item.done .check{
+  background:#fbbf24;
+  border-color:#fbbf24;
+  color:#000;
+}
+
+/* Number badge */
+.num{
+  font-size:clamp(14px, 4vw, 18px);
+  font-weight:700;
+  color:#888;
+  min-width:clamp(18px, 5vw, 24px);
+  text-align:center;
+  flex-shrink:0;
+}
+
+/* Text */
+.txt{
+  font-size:clamp(14px, 4vw, 18px);
+  line-height:1.4;
+  flex:1;
+}
+.txt .highlight{
+  display:inline;
+  font-weight:700;
+  color:#fbbf24;
+}
+.txt .desc{
+  display:block;
+  font-size:clamp(11px, 3vw, 14px);
+  color:#666;
+  margin-top:0.8vw;
+  line-height:1.4;
+}
+
+/* ===== RESET BUTTON ===== */
+.actions{
+  display:flex;
+  gap:3vw;
+  margin-top:6vw;
+  justify-content:center;
+}
+.btn{
+  padding:3vw 6vw;
+  border-radius:100px;
+  border:1px solid #333;
+  background:#1a1a1a;
+  color:#888;
+  font-size:clamp(12px, 3.5vw, 16px);
+  font-weight:600;
+  cursor:pointer;
+  transition:all 0.2s;
+}
+.btn:active{transform:scale(0.95)}
+.btn.primary{
+  background:#fbbf24;
+  color:#000;
+  border-color:#fbbf24;
+}
+
+/* ===== HISTORY ===== */
+.section-title{
+  font-size:clamp(14px, 4vw, 18px);
+  font-weight:700;
+  color:#888;
+  margin-top:8vw;
+  margin-bottom:3vw;
+}
+.history-list{
+  display:flex;
+  flex-wrap:wrap;
+  gap:2vw;
+}
+.history-day{
+  width:clamp(32px, 10vw, 44px);
+  height:clamp(32px, 10vw, 44px);
+  border-radius:2vw;
+  background:#141414;
+  border:1px solid #222;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  font-size:clamp(8px, 2.5vw, 11px);
+  color:#555;
+  position:relative;
+}
+.history-day.full{
+  background:#1a2a0a;
+  border-color:#4ade80;
+  color:#4ade80;
+}
+.history-day.partial{
+  background:#1a1a00;
+  border-color:#fbbf24;
+  color:#fbbf24;
+}
+.history-day .dot{
+  font-size:clamp(10px, 3vw, 14px);
+  line-height:1;
+}
+
+/* ===== INSTALL HINT ===== */
+.install-hint{
+  margin-top:8vw;
+  padding:3vw 4vw;
+  background:#1a1a00;
+  border:1px solid #333;
+  border-radius:3vw;
+  text-align:center;
+  font-size:clamp(10px, 3vw, 14px);
+  color:#888;
+  line-height:1.5;
+}
+.install-hint strong{color:#fbbf24}
+
+/* ===== CONFETTI ===== */
+.confetti-container{
+  position:fixed;
+  top:0;left:0;width:100%;height:100%;
+  pointer-events:none;
+  z-index:999;
+  overflow:hidden;
+}
+.confetti-piece{
+  position:absolute;
+  top:-10px;
+  width:10px;
+  height:10px;
+  border-radius:2px;
+  animation:confettiFall 3s ease-out forwards;
+}
+@keyframes confettiFall{
+  0%{transform:translateY(0) rotate(0deg);opacity:1}
+  100%{transform:translateY(100vh) rotate(720deg);opacity:0}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🧾 人生清單</h1>
+  <div class="sub">
+    <div class="date" id="todayDate"></div>
+    <div id="dayLabel">第 1 天</div>
+  </div>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-bar" id="progressBar"></div>
+  <div class="progress-label" id="progressLabel">0 / 10</div>
+</div>
+
+<div class="stats">
+  <div class="stat-card">
+    <div class="num" id="todayCount">0</div>
+    <div class="lbl">今日完成</div>
+  </div>
+  <div class="stat-card streak">
+    <div class="num" id="streakCount">0</div>
+    <div class="lbl">連續天數 🔥</div>
+  </div>
+  <div class="stat-card">
+    <div class="num" id="totalDays">0</div>
+    <div class="lbl">追蹤天數</div>
+  </div>
+</div>
+
+<div class="checklist" id="checklist"></div>
+
+<div class="actions">
+  <button class="btn" id="resetTodayBtn">⟳ 重設今日</button>
+  <button class="btn primary" id="completeAllBtn">✓ 全部完成</button>
+</div>
+
+<div class="section-title">📊 歷史紀錄</div>
+<div class="history-list" id="historyList"></div>
+
+<div class="install-hint" id="installHint">
+  💡 點選分享按鈕 → <strong>加入主畫面</strong>，下次直接從桌面打開
+</div>
+
+<script>
+// ===== DATA =====
+const ITEMS = [
+  { id:1, title:'💰 研究掙錢', desc:'錢能解決人生中 90% 的問題。剩下的 10%，也可以用錢緩解。' },
+  { id:2, title:'📚 培養深度閱讀的習慣', desc:'無論商業巨著、歷史典籍、哲學著作，都能拓寬視野。' },
+  { id:3, title:'🤝 結交良師益友', desc:'身旁圍繞有智慧、有品德且積極向上的人，彼此激勵成長。' },
+  { id:4, title:'🏃 堅持鍛鍊身體', desc:'每週數次運動 — 慢跑、游泳或瑜伽，保持充沛精力。' },
+  { id:5, title:'🧘 學會情緒管理', desc:'不被憤怒、焦慮左右。冷靜理性，而不是情緒化行事。' },
+  { id:6, title:'🎯 專注長期目標', desc:'制定清晰長遠規劃，按計劃穩步推進，積累成果。' },
+  { id:7, title:'🔄 持續自我反思', desc:'定期回顧行為與決策，發現不足，及時改進。' },
+  { id:8, title:'📊 學習投資理財知識', desc:'了解不同投資工具，合理配置資產，讓錢生錢。' },
+  { id:9, title:'👨‍👩‍👧‍👦 重視家庭關係', desc:'抽出時間陪伴家人，營造溫馨和睦的家庭氛圍。' },
+  { id:10, title:'🎁 懂得回饋社會', desc:'透過慈善、公益幫助他人，收穫真正的精神富足。' }
+];
+
+// ===== HELPERS =====
+function getToday(){return new Date().toISOString().slice(0,10)}
+function getDayKey(d){return 'd:'+d}
+function getHistoryKey(){return 'history'}
+
+function loadDay(date){
+  const raw = localStorage.getItem(getDayKey(date));
+  if(!raw) return {done:{},ts:null};
+  try{return JSON.parse(raw)}catch{return {done:{},ts:null}}
+}
+function saveDay(date, data){
+  localStorage.setItem(getDayKey(date), JSON.stringify(data));
+}
+function loadHistory(){
+  const raw = localStorage.getItem(getHistoryKey());
+  if(!raw) return {};
+  try{return JSON.parse(raw)}catch{return {}}
+}
+function saveHistory(h){localStorage.setItem(getHistoryKey(), JSON.stringify(h))}
+
+function getStreak(today, history){
+  let streak = 0;
+  let d = new Date(today);
+  while(true){
+    const key = getDayKey(d.toISOString().slice(0,10));
+    const day = loadDay(d.toISOString().slice(0,10));
+    const count = Object.values(day.done).filter(Boolean).length;
+    if(count >= 10){streak++}
+    else if(count > 0 && count < 10){streak++;break}
+    else break;
+    d.setDate(d.getDate()-1);
+  }
+  return streak;
+}
+
+// ===== RENDER =====
+const today = getToday();
+const dayData = loadDay(today);
+
+function render(){
+  const dateEl = document.getElementById('todayDate');
+  const now = new Date();
+  const weekdays = ['日','一','二','三','四','五','六'];
+  dateEl.textContent = `${now.getFullYear()}/${String(now.getMonth()+1).padStart(2,'0')}/${String(now.getDate()).padStart(2,'0')} 週${weekdays[now.getDay()]}`;
+
+  const doneCount = Object.values(dayData.done).filter(Boolean).length;
+
+  // Progress bar
+  const pct = Math.round((doneCount/ITEMS.length)*100);
+  document.getElementById('progressBar').style.width = pct+'%';
+  document.getElementById('progressLabel').textContent = `${doneCount} / ${ITEMS.length}`;
+
+  // Stats
+  document.getElementById('todayCount').textContent = doneCount;
+
+  const history = loadHistory();
+  const totalDays = Object.keys(history).length;
+  document.getElementById('totalDays').textContent = totalDays;
+
+  const streak = getStreak(today, history);
+  document.getElementById('streakCount').textContent = streak;
+
+  // Day label
+  const firstDay = localStorage.getItem('firstDay') || today;
+  const dayNum = Math.floor((new Date(today) - new Date(firstDay)) / 86400000) + 1;
+  document.getElementById('dayLabel').textContent = `第 ${dayNum} 天`;
+
+  // Checklist
+  const list = document.getElementById('checklist');
+  list.innerHTML = '';
+  ITEMS.forEach(item => {
+    const isDone = dayData.done[item.id] || false;
+    const div = document.createElement('div');
+    div.className = 'item' + (isDone ? ' done' : '');
+    div.dataset.id = item.id;
+    div.innerHTML = `
+      <div class="check">${isDone ? '✓' : ''}</div>
+      <div class="num">${String(item.id).padStart(2,'0')}</div>
+      <div class="txt">
+        <span class="highlight">${item.title}</span>
+        <span class="desc">${item.desc}</span>
+      </div>
+    `;
+    div.addEventListener('click', ()=>{
+      dayData.done[item.id] = !dayData.done[item.id];
+      dayData.ts = Date.now();
+      saveDay(today, dayData);
+      updateHistory();
+      render();
+      if(dayData.done[item.id] && doneCount+1 === ITEMS.length){
+        fireConfetti();
+      }
+    });
+    list.appendChild(div);
+  });
+
+  // History
+  renderHistory();
+}
+
+function renderHistory(){
+  const container = document.getElementById('historyList');
+  const history = loadHistory();
+  const dates = Object.keys(history).sort().reverse().slice(0,30);
+
+  container.innerHTML = dates.map(d => {
+    const day = loadDay(d);
+    const count = Object.values(day.done).filter(Boolean).length;
+    const cls = count === ITEMS.length ? 'full' : (count > 0 ? 'partial' : '');
+    const lbl = d.slice(5); // MM-DD
+    return `<div class="history-day ${cls}">${lbl}</div>`;
+  }).join('') || '<div style="color:#444;font-size:14px">還沒有記錄</div>';
+}
+
+function updateHistory(){
+  const history = loadHistory();
+  history[today] = Date.now();
+  saveHistory(history);
+  if(!localStorage.getItem('firstDay')) localStorage.setItem('firstDay', today);
+}
+
+// ===== ACTIONS =====
+document.getElementById('resetTodayBtn').addEventListener('click', ()=>{
+  if(confirm('確定要重設今日進度？')){
+    dayData.done = {};
+    dayData.ts = Date.now();
+    saveDay(today, dayData);
+    render();
+  }
+});
+document.getElementById('completeAllBtn').addEventListener('click', ()=>{
+  ITEMS.forEach(item => {dayData.done[item.id] = true});
+  dayData.ts = Date.now();
+  saveDay(today, dayData);
+  updateHistory();
+  render();
+  fireConfetti();
+});
+
+// ===== CONFETTI =====
+function fireConfetti(){
+  const container = document.createElement('div');
+  container.className = 'confetti-container';
+  const colors = ['#fbbf24','#34d399','#60a5fa','#f472b6','#a78bfa','#fb923c'];
+  for(let i=0;i<40;i++){
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.left = Math.random()*100+'%';
+    piece.style.background = colors[Math.floor(Math.random()*colors.length)];
+    piece.style.width = (Math.random()*8+4)+'px';
+    piece.style.height = (Math.random()*8+4)+'px';
+    piece.style.animationDuration = (Math.random()*2+2)+'s';
+    piece.style.animationDelay = Math.random()*0.5+'s';
+    container.appendChild(piece);
+  }
+  document.body.appendChild(container);
+  setTimeout(()=>container.remove(), 4000);
+}
+
+// ===== INIT =====
+updateHistory();
+render();
+
+// ===== SERVICE WORKER for offline =====
+if('serviceWorker' in navigator){
+  const swCode = `
+const CACHE = 'buffett-v1';
+self.addEventListener('install', e => {
+  e.waitUntil(caches.open(CACHE).then(c => c.addAll(['./buffett-checklist.html'])));
+  self.skipWaiting();
+});
+self.addEventListener('activate', e => e.waitUntil(clients.claim()));
+self.addEventListener('fetch', e => {
+  e.respondWith(
+    caches.match(e.request).then(r => r || fetch(e.request).catch(() => r))
+  );
+});
+  `;
+  const blob = new Blob([swCode], {type:'application/javascript'});
+  const url = URL.createObjectURL(blob);
+  navigator.serviceWorker.register(url).catch(()=>{});
+}
+</script>
+</body>
+</html>
