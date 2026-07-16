@@ -879,18 +879,27 @@ function startVoiceInput(itemId){
   };
 
   recognition.onend = function(){
+    // Save any leftover transcript BEFORE render
+    if(finalTranscript && itemId){
+      if(!dayData.notes) dayData.notes = {};
+      const existing = dayData.notes[itemId] || '';
+      const sep = existing && !existing.endsWith(' ') && !existing.endsWith('\n') ? ' ' : '';
+      dayData.notes[itemId] = existing + sep + finalTranscript;
+      dayData.ts = Date.now();
+    }
     dayData.listening = null;
     saveDay(today, dayData);
     render();
-    // If there's leftover final transcript, save it
-    if(finalTranscript && ta){
-      const existing = dayData.notes && dayData.notes[itemId] ? dayData.notes[itemId] : '';
-      const newVal = existing + (existing && !existing.endsWith(' ') && !existing.endsWith('\n') ? ' ' : '') + finalTranscript;
-      if(!dayData.notes) dayData.notes = {};
-      dayData.notes[itemId] = newVal;
-      dayData.ts = Date.now();
-      saveDay(today, dayData);
+    // After re-render, directly update the textarea value to be sure
+    if(finalTranscript){
+      const newTa = document.querySelector(`.note-input[data-id="${itemId}"]`);
+      if(newTa){
+        newTa.value = dayData.notes[itemId] || '';
+        newTa.style.height = 'auto';
+        newTa.style.height = newTa.scrollHeight + 'px';
+      }
     }
+    finalTranscript = '';
   };
 
   try {
