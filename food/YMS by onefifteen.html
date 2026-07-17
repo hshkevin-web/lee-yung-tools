@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="美食地圖">
+<title>YMS by onefifteen - 美食地圖</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body {
+    font-family: -apple-system, 'PingFang TC', 'Noto Sans TC', sans-serif;
+    background: #0a0e14; color: #e8edf5;
+    padding: 0 0 20vw; min-height: 100dvh;
+    font-size: 16px; line-height: 1.7;
+  }
+  .header {
+    background: linear-gradient(135deg, #1a1f2e, #0a0e14);
+    padding: 60px 20px 30px; text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+  }
+  .header .badge {
+    display: inline-block;
+    background: rgba(59,130,246,.15);
+    color: #60a5fa; font-size: 13px; font-weight: 700;
+    padding: 6px 16px; border-radius: 20px;
+    letter-spacing: 1px; margin-bottom: 12px;
+    border: 1px solid rgba(59,130,246,.2);
+  }
+  .header h1 { font-size: 32px; font-weight: 900; letter-spacing: -0.5px; }
+  .header h1 span { background: linear-gradient(135deg, #fff, #60a5fa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .header .sub { color: #8892a8; font-size: 14px; margin-top: 8px; }
+  .content { padding: 20px; max-width: 600px; margin: 0 auto; }
+
+  .info-card {
+    background: #10141c; border: 1px solid rgba(255,255,255,.06);
+    border-radius: 14px; padding: 18px; margin-bottom: 16px;
+  }
+  .info-card .row {
+    display: flex; gap: 10px; padding: 6px 0;
+    font-size: 14px; color: #d1d5db;
+  }
+  .info-card .row .label { color: #6b7280; min-width: 50px; }
+  .info-card .row a { color: #60a5fa; text-decoration: none; }
+
+  .section-title {
+    font-size: 15px; font-weight: 700; color: #60a5fa;
+    margin: 20px 0 12px; padding-left: 12px;
+    border-left: 3px solid #60a5fa;
+  }
+
+  .venue-card {
+    background: #10141c; border: 1px solid rgba(255,255,255,.06);
+    border-radius: 12px; padding: 14px 16px; margin-bottom: 10px;
+  }
+  .venue-card .vname { font-size: 15px; font-weight: 700; color: #fff; }
+  .venue-card .vdesc { font-size: 13px; color: #9ca3af; margin-top: 4px; }
+
+  .dish-list { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+  .dish-tag {
+    background: rgba(96,165,250,.1);
+    color: #93c5fd; font-size: 14px; font-weight: 600;
+    padding: 8px 16px; border-radius: 20px;
+    border: 1px solid rgba(96,165,250,.15);
+  }
+
+  .actions { display: flex; gap: 8px; }
+  .actions a {
+    flex: 1; display: block; text-align: center;
+    padding: 12px 0; border-radius: 10px;
+    font-size: 14px; font-weight: 600; text-decoration: none;
+  }
+  .actions a:active { opacity: .7; }
+  .actions .maps {
+    background: rgba(34,197,94,.12); color: #22c55e;
+    border: 1px solid rgba(34,197,94,.2);
+  }
+  .actions .search {
+    background: rgba(96,165,250,.12); color: #60a5fa;
+    border: 1px solid rgba(96,165,250,.2);
+  }
+  .actions .blog {
+    background: rgba(250,204,21,.1); color: #facc15;
+    border: 1px solid rgba(250,204,21,.15);
+  }
+
+  .source-link {
+    margin-top: 24px; padding: 14px; text-align: center;
+    background: #10141c; border-radius: 12px;
+    border: 1px solid rgba(255,255,255,.04);
+  }
+  .source-link a { color: #60a5fa; font-size: 13px; text-decoration: none; }
+  .back-link {
+    display: block; text-align: center; margin-top: 16px;
+    padding: 12px; border-radius: 12px;
+    background: rgba(255,255,255,.03);
+    color: #8892a8; font-size: 13px; text-decoration: none;
+  }
+  .footer { text-align: center; padding: 30px; color: #4b5563; font-size: 12px; }
+
+  @media (prefers-color-scheme: light) {
+    body { background: #f5f5f7; color: #1d1d1f; }
+    .header { background: linear-gradient(135deg, #fff, #f0f0f2); border-color: rgba(0,0,0,.06); }
+    .info-card { background: #fff; border-color: rgba(0,0,0,.08); }
+    .info-card .row { color: #374151; }
+    .venue-card { background: #fff; border-color: rgba(0,0,0,.08); }
+    .venue-card .vdesc { color: #6b7280; }
+    .dish-tag { background: rgba(96,165,250,.08); color: #2563eb; border-color: rgba(96,165,250,.15); }
+    .actions .maps { background: rgba(34,197,94,.08); color: #16a34a; border-color: rgba(34,197,94,.15); }
+    .actions .search { background: rgba(96,165,250,.08); color: #2563eb; border-color: rgba(96,165,250,.15); }
+    .actions .blog { background: rgba(250,204,21,.08); color: #d97706; border-color: rgba(250,204,21,.15); }
+    .source-link { background: #fff; border-color: rgba(0,0,0,.08); }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="badge">🏡 生活美學聚落</div>
+  <h1><span>YMS by onefifteen</span></h1>
+  <div class="sub">陽明山 · 初衣食午 · 美軍宿舍園區</div>
+</div>
+
+<div class="content">
+
+  <div class="info-card">
+    <div class="row"><span class="label">📍</span> 台北市士林區建業路10號（陽明山H2區）</div>
+    <div class="row"><span class="label">🏷️</span> Fine Dining · 茶食 · 藝廊 · SPA · 旅宿</div>
+    <div class="row"><span class="label">🌐</span> <a href="https://ymsbyonefifteen.com" target="_blank">ymsbyonefifteen.com</a></div>
+    <div class="row"><span class="label">📸</span> <a href="https://instagram.com/yms_by_onefifteen" target="_blank">@yms_by_onefifteen</a></div>
+  </div>
+
+  <div class="section-title">🏛️ 關於園區</div>
+  <div class="info-card">
+    由生活選物品牌「初衣食午 onefifteen」打造的複合式生活美學場域，將五棟陽明山美軍眷舍改建為結合餐廳、酒吧、藝廊、療癒空間與住宿的風格聚落。建築保留美式 Mid-Century Modern 平屋頂風格，重現昔日夜無圍牆、庭院相通的郊區住宅風景。
+  </div>
+
+  <div class="section-title">🍽️ 園區空間</div>
+
+  <div class="venue-card">
+    <div class="vname">🍷 Restaurant 12</div>
+    <div class="vdesc">Fine dining 餐廳，西班牙主廚 Jonatan Motos Ferrán 領軍，以「島嶼之味」為主軸，揉合地中海與法式技法。Noma 曾於 2025年8月來台客座。</div>
+  </div>
+
+  <div class="venue-card">
+    <div class="vname">🍵 Lab 10</div>
+    <div class="vdesc">複合機能的茶食空間，園區的客廳。設有手沖咖啡吧、現代茶吧，米其林御用侍茶師張舒涵演繹茶藝。</div>
+  </div>
+
+  <div class="venue-card">
+    <div class="vname">🎨 Gallery 4</div>
+    <div class="vdesc">創意展演場域，展售初衣食午代理的香氛、名品傢俱、生活居家器物。</div>
+  </div>
+
+  <div class="venue-card">
+    <div class="vname">💆 Spa 6</div>
+    <div class="vdesc">療癒空間，注重私密性與舒適感。</div>
+  </div>
+
+  <div class="venue-card">
+    <div class="vname">🏡 Dwell 8</div>
+    <div class="vdesc">住宿空間，一泊二食體驗，沉浸山林生活。</div>
+  </div>
+
+  <div class="section-title">🔗 快速連結</div>
+  <div class="actions">
+    <a class="maps" href="https://www.google.com/maps/search/?api=1&query=YMS+by+onefifteen+%E5%8F%B0%E5%8C%97%E5%B8%82%E5%A3%AB%E6%9E%97%E5%8D%80%E5%BB%BA%E6%A5%AD%E8%B7%AF10%E8%99%9F">📍 地圖</a>
+    <a class="search" href="https://www.google.com/search?q=YMS+by+onefifteen+%E9%99%BD%E6%98%8E%E5%B1%B1">🔍 搜尋</a>
+    <a class="blog" href="https://www.vogue.com.tw/article/yms-by-onefifteen-%E5%88%9D%E8%A1%A3%E9%A3%9F%E5%8D%88-%E9%99%BD%E6%98%8E%E5%B1%B1-%E7%BE%8E%E8%BB%8D%E5%AE%BF%E8%88%8D">📖 Vogue 報導</a>
+  </div>
+
+  <div class="source-link">
+    📎 <a href="https://www.facebook.com/taipeibatman/posts/yms-by-onefifteen-%E6%98%AF%E9%99%BD%E6%98%8E%E5%B1%B1h2%E5%8D%80%E7%9A%84%E8%88%8A%E7%BE%8E%E8%BB%8D%E7%9C%B7%E5%8D%80%E6%94%B9%E5%BB%BA%E8%80%8C%E6%88%90%E7%9A%84%E5%9C%92%E5%8D%80%E9%80%99%E5%8D%80%E7%9A%84%E7%BE%8E%E8%BB%8D%E7%9C%B7%E8%88%8D%E8%88%87%E5%A4%A9%E6%AF%8D%E9%99%BD%E6%98%8E%E5%B1%B1%E5%85%B6%E4%BB%96%E6%9C%A8%E9%80%A0%E6%88%96%E7%9F%B3%E7%A0%8C%E7%89%86%E7%9A%84%E6%96%9C%E5%B1%8B%E9%A0%82%E7%9C%B7%E8%88%8D%E4%B8%8D%E5%90%8C%E6%98%AF%E7%BE%8E%E5%BC%8Fmid-centur/1590082725816908/" target="_blank">李清志 FB · YMS by onefifteen 陽明山園區</a>
+  </div>
+
+  <a class="back-link" href="https://hshkevin-web.github.io/lee-yung-tools/food/">← 回美食地圖首頁</a>
+
+</div>
+
+<div class="footer">里洋美食地圖</div>
+
+</body>
+</html>
