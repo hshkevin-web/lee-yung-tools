@@ -307,7 +307,134 @@ body{
   border-color:#d97706;
 }
 
-/* ===== HISTORY ===== */
+/* ===== DIARY SECTION ===== */
+.diary-section{
+  background:#fff;
+  border:1.5px solid #e0e0e0;
+  border-radius:4vw;
+  margin-bottom:5vw;
+  overflow:hidden;
+}
+.diary-header{
+  display:flex;
+  align-items:center;
+  gap:2.5vw;
+  padding:3.5vw 4vw;
+  background:#fafafa;
+  border-bottom:1px solid #e0e0e0;
+  cursor:pointer;
+  -webkit-user-select:none;
+  user-select:none;
+}
+.diary-header:active{background:#f0f0f0}
+.diary-icon{font-size:clamp(20px, 6vw, 28px)}
+.diary-title{
+  flex:1;
+  font-size:clamp(18px, 5.5vw, 26px);
+  font-weight:800;
+  color:#92400e;
+}
+.diary-toggle{
+  font-size:clamp(14px, 4.5vw, 20px);
+  color:#999;
+  border:none;
+  background:none;
+  cursor:pointer;
+  transition:transform 0.2s;
+  padding:1vw;
+}
+.diary-toggle.collapsed{transform:rotate(-90deg)}
+.diary-body{
+  padding:3vw 4vw;
+  transition:max-height 0.3s ease;
+  overflow:hidden;
+}
+.diary-body.hidden{max-height:0 !important;padding:0 4vw}
+
+.diary-row{
+  display:flex;
+  gap:2vw;
+  align-items:flex-start;
+}
+.diary-input{
+  flex:1;
+  border:1.5px solid #d4d4d4;
+  border-radius:3vw;
+  padding:3vw 3.5vw;
+  font-size:clamp(16px, 5vw, 24px);
+  font-family:inherit;
+  background:#fff;
+  color:#1a1a1a;
+  resize:none;
+  outline:none;
+  min-height:clamp(80px, 22vw, 120px);
+  line-height:1.6;
+  overflow-wrap:break-word;
+  transition:border-color 0.2s;
+}
+.diary-input:focus{
+  border-color:#d97706;
+  box-shadow:0 0 0 2px rgba(217,119,6,0.15);
+}
+.diary-input::placeholder{
+  color:#bbb;
+  font-size:clamp(14px, 4.5vw, 20px);
+}
+
+.diary-entry-count{
+  font-size:clamp(12px, 3.5vw, 16px);
+  color:#059669;
+  font-weight:600;
+  margin-top:2vw;
+  text-align:right;
+}
+
+/* Diary history */
+.diary-history-title{
+  font-size:clamp(14px, 4.5vw, 20px);
+  font-weight:700;
+  color:#666;
+  margin-top:5vw;
+  margin-bottom:2.5vw;
+}
+.diary-history-list{
+  display:flex;
+  flex-direction:column;
+  gap:2vw;
+}
+.diary-history-item{
+  background:#fafafa;
+  border:1px solid #e8e8e8;
+  border-radius:3vw;
+  padding:2.5vw 3vw;
+  cursor:pointer;
+}
+.diary-history-item:active{background:#f0f0f0}
+.diary-history-date{
+  font-size:clamp(12px, 3.5vw, 16px);
+  font-weight:700;
+  color:#d97706;
+  margin-bottom:1vw;
+}
+.diary-history-preview{
+  font-size:clamp(13px, 4vw, 18px);
+  color:#555;
+  line-height:1.4;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+}
+.diary-history-item.expanded .diary-history-preview{
+  -webkit-line-clamp:unset;
+}
+.diary-empty{
+  font-size:clamp(13px, 4vw, 18px);
+  color:#bbb;
+  text-align:center;
+  padding:3vw;
+}
 .section-title{
   font-size:clamp(20px, 6vw, 28px);
   font-weight:800;
@@ -410,6 +537,23 @@ body{
   <div class="stat-card">
     <div class="num" id="totalDays">0</div>
     <div class="lbl">追蹤天數</div>
+  </div>
+</div>
+
+<div class="diary-section">
+  <div class="diary-header" id="diaryHeader">
+    <span class="diary-icon">📓</span>
+    <span class="diary-title">每日日記</span>
+    <span class="diary-entry-count" id="diaryWordCount"></span>
+    <span class="diary-toggle" id="diaryToggle">▼</span>
+  </div>
+  <div class="diary-body" id="diaryBody">
+    <div class="diary-row">
+      <textarea class="diary-input" id="diaryInput" placeholder="寫下今天的想法、感受、收穫、反思…"></textarea>
+      <button class="mic-btn" id="diaryMicBtn">🎤</button>
+    </div>
+    <div class="diary-history-title">📖 日記歷史</div>
+    <div class="diary-history-list" id="diaryHistoryList"></div>
   </div>
 </div>
 
@@ -797,12 +941,154 @@ function updateHistory(){
   if(!localStorage.getItem('firstDay')) localStorage.setItem('firstDay', today);
 }
 
+// ===== DIARY =====
+function renderDiary(){
+  const journal = dayData.journal || '';
+  const input = document.getElementById('diaryInput');
+  if(input) input.value = journal;
+
+  // Word count
+  const wc = document.getElementById('diaryWordCount');
+  if(journal.trim()){
+    const chars = journal.replace(/\s/g,'').length;
+    wc.textContent = chars + ' 字';
+    wc.style.display = '';
+  } else {
+    wc.textContent = '';
+  }
+
+  // Auto-resize
+  if(input){
+    input.style.height = 'auto';
+    input.style.height = input.scrollHeight + 'px';
+  }
+
+  // Diary history - past 7 days
+  const list = document.getElementById('diaryHistoryList');
+  const history = loadHistory();
+  const dates = Object.keys(history).sort().reverse().slice(0,7);
+
+  if(dates.length === 0){
+    list.innerHTML = '<div class="diary-empty">還沒有日記記錄</div>';
+    return;
+  }
+
+  list.innerHTML = dates.map(d => {
+    if(d === today) return '';
+    const day = loadDay(d);
+    const entry = (day.journal || '').trim();
+    if(!entry) return '';
+    const dateStr = d.slice(5);
+    const preview = entry.length > 80 ? entry.slice(0,80) + '…' : entry;
+    return `<div class="diary-history-item" data-date="${d}">
+      <div class="diary-history-date">${dateStr}</div>
+      <div class="diary-history-preview">${preview}</div>
+    </div>`;
+  }).filter(Boolean).join('') || '<div class="diary-empty">還沒有日記記錄</div>';
+
+  // Click to expand/collapse history items
+  document.querySelectorAll('.diary-history-item').forEach(el => {
+    el.addEventListener('click', function(){
+      this.classList.toggle('expanded');
+    });
+  });
+}
+
+// Diary save
+document.getElementById('diaryInput').addEventListener('input', function(){
+  dayData.journal = this.value;
+  dayData.ts = Date.now();
+  saveDay(today, dayData);
+  updateHistory();
+  renderDiary();
+});
+
+// Diary voice
+let diaryRecognition = null;
+document.getElementById('diaryMicBtn').addEventListener('click', function(e){
+  e.stopPropagation();
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SpeechRecognition){
+    alert('您的瀏覽器不支援語音輸入。請用 Chrome 或 Android 瀏覽器。');
+    return;
+  }
+  if(diaryRecognition){
+    diaryRecognition.stop();
+    diaryRecognition = null;
+    this.textContent = '🎤';
+    return;
+  }
+  const btn = this;
+  diaryRecognition = new SpeechRecognition();
+  diaryRecognition.lang = 'zh-TW';
+  diaryRecognition.continuous = true;
+  diaryRecognition.interimResults = true;
+  btn.textContent = '🔴';
+
+  let finalTranscript = '';
+  const ta = document.getElementById('diaryInput');
+
+  diaryRecognition.onresult = function(event){
+    for(let i = event.resultIndex; i < event.results.length; i++){
+      if(event.results[i].isFinal){
+        finalTranscript += event.results[i][0].transcript;
+      }
+    }
+    if(finalTranscript && ta){
+      const existing = dayData.journal || '';
+      const sep = existing && !existing.endsWith(' ') && !existing.endsWith('\n') ? ' ' : '';
+      dayData.journal = existing + sep + finalTranscript;
+      dayData.ts = Date.now();
+      saveDay(today, dayData);
+      ta.value = dayData.journal;
+      ta.style.height = 'auto';
+      ta.style.height = ta.scrollHeight + 'px';
+      renderDiary();
+      finalTranscript = '';
+    }
+  };
+
+  diaryRecognition.onerror = function(){
+    btn.textContent = '🎤';
+    diaryRecognition = null;
+  };
+
+  diaryRecognition.onend = function(){
+    btn.textContent = '🎤';
+    diaryRecognition = null;
+    if(finalTranscript && ta){
+      const existing = dayData.journal || '';
+      const sep = existing && !existing.endsWith(' ') && !existing.endsWith('\n') ? ' ' : '';
+      dayData.journal = existing + sep + finalTranscript;
+      dayData.ts = Date.now();
+      saveDay(today, dayData);
+      ta.value = dayData.journal;
+      ta.style.height = 'auto';
+      ta.style.height = ta.scrollHeight + 'px';
+      renderDiary();
+      finalTranscript = '';
+    }
+  };
+
+  try { diaryRecognition.start(); } catch(e){ btn.textContent = '🎤'; diaryRecognition = null; }
+});
+
+// Diary collapse/expand
+let diaryCollapsed = false;
+document.getElementById('diaryHeader').addEventListener('click', function(e){
+  if(e.target.closest('.mic-btn')) return;
+  diaryCollapsed = !diaryCollapsed;
+  document.getElementById('diaryBody').classList.toggle('hidden', diaryCollapsed);
+  document.getElementById('diaryToggle').classList.toggle('collapsed', diaryCollapsed);
+});
+
 // ===== ACTIONS =====
 document.getElementById('resetTodayBtn').addEventListener('click', ()=>{
-  if(confirm('確定要重設今日進度？筆記也會一併清除。')){
+  if(confirm('確定要重設今日進度？筆記與日記也會一併清除。')){
     dayData.done = {};
     dayData.notes = {};
     dayData.listening = null;
+    dayData.journal = '';
     dayData.ts = Date.now();
     saveDay(today, dayData);
     render();
@@ -946,6 +1232,7 @@ function fireConfetti(){
 // ===== INIT =====
 updateHistory();
 render();
+renderDiary();
 
 // ===== SERVICE WORKER for offline =====
 if('serviceWorker' in navigator){
