@@ -435,6 +435,75 @@ body{
   text-align:center;
   padding:3vw;
 }
+
+/* ===== BACKUP SECTION ===== */
+.backup-section{
+  margin-top:10vw;
+  padding:4vw 5vw;
+  background:#fffbeb;
+  border:1.5px solid #fde68a;
+  border-radius:4vw;
+}
+.backup-title{
+  font-size:clamp(18px, 5.5vw, 26px);
+  font-weight:800;
+  color:#92400e;
+  margin-bottom:3vw;
+}
+.backup-desc{
+  font-size:clamp(14px, 4vw, 19px);
+  color:#666;
+  line-height:1.5;
+  margin-bottom:3vw;
+}
+.backup-btn-row{
+  display:flex;
+  gap:2.5vw;
+}
+.backup-btn{
+  flex:1;
+  padding:3.5vw 4vw;
+  border-radius:3vw;
+  border:1.5px solid #d97706;
+  background:#fff;
+  color:#92400e;
+  font-size:clamp(14px, 4vw, 19px);
+  font-weight:700;
+  cursor:pointer;
+  text-align:center;
+  transition:all 0.2s;
+}
+.backup-btn:active{transform:scale(0.95);background:#fef3c7}
+.backup-btn.primary{
+  background:#d97706;
+  color:#fff;
+}
+.backup-status{
+  margin-top:2.5vw;
+  font-size:clamp(12px, 3.5vw, 16px);
+  color:#059669;
+  font-weight:600;
+  text-align:center;
+  display:none;
+}
+.backup-result{
+  display:none;
+  margin-top:3vw;
+}
+.backup-result textarea{
+  width:100%;
+  border:1.5px solid #d4d4d4;
+  border-radius:3vw;
+  padding:3vw;
+  font-size:clamp(11px, 3vw, 14px);
+  font-family:monospace;
+  color:#333;
+  background:#fafafa;
+  resize:vertical;
+  min-height:clamp(80px, 25vw, 150px);
+  line-height:1.5;
+}
+
 .section-title{
   font-size:clamp(20px, 6vw, 28px);
   font-weight:800;
@@ -569,6 +638,19 @@ body{
 
 <div class="install-hint" id="installHint">
   💡 點選分享按鈕 → <strong>加入主畫面</strong>，下次直接從桌面打開
+</div>
+
+<div class="backup-section">
+  <div class="backup-title">☁️ 雲端備份</div>
+  <div class="backup-desc">將所有每日紀錄打包，傳送到 Google Drive 永久保存</div>
+  <div class="backup-btn-row">
+    <button class="backup-btn primary" id="backupExportBtn">📥 下載備份檔</button>
+    <button class="backup-btn" id="backupCopyBtn">📋 複製文字</button>
+  </div>
+  <div class="backup-status" id="backupStatus"></div>
+  <div class="backup-result" id="backupResult">
+    <textarea id="backupTextArea" readonly></textarea>
+  </div>
 </div>
 
 <script>
@@ -1228,6 +1310,95 @@ function fireConfetti(){
   document.body.appendChild(container);
   setTimeout(()=>container.remove(), 4000);
 }
+
+// ===== BACKUP =====
+function generateBackupText(){
+  const history = loadHistory();
+  const dates = Object.keys(history).sort();
+  const lines = [];
+  const todayStr = new Date().toISOString().slice(0,10);
+
+  lines.push('========================================');
+  lines.push('  巴菲特人生清單 - 每日追蹤備份');
+  lines.push('  產出日期: ' + todayStr);
+  lines.push('  總追蹤天數: ' + dates.length + ' 天');
+  lines.push('========================================');
+  lines.push('');
+
+  dates.forEach(d => {
+    const day = loadDay(d);
+    const doneCount = Object.values(day.done || {}).filter(Boolean).length;
+    const isToday = d === todayStr;
+
+    lines.push('──────────────────────────────────────');
+    lines.push('  📅 ' + d + (isToday ? ' ← 今天' : ''));
+    lines.push('  完成進度: ' + doneCount + ' / 10');
+    lines.push('');
+
+    // Journal
+    if(day.journal && day.journal.trim()){
+      lines.push('  📓 日記:');
+      day.journal.split('\n').forEach(l => lines.push('    ' + l));
+      lines.push('');
+    }
+
+    // Per-item notes
+    if(day.notes){
+      const itemsWithNotes = Object.keys(day.notes).filter(k => day.notes[k].trim());
+      if(itemsWithNotes.length > 0){
+        ITEMS.forEach(item => {
+          const note = day.notes[item.id];
+          if(note && note.trim()){
+            const done = day.done && day.done[item.id] ? '✓' : '☐';
+            lines.push('  ' + done + ' ' + item.title);
+            note.split('\n').forEach(l => lines.push('    ' + l));
+            lines.push('');
+          }
+        });
+      }
+    }
+  });
+
+  return lines.join('\n');
+}
+
+document.getElementById('backupExportBtn').addEventListener('click', function(){
+  const text = generateBackupText();
+  const blob = new Blob([text], {type:'text/plain;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  const dateStr = new Date().toISOString().slice(0,10);
+  a.download = '巴菲特清單備份_' + dateStr + '.txt';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+
+  const status = document.getElementById('backupStatus');
+  status.textContent = '✅ 備份檔已下載！請傳送給小K，我幫你上傳到 Google Drive 📤';
+  status.style.display = 'block';
+  setTimeout(() => { status.style.display = 'none'; }, 8000);
+});
+
+document.getElementById('backupCopyBtn').addEventListener('click', function(){
+  const text = generateBackupText();
+  const result = document.getElementById('backupResult');
+  const ta = document.getElementById('backupTextArea');
+  ta.value = text;
+  result.style.display = 'block';
+
+  ta.select();
+  try {
+    document.execCommand('copy');
+    const status = document.getElementById('backupStatus');
+    status.textContent = '✅ 已複製！請貼到對話中傳給小K 📋';
+    status.style.display = 'block';
+    setTimeout(() => { status.style.display = 'none'; }, 5000);
+  } catch(e) {
+    // fallback
+  }
+});
 
 // ===== INIT =====
 updateHistory();
