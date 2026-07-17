@@ -1400,6 +1400,59 @@ document.getElementById('backupCopyBtn').addEventListener('click', function(){
   }
 });
 
+// ===== AUTO BACKUP =====
+const BACKUP_URL = 'https://five-being-min-produces.trycloudflare.com/api/backup';
+
+function sendBackupToServer(){
+  const text = generateBackupText();
+  const dateStr = new Date().toISOString().slice(0,10);
+  fetch(BACKUP_URL, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({text: text, date: dateStr})
+  }).then(r => r.json()).then(data => {
+    if(data.status === 'ok'){
+      console.log('☁️ 自動備份成功:', data.file);
+    }
+  }).catch(err => {
+    console.log('☁️ 備份上傳失敗（伺服器可能未連線）:', err.message);
+  });
+}
+
+// Auto-backup at 10pm every day
+function scheduleBackup(){
+  const now = new Date();
+  const target = new Date(now);
+  target.setHours(22, 0, 0, 0);  // 10pm
+  if(now >= target){
+    target.setDate(target.getDate() + 1);
+  }
+  const msUntil10pm = target - now;
+  setTimeout(() => {
+    sendBackupToServer();
+    // Repeat every 24h
+    setInterval(sendBackupToServer, 86400000);
+  }, msUntil10pm);
+  console.log(`⏰ 下次自動備份: ${target.toLocaleString('zh-TW')}`);
+}
+
+// Also backup on every save (debounced)
+let backupDebounce = null;
+function debouncedBackup(){
+  clearTimeout(backupDebounce);
+  backupDebounce = setTimeout(sendBackupToServer, 30000); // 30s after last change
+}
+
+// Patch saveDay to trigger debounced backup
+const origSaveDay = saveDay;
+saveDay = function(date, data){
+  origSaveDay(date, data);
+  debouncedBackup();
+};
+
+// Start scheduler
+scheduleBackup();
+
 // ===== INIT =====
 updateHistory();
 render();
