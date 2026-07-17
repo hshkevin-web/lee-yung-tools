@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="美食地圖">
+<title>萬華必比登美食</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body {
+    font-family: -apple-system, 'PingFang TC', 'Noto Sans TC', sans-serif;
+    background: #0a0e14; color: #e8edf5;
+    padding: 0 0 20vw; min-height: 100dvh;
+    font-size: 16px; line-height: 1.7;
+  }
+  .header {
+    background: linear-gradient(135deg, #1a1f2e, #0a0e14);
+    padding: 60px 20px 30px; text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+  }
+  .header .badge {
+    display: inline-block;
+    background: rgba(239, 68, 68, .15);
+    color: #ef4444; font-size: 13px; font-weight: 700;
+    padding: 6px 16px; border-radius: 20px;
+    letter-spacing: 1px; margin-bottom: 12px;
+    border: 1px solid rgba(239,68,68,.2);
+  }
+  .header h1 { font-size: 32px; font-weight: 900; letter-spacing: -0.5px; }
+  .header h1 span { background: linear-gradient(135deg, #fff, #ef4444); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .header .sub { color: #8892a8; font-size: 14px; margin-top: 8px; }
+  .header .sub span { color: #facc15; }
+  .info-bar {
+    display: flex; justify-content: center; gap: 20px;
+    padding: 16px 20px; background: #10141c;
+    border-bottom: 1px solid rgba(255,255,255,.04);
+    font-size: 13px; color: #8892a8;
+  }
+  .info-bar .label { color: #4b5563; }
+  .content { padding: 20px; max-width: 600px; margin: 0 auto; }
+  .section-title {
+    font-size: 15px; font-weight: 700; color: #ef4444;
+    margin: 24px 0 12px; padding-left: 12px;
+    border-left: 3px solid #ef4444;
+    letter-spacing: 0.5px;
+  }
+  .restaurant-list { display: flex; flex-direction: column; gap: 10px; }
+  .rest-card {
+    background: #10141c; border: 1px solid rgba(255,255,255,.06);
+    border-radius: 12px; padding: 16px 18px;
+    display: flex; align-items: center; gap: 14px;
+    transition: all .2s;
+  }
+  .rest-card:active { transform: scale(.98); background: #161c28; }
+  .rest-card .num {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: rgba(239,68,68,.12); color: #ef4444;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 800; flex-shrink: 0;
+  }
+  .rest-card .info { flex: 1; }
+  .rest-card .name { font-size: 17px; font-weight: 700; color: #fff; }
+  .rest-card .tag {
+    display: inline-block; font-size: 11px; font-weight: 600;
+    background: rgba(239,68,68,.12); color: #f87171;
+    padding: 2px 10px; border-radius: 10px; margin-top: 4px;
+  }
+  .source-link {
+    margin-top: 24px; padding: 14px; text-align: center;
+    background: #10141c; border-radius: 12px;
+    border: 1px solid rgba(255,255,255,.04);
+  }
+  .source-link a { color: #60a5fa; font-size: 13px; text-decoration: none; }
+  .source-link a:active { opacity: .7; }
+  .footer {
+    text-align: center; padding: 30px 20px 40px;
+    color: #4b5563; font-size: 12px;
+  }
+  @media (prefers-color-scheme: light) {
+    body { background: #f5f5f7; color: #1d1d1f; }
+    .header { background: linear-gradient(135deg, #fff, #f0f0f2); border-color: rgba(0,0,0,.06); }
+    .header .sub { color: #6b7280; }
+    .info-bar, .rest-card, .source-link { background: #fff; border-color: rgba(0,0,0,.06); }
+    .rest-card:active { background: #f0f0f2; }
+    .rest-card .name { color: #1d1d1f; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="badge">🍜 必比登推薦</div>
+  <h1><span>萬華美食地圖</span></h1>
+  <div class="sub">台北 · <span>5</span> 間必比登推薦</div>
+</div>
+
+<div class="info-bar">
+  <span><span class="label">📅</span> 2026-07-17</span>
+  <span><span class="label">📱</span> Facebook</span>
+</div>
+
+<div class="content">
+
+  <div class="section-title">🏆 推薦名單</div>
+
+  <div class="restaurant-list">
+    <div class="rest-card">
+      <div class="num">1</div>
+      <div class="info">
+        <div class="name">小王煮瓜</div>
+        <div class="tag">⭐ 必比登推薦</div>
+      </div>
+    </div>
+    <div class="rest-card">
+      <div class="num">2</div>
+      <div class="info">
+        <div class="name">源芳刈包</div>
+        <div class="tag">⭐ 必比登推薦</div>
+      </div>
+    </div>
+    <div class="rest-card">
+      <div class="num">3</div>
+      <div class="info">
+        <div class="name">一甲子餐飲</div>
+        <div class="tag">⭐ 必比登推薦</div>
+      </div>
+    </div>
+    <div class="rest-card">
+      <div class="num">4</div>
+      <div class="info">
+        <div class="name">老山東牛肉家常麵店</div>
+        <div class="tag">⭐ 必比登推薦</div>
+      </div>
+    </div>
+    <div class="rest-card">
+      <div class="num">5</div>
+      <div class="info">
+        <div class="name">蘇來傳（原蘇家肉圓）</div>
+        <div class="tag">⭐ 必比登推薦</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="source-link">
+    📎 <a href="https://www.facebook.com/share/p/1GFftBcB5P/">查看原始 Facebook 貼文</a>
+  </div>
+
+</div>
+
+<div class="footer">
+  里洋美食地圖 · 自動記錄
+</div>
+
+</body>
+</html>

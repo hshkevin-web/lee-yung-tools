@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="美食地圖">
+<title>美食地圖</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, 'PingFang TC', 'Noto Sans TC', sans-serif;
+    background: #0a0e14; color: #e8edf5;
+    padding: 0 0 20vw; min-height: 100dvh;
+    font-size: 16px;
+  }
+  .header {
+    background: linear-gradient(135deg, #1a1f2e, #0a0e14);
+    padding: 60px 20px 30px; text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+  }
+  .header .icon { font-size: 40px; margin-bottom: 10px; }
+  .header h1 { font-size: 30px; font-weight: 900; }
+  .header h1 span { background: linear-gradient(135deg, #fff, #ef4444); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .header .sub { color: #8892a8; font-size: 14px; margin-top: 6px; }
+  .content { padding: 20px; max-width: 600px; margin: 0 auto; }
+  .city-group { margin-bottom: 20px; }
+  .city-title {
+    font-size: 15px; font-weight: 700; color: #ef4444;
+    padding: 8px 12px; margin-bottom: 10px;
+    border-left: 3px solid #ef4444;
+  }
+  .food-item {
+    display: block; text-decoration: none;
+    background: #10141c; border: 1px solid rgba(255,255,255,.06);
+    border-radius: 12px; padding: 14px 16px; margin-bottom: 8px;
+    transition: all .2s;
+  }
+  .food-item:active { transform: scale(.98); background: #161c28; }
+  .food-item .name { font-size: 16px; font-weight: 700; color: #fff; }
+  .food-item .meta { font-size: 12px; color: #6b7280; margin-top: 4px; }
+  .empty { text-align: center; color: #4b5563; padding: 40px 0; font-size: 14px; }
+  .footer { text-align: center; padding: 30px; color: #4b5563; font-size: 12px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="icon">🗺️</div>
+  <h1><span>美食地圖</span></h1>
+  <div class="sub">小K的美食記錄本</div>
+</div>
+
+<div class="content">
+  <div class="city-group">
+    <div class="city-title">📍 台北</div>
+    <a class="food-item" href="萬華必比登美食.html">
+      <div class="name">🍜 萬華必比登美食</div>
+      <div class="meta">5 間餐廳 · 2026-07-17</div>
+    </a>
+  </div>
+</div>
+
+<div class="footer">里洋美食地圖 · 持續新增中</div>
+
+</body>
+</html>
