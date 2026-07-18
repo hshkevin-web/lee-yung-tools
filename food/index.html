@@ -2,78 +2,170 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="美食地圖">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#ef4444">
+<meta name="application-name" content="美食地圖">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<meta name="apple-touch-fullscreen" content="yes">
 <title>美食地圖</title>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   body {
     font-family: -apple-system, 'PingFang TC', 'Noto Sans TC', sans-serif;
     background: #0a0e14; color: #e8edf5;
-    padding: 0 0 20vw; min-height: 100dvh;
+    padding: 0 0 env(safe-area-inset-bottom);
+    min-height: 100dvh;
     font-size: 16px;
+    -webkit-font-smoothing: antialiased;
   }
   .header {
     background: linear-gradient(135deg, #1a1f2e, #0a0e14);
-    padding: 60px 20px 30px; text-align: center;
+    padding: calc(env(safe-area-inset-top) + 48px) 20px 24px;
+    text-align: center;
     border-bottom: 1px solid rgba(255,255,255,.06);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    background: rgba(10,14,20,.92);
   }
-  .header .icon { font-size: 40px; margin-bottom: 10px; }
-  .header h1 { font-size: 30px; font-weight: 900; }
+  .header .icon { font-size: 40px; margin-bottom: 8px; display: block; }
+  .header h1 { font-size: 28px; font-weight: 900; letter-spacing: -0.5px; }
   .header h1 span { background: linear-gradient(135deg, #fff, #ef4444); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-  .header .sub { color: #8892a8; font-size: 14px; margin-top: 6px; }
-  .content { padding: 20px; max-width: 600px; margin: 0 auto; }
-  .city-group { margin-bottom: 20px; }
+  .header .sub { color: #8892a8; font-size: 13px; margin-top: 4px; }
+  .count-badge {
+    display: inline-block;
+    background: rgba(239,68,68,.15);
+    color: #ef4444;
+    font-size: 12px; font-weight: 700;
+    padding: 2px 10px; border-radius: 10px;
+    margin-top: 6px;
+  }
+  .content { padding: 16px 16px calc(env(safe-area-inset-bottom) + 80px); max-width: 600px; margin: 0 auto; }
+  .city-group { margin-bottom: 16px; }
   .city-title {
-    font-size: 15px; font-weight: 700; color: #ef4444;
-    padding: 8px 12px; margin-bottom: 10px;
+    font-size: 14px; font-weight: 700; color: #ef4444;
+    padding: 8px 12px; margin-bottom: 8px;
     border-left: 3px solid #ef4444;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .city-title .count {
+    font-size: 11px; font-weight: 400;
+    color: #6b7280; margin-left: auto;
   }
   .food-item {
-    display: block; text-decoration: none;
+    display: flex; align-items: center; gap: 12px;
+    text-decoration: none;
     background: #10141c; border: 1px solid rgba(255,255,255,.06);
-    border-radius: 12px; padding: 14px 16px; margin-bottom: 8px;
-    transition: all .2s;
+    border-radius: 14px; padding: 14px 16px; margin-bottom: 8px;
+    transition: all .15s ease;
   }
-  .food-item:active { transform: scale(.98); background: #161c28; }
+  .food-item:active { transform: scale(.97); background: #161c28; }
+  .food-item .thumb {
+    width: 44px; height: 44px; border-radius: 12px;
+    background: rgba(239,68,68,.1);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; flex-shrink: 0;
+  }
+  .food-item .info { flex: 1; min-width: 0; }
   .food-item .name { font-size: 16px; font-weight: 700; color: #fff; }
-  .food-item .meta { font-size: 12px; color: #6b7280; margin-top: 4px; }
-  .empty { text-align: center; color: #4b5563; padding: 40px 0; font-size: 14px; }
-  .footer { text-align: center; padding: 30px; color: #4b5563; font-size: 12px; }
+  .food-item .meta { font-size: 12px; color: #6b7280; margin-top: 2px; }
+  .food-item .arrow { color: #4b5563; font-size: 14px; }
+  .empty { text-align: center; color: #4b5563; padding: 60px 20px; font-size: 14px; }
+  .empty .big { font-size: 48px; margin-bottom: 12px; display: block; }
+
+  .footer {
+    text-align: center;
+    padding: 24px 20px calc(env(safe-area-inset-bottom) + 24px);
+    color: #4b5563; font-size: 12px;
+  }
+
+  /* Pull-to-refresh hint */
+  .pull-hint {
+    text-align: center; font-size: 11px; color: #4b5563;
+    padding: 8px; opacity: .5;
+  }
+
+  @media (prefers-color-scheme: light) {
+    body { background: #f5f5f7; color: #1d1d1f; }
+    .header { background: rgba(245,245,247,.92); border-color: rgba(0,0,0,.06); }
+    .food-item { background: #fff; border-color: rgba(0,0,0,.08); }
+    .food-item .name { color: #1d1d1f; }
+    .food-item:active { background: #f0f0f2; }
+    .food-item .arrow { color: #d1d5db; }
+    .city-title .count { color: #9ca3af; }
+  }
 </style>
 </head>
 <body>
 
 <div class="header">
-  <div class="icon">🗺️</div>
+  <span class="icon">🗺️</span>
   <h1><span>美食地圖</span></h1>
   <div class="sub">小K的美食記錄本</div>
+  <div class="count-badge" id="countBadge">4 間餐廳</div>
 </div>
 
-<div class="content">
+<div class="content" id="app">
+  <div class="pull-hint">↓ 下拉重整</div>
   <div class="city-group">
-    <div class="city-title">📍 台北</div>
+    <div class="city-title">📍 台北 <span class="count" id="cityCount">4</span></div>
     <a class="food-item" href="海陸海產店.html">
-      <div class="name">🦐 海陸海產店</div>
-      <div class="meta">中山區 · 預約制海鮮熱炒 · 2026-07-17</div>
+      <div class="thumb">🦐</div>
+      <div class="info">
+        <div class="name">海陸海產店</div>
+        <div class="meta">中山區 · 預約制海鮮熱炒</div>
+      </div>
+      <div class="arrow">›</div>
     </a>
     <a class="food-item" href="臭麵攤.html">
-      <div class="name">🍜 臭麵攤</div>
-      <div class="meta">林口區 · 低調路邊攤 · 臭豆腐 · 2026-07-18</div>
+      <div class="thumb">🍜</div>
+      <div class="info">
+        <div class="name">臭麵攤</div>
+        <div class="meta">林口區 · 低調路邊攤</div>
+      </div>
+      <div class="arrow">›</div>
     </a>
     <a class="food-item" href="YMS%20by%20onefifteen.html">
-      <div class="name">🏡 YMS by onefifteen</div>
-      <div class="meta">陽明山 · 初衣食午 · 美軍宿舍園區 · 2026-07-17</div>
+      <div class="thumb">🏡</div>
+      <div class="info">
+        <div class="name">YMS by onefifteen</div>
+        <div class="meta">陽明山 · 美學園區</div>
+      </div>
+      <div class="arrow">›</div>
     </a>
     <a class="food-item" href="萬華必比登美食.html">
-      <div class="name">🍜 萬華必比登美食</div>
-      <div class="meta">5 間餐廳 · 2026-07-17</div>
+      <div class="thumb">🍜</div>
+      <div class="info">
+        <div class="name">萬華必比登美食</div>
+        <div class="meta">5 間推薦餐廳</div>
+      </div>
+      <div class="arrow">›</div>
     </a>
   </div>
 </div>
 
-<div class="footer">里洋美食地圖 · 持續新增中</div>
+<div class="footer">里洋美食地圖 · 加入主畫面使用 ✨</div>
+
+<script>
+  // Register service worker
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js');
+  }
+  // Count badge
+  document.getElementById('countBadge').textContent =
+    document.querySelectorAll('.food-item').length + ' 間餐廳';
+</script>
 
 </body>
 </html>
