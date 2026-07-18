@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="美食地圖">
+<title>臭麵攤 - 美食地圖</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body {
+    font-family: -apple-system, 'PingFang TC', 'Noto Sans TC', sans-serif;
+    background: #0a0e14; color: #e8edf5;
+    padding: 0 0 20vw; min-height: 100dvh;
+    font-size: 16px; line-height: 1.7;
+  }
+  .header {
+    background: linear-gradient(135deg, #1a1f2e, #0a0e14);
+    padding: 60px 20px 30px; text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+  }
+  .header .badge {
+    display: inline-block;
+    background: rgba(59,130,246,.15);
+    color: #60a5fa; font-size: 13px; font-weight: 700;
+    padding: 6px 16px; border-radius: 20px;
+    letter-spacing: 1px; margin-bottom: 12px;
+    border: 1px solid rgba(59,130,246,.2);
+  }
+  .header h1 { font-size: 32px; font-weight: 900; letter-spacing: -0.5px; }
+  .header h1 span { background: linear-gradient(135deg, #fff, #60a5fa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .header .sub { color: #8892a8; font-size: 14px; margin-top: 8px; }
+  .content { padding: 20px; max-width: 600px; margin: 0 auto; }
+
+  .info-card {
+    background: #10141c; border: 1px solid rgba(255,255,255,.06);
+    border-radius: 14px; padding: 18px; margin-bottom: 16px;
+  }
+  .info-card .row {
+    display: flex; gap: 10px; padding: 6px 0;
+    font-size: 14px; color: #d1d5db;
+  }
+  .info-card .row .label { color: #6b7280; min-width: 50px; }
+  .info-card .row a { color: #60a5fa; text-decoration: none; }
+
+  .section-title {
+    font-size: 15px; font-weight: 700; color: #60a5fa;
+    margin: 20px 0 12px; padding-left: 12px;
+    border-left: 3px solid #60a5fa;
+  }
+
+  .dish-list { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+  .dish-tag {
+    background: rgba(96,165,250,.1);
+    color: #93c5fd; font-size: 14px; font-weight: 600;
+    padding: 8px 16px; border-radius: 20px;
+    border: 1px solid rgba(96,165,250,.15);
+  }
+
+  .actions { display: flex; gap: 8px; }
+  .actions a {
+    flex: 1; display: block; text-align: center;
+    padding: 12px 0; border-radius: 10px;
+    font-size: 14px; font-weight: 600; text-decoration: none;
+  }
+  .actions a:active { opacity: .7; }
+  .actions .maps {
+    background: rgba(34,197,94,.12); color: #22c55e;
+    border: 1px solid rgba(34,197,94,.2);
+  }
+  .actions .search {
+    background: rgba(96,165,250,.12); color: #60a5fa;
+    border: 1px solid rgba(96,165,250,.2);
+  }
+  .actions .blog {
+    background: rgba(250,204,21,.1); color: #facc15;
+    border: 1px solid rgba(250,204,21,.15);
+  }
+
+  .source-link {
+    margin-top: 24px; padding: 14px; text-align: center;
+    background: #10141c; border-radius: 12px;
+    border: 1px solid rgba(255,255,255,.04);
+  }
+  .source-link a { color: #60a5fa; font-size: 13px; text-decoration: none; }
+  .back-link {
+    display: block; text-align: center; margin-top: 16px;
+    padding: 12px; border-radius: 12px;
+    background: rgba(255,255,255,.03);
+    color: #8892a8; font-size: 13px; text-decoration: none;
+  }
+  .footer { text-align: center; padding: 30px; color: #4b5563; font-size: 12px; }
+
+  @media (prefers-color-scheme: light) {
+    body { background: #f5f5f7; color: #1d1d1f; }
+    .header { background: linear-gradient(135deg, #fff, #f0f0f2); border-color: rgba(0,0,0,.06); }
+    .info-card { background: #fff; border-color: rgba(0,0,0,.08); }
+    .info-card .row { color: #374151; }
+    .dish-tag { background: rgba(96,165,250,.08); color: #2563eb; border-color: rgba(96,165,250,.15); }
+    .actions .maps { background: rgba(34,197,94,.08); color: #16a34a; border-color: rgba(34,197,94,.15); }
+    .actions .search { background: rgba(96,165,250,.08); color: #2563eb; border-color: rgba(96,165,250,.15); }
+    .actions .blog { background: rgba(250,204,21,.08); color: #d97706; border-color: rgba(250,204,21,.15); }
+    .source-link { background: #fff; border-color: rgba(0,0,0,.08); }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="badge">🍜 林口路邊攤美食</div>
+  <h1><span>臭麵攤</span></h1>
+  <div class="sub">新北 · 林口 · 文化北路</div>
+</div>
+
+<div class="content">
+
+  <div class="info-card">
+    <div class="row"><span class="label">📍</span> 新北市林口區文化北路二段548號（寶林路交叉口）</div>
+    <div class="row"><span class="label">🏷️</span> 路邊攤 · 臭豆腐 · 麵食</div>
+  </div>
+
+  <div class="section-title">🔥 推薦菜色</div>
+  <div class="dish-list">
+    <span class="dish-tag">臭豆腐</span>
+    <span class="dish-tag">麵類</span>
+  </div>
+
+  <div class="section-title">🔗 快速連結</div>
+  <div class="actions">
+    <a class="maps" href="https://www.google.com/maps/search/?api=1&query=%E8%87%AD%E9%BA%B5%E6%94%A4+%E6%9E%97%E5%8F%A3">📍 地圖</a>
+    <a class="search" href="https://www.google.com/search?q=%E6%9E%97%E5%8F%A3%E8%87%AD%E9%BA%B5%E6%94%A4+%E6%96%87%E5%8C%96%E5%8C%97%E8%B7%AF">🔍 搜尋</a>
+    <a class="blog" href="https://nixojov.pixnet.net/blog/posts/10348538792">📖 食記</a>
+  </div>
+
+  <div class="source-link">
+    📎 <a href="https://maps.app.goo.gl/Q6FnpXibfcm4P1Mc9">Google Maps · 臭麵攤</a>
+  </div>
+
+  <a class="back-link" href="https://hshkevin-web.github.io/lee-yung-tools/food/">← 回美食地圖首頁</a>
+
+</div>
+
+<div class="footer">里洋美食地圖</div>
+
+</body>
+</html>
