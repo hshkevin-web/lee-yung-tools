@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0a0e14">
+<title>Insta360 GO Ultra 完整評測與比較報告</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body {
+    font-family: -apple-system, 'PingFang TC', 'Noto Sans TC', sans-serif;
+    background: #0a0e14; color: #e8edf5;
+    font-size: 15px; line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    padding: 0 0 env(safe-area-inset-bottom);
+  }
+  .hero {
+    background: linear-gradient(135deg, #1a1f2e 0%, #0a0e14 50%, #1a0e0e 100%);
+    padding: calc(env(safe-area-inset-top) + 60px) 20px 40px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+  }
+  .hero .badge {
+    display: inline-block;
+    background: rgba(239,68,68,.15);
+    color: #ef4444; font-size: 12px; font-weight: 700;
+    padding: 4px 14px; border-radius: 20px;
+    border: 1px solid rgba(239,68,68,.2);
+    margin-bottom: 14px;
+  }
+  .hero h1 { font-size: 28px; font-weight: 900; letter-spacing: -0.5px; }
+  .hero h1 span { background: linear-gradient(135deg, #fff, #ef4444); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .hero .sub { color: #8892a8; font-size: 14px; margin-top: 8px; }
+  .hero .price-tag {
+    display: inline-block;
+    background: rgba(34,197,94,.12);
+    color: #22c55e;
+    font-size: 20px; font-weight: 900;
+    padding: 8px 24px; border-radius: 12px;
+    margin-top: 16px;
+    border: 1px solid rgba(34,197,94,.2);
+  }
+  .hero .source {
+    color: #6b7280; font-size: 12px; margin-top: 12px;
+  }
+  .hero .source a { color: #60a5fa; text-decoration: none; }
+
+  .content { padding: 20px; max-width: 680px; margin: 0 auto; }
+
+  .section { margin-bottom: 28px; }
+  .section-title {
+    font-size: 17px; font-weight: 800; color: #fff;
+    margin-bottom: 14px; padding-left: 14px;
+    border-left: 3px solid #ef4444;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .section-title .icon { font-size: 18px; }
+
+  .card {
+    background: #10141c; border: 1px solid rgba(255,255,255,.06);
+    border-radius: 14px; padding: 16px; margin-bottom: 10px;
+  }
+  .card p { color: #d1d5db; font-size: 14px; margin-bottom: 8px; }
+  .card p:last-child { margin-bottom: 0; }
+
+  .spec-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .spec-item {
+    background: #10141c; border: 1px solid rgba(255,255,255,.06);
+    border-radius: 10px; padding: 12px;
+  }
+  .spec-item .label { font-size: 11px; color: #6b7280; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; }
+  .spec-item .value { font-size: 14px; color: #fff; font-weight: 700; margin-top: 4px; }
+
+  .pros { list-style: none; }
+  .pros li {
+    padding: 10px 14px 10px 36px;
+    background: rgba(34,197,94,.05);
+    border: 1px solid rgba(34,197,94,.1);
+    border-radius: 10px; margin-bottom: 6px;
+    position: relative; font-size: 14px; color: #d1d5db;
+  }
+  .pros li::before { content: "✅"; position: absolute; left: 10px; top: 10px; }
+  .cons { list-style: none; }
+  .cons li {
+    padding: 10px 14px 10px 36px;
+    background: rgba(239,68,68,.05);
+    border: 1px solid rgba(239,68,68,.1);
+    border-radius: 10px; margin-bottom: 6px;
+    position: relative; font-size: 14px; color: #d1d5db;
+  }
+  .cons li::before { content: "❌"; position: absolute; left: 10px; top: 10px; }
+
+  .compare-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 0 -4px; }
+  .compare-table {
+    width: 100%; min-width: 600px;
+    border-collapse: separate; border-spacing: 0 4px;
+    font-size: 13px;
+  }
+  .compare-table th {
+    padding: 12px 8px; text-align: center;
+    font-weight: 700; font-size: 12px;
+    background: #10141c;
+    border-bottom: 2px solid rgba(255,255,255,.08);
+    position: sticky; top: 0;
+  }
+  .compare-table th:first-child { border-radius: 10px 0 0 0; text-align: left; padding-left: 12px; }
+  .compare-table th:last-child { border-radius: 0 10px 0 0; }
+  .compare-table th.winner { background: rgba(34,197,94,.08); color: #22c55e; }
+  .compare-table th.light { background: rgba(96,165,250,.08); color: #60a5fa; }
+  .compare-table td {
+    padding: 10px 8px; text-align: center;
+    background: #10141c;
+    border-bottom: 1px solid rgba(255,255,255,.03);
+  }
+  .compare-table td:first-child {
+    text-align: left; padding-left: 12px;
+    color: #9ca3af; font-weight: 600;
+    white-space: nowrap;
+  }
+  .compare-table tr:last-child td:first-child { border-radius: 0 0 0 10px; }
+  .compare-table tr:last-child td:last-child { border-radius: 0 0 10px 0; }
+  .compare-table .best { color: #22c55e; font-weight: 700; }
+  .compare-table .worst { color: #ef4444; }
+  .compare-table .stars { color: #facc15; letter-spacing: -2px; }
+
+  .scenario-card {
+    background: #10141c; border-radius: 12px; padding: 14px; margin-bottom: 8px;
+    border-left: 3px solid #ef4444;
+  }
+  .scenario-card .s-title { font-size: 15px; font-weight: 700; color: #fff; }
+  .scenario-card .s-pick { font-size: 14px; color: #60a5fa; font-weight: 600; margin-top: 4px; }
+  .scenario-card .s-reason { font-size: 13px; color: #9ca3af; margin-top: 4px; }
+  .scenario-card.pick1 { border-left-color: #22c55e; }
+  .scenario-card.pick2 { border-left-color: #facc15; }
+  .scenario-card.pick3 { border-left-color: #60a5fa; }
+
+  .score-wrap { display: flex; gap: 10px; flex-wrap: wrap; }
+  .score-card {
+    flex: 1; min-width: 100px;
+    background: #10141c; border-radius: 12px; padding: 14px; text-align: center;
+    border: 1px solid rgba(255,255,255,.06);
+  }
+  .score-card .score-num { font-size: 28px; font-weight: 900; }
+  .score-card .score-label { font-size: 11px; color: #6b7280; margin-top: 4px; }
+  .score-card.green { border-color: rgba(34,197,94,.3); }
+  .score-card.green .score-num { color: #22c55e; }
+  .score-card.yellow { border-color: rgba(250,204,21,.3); }
+  .score-card.yellow .score-num { color: #facc15; }
+  .score-card.red { border-color: rgba(239,68,68,.3); }
+  .score-card.red .score-num { color: #ef4444; }
+  .score-card.blue { border-color: rgba(96,165,250,.3); }
+  .score-card.blue .score-num { color: #60a5fa; }
+
+  .verdict-box {
+    background: linear-gradient(135deg, rgba(34,197,94,.08), rgba(34,197,94,.03));
+    border: 1px solid rgba(34,197,94,.2);
+    border-radius: 14px; padding: 18px;
+    margin-top: 16px;
+  }
+  .verdict-box h3 { color: #22c55e; font-size: 16px; margin-bottom: 8px; }
+  .verdict-box p { color: #d1d5db; font-size: 14px; }
+
+  .footer {
+    text-align: center; padding: 30px 20px calc(env(safe-area-inset-bottom) + 30px);
+    color: #4b5563; font-size: 12px;
+  }
+  .footer a { color: #6b7280; text-decoration: none; }
+  .back-link {
+    display: block; text-align: center; margin-top: 16px;
+    padding: 12px; border-radius: 12px;
+    background: rgba(255,255,255,.03);
+    color: #8892a8; font-size: 13px; text-decoration: none;
+  }
+
+  @media (prefers-color-scheme: light) {
+    body { background: #f5f5f7; color: #1d1d1f; }
+    .hero { background: linear-gradient(135deg, #fff 0%, #f5f5f7 50%, #fef2f2 100%); border-color: rgba(0,0,0,.06); }
+    .card { background: #fff; border-color: rgba(0,0,0,.08); }
+    .card p { color: #374151; }
+    .spec-item { background: #fff; border-color: rgba(0,0,0,.08); }
+    .spec-item .value { color: #1d1d1f; }
+    .compare-table th { background: #fff; }
+    .compare-table td { background: #fff; border-color: rgba(0,0,0,.04); }
+    .compare-table td:first-child { color: #6b7280; }
+    .scenario-card { background: #fff; }
+    .score-card { background: #fff; border-color: rgba(0,0,0,.08); }
+    .pros li { background: rgba(34,197,94,.04); border-color: rgba(34,197,94,.12); color: #374151; }
+    .cons li { background: rgba(239,68,68,.04); border-color: rgba(239,68,68,.12); color: #374151; }
+    .section-title { color: #1d1d1f; }
+    .verdict-box { background: linear-gradient(135deg, rgba(34,197,94,.06), rgba(34,197,94,.02)); }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="badge">📷 完整評測報告</div>
+  <h1><span>Insta360 GO Ultra</span></h1>
+  <div class="sub">輕巧隨身 Vlog 相機 · 全方位深度比較</div>
+  <div class="price-tag">NT$12,000 ~ 14,000</div>
+  <div class="source">來源：<a href="https://www.cameracity.tw">相機城市 cameracity.tw</a></div>
+</div>
+
+<div class="content">
+
+  <!-- 基本規格 -->
+  <div class="section">
+    <div class="section-title"><span class="icon">📋</span> 基本規格</div>
+    <div class="spec-grid">
+      <div class="spec-item"><div class="label">重量</div><div class="value">27g（主機）</div></div>
+      <div class="spec-item"><div class="label">畫質</div><div class="value">4K@30fps</div></div>
+      <div class="spec-item"><div class="label">全景模式</div><div class="value">5.7K@30fps</div></div>
+      <div class="spec-item"><div class="label">防抖</div><div class="value">FlowState 6.0</div></div>
+      <div class="spec-item"><div class="label">續航（本體）</div><div class="value">~45 分鐘</div></div>
+      <div class="spec-item"><div class="label">續航（含盒）</div><div class="value">~150 分鐘</div></div>
+      <div class="spec-item"><div class="label">防水</div><div class="value">IPX4（防潑水）</div></div>
+      <div class="spec-item"><div class="label">儲存</div><div class="value">64/128GB（內建）</div></div>
+    </div>
+  </div>
+
+  <!-- 優點 -->
+  <div class="section">
+    <div class="section-title"><span class="icon">✅</span> 優點</div>
+    <ul class="pros">
+      <li><strong>極致輕巧 27g</strong> — 業界最輕，磁吸掛胸前幾乎無感佩戴</li>
+      <li><strong>畫質大升級</strong> — 4K 單鏡頭 + 5.7K 全景，相較前代 2.7K 進步顯著</li>
+      <li><strong>FlowState 6.0 防抖</strong> — 走路、跑步、騎車畫面穩定，360° 水平鎖定</li>
+      <li><strong>AI 自動剪輯</strong> — Insta360 App 一鍵成片，完全不用學後製</li>
+      <li><strong>磁吸配件系統 MagNeat</strong> — 掛繩、夾具、黏貼座，到處都能固定</li>
+      <li><strong>全景模式</strong> — 先拍攝後取景，創作自由度極高</li>
+    </ul>
+  </div>
+
+  <!-- 缺點 -->
+  <div class="section">
+    <div class="section-title"><span class="icon">❌</span> 缺點</div>
+    <ul class="cons">
+      <li><strong>夜拍表現不佳</strong> — 1/2.3" 感光元件，低光源雜訊明顯</li>
+      <li><strong>單次續航僅 45 分鐘</strong> — 無法長時間連續錄影，需依賴充電盒</li>
+      <li><strong>儲存不可擴充</strong> — 內建 64/128GB，無法插 microSD 卡</li>
+      <li><strong>4K 錄影發熱</strong> — 高溫環境可能觸發過熱保護</li>
+      <li><strong>防水僅 IPX4</strong> — 下水需另購防水殼</li>
+      <li><strong>價格偏高</strong> — NT$12,000+，同價位可買到畫質更好的相機</li>
+    </ul>
+  </div>
+
+  <!-- 完整比較表 -->
+  <div class="section">
+    <div class="section-title"><span class="icon">⚔️</span> 終極比較：四大隨身相機</div>
+    <div class="card">
+      <p>以下將 Insta360 GO Ultra 與三款同級對手完整比較，幫助你找到最適合自己的選擇。</p>
+    </div>
+    <div class="compare-table-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>比較維度</th>
+            <th class="winner">🏆 GO Ultra</th>
+            <th class="light">DJI Action 5 Pro</th>
+            <th class="light">DJI Pocket 3</th>
+            <th>GoPro Hero 13</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>台灣售價</td>
+            <td class="best">NT$12,000~14,000</td>
+            <td>NT$14,000~16,000</td>
+            <td>NT$14,000~17,000</td>
+            <td>NT$16,000~18,000</td>
+          </tr>
+          <tr>
+            <td>重量</td>
+            <td class="best">27g 🏆</td>
+            <td>145g</td>
+            <td>116g</td>
+            <td class="worst">154g</td>
+          </tr>
+          <tr>
+            <td>感光元件</td>
+            <td class="worst">1/2.3"</td>
+            <td>1/1.3"</td>
+            <td class="best">1" 🏆</td>
+            <td>1/1.9"</td>
+          </tr>
+          <tr>
+            <td>最高錄影</td>
+            <td>4K@30fps</td>
+            <td class="best">5.3K@30/4K@120 🏆</td>
+            <td>4K@120fps</td>
+            <td class="best">5.3K@60/4K@120 🏆</td>
+          </tr>
+          <tr>
+            <td>防抖技術</td>
+            <td>FlowState 6.0</td>
+            <td>RockSteady 3.0</td>
+            <td class="best">3軸機械雲台 🏆</td>
+            <td>HyperSmooth 6.0</td>
+          </tr>
+          <tr>
+            <td>續航（分鐘）</td>
+            <td class="worst">~45（本體）</td>
+            <td class="best">~240 🏆</td>
+            <td>~140</td>
+            <td>~150</td>
+          </tr>
+          <tr>
+            <td>夜拍能力</td>
+            <td class="worst"><span class="stars">★★☆☆</span></td>
+            <td><span class="stars">★★★★☆</span></td>
+            <td class="best"><span class="stars">★★★★★</span> 🏆</td>
+            <td><span class="stars">★★★☆☆</span></td>
+          </tr>
+          <tr>
+            <td>裸機防水</td>
+            <td class="worst">IPX4（潑水）</td>
+            <td class="best">20m 🏆</td>
+            <td>❌ 不防水</td>
+            <td>10m</td>
+          </tr>
+          <tr>
+            <td>全景模式</td>
+            <td class="best">✅ 5.7K 🏆</td>
+            <td>❌</td>
+            <td>❌</td>
+            <td>❌</td>
+          </tr>
+          <tr>
+            <td>AI App 生態</td>
+            <td class="best">自動剪輯成熟 🏆</td>
+            <td>語音/手勢控制</td>
+            <td>ActiveTrack 追蹤</td>
+            <td>自動 Highlight</td>
+          </tr>
+          <tr>
+            <td>便攜性</td>
+            <td class="best">⭐⭐⭐⭐⭐ 🏆</td>
+            <td>⭐⭐⭐⭐</td>
+            <td>⭐⭐⭐⭐</td>
+            <td>⭐⭐⭐</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 適合場景推薦 -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🎯</span> 你的需求決定選擇</div>
+
+    <div class="scenario-card pick1">
+      <div class="s-title">🪶 最輕巧隨身 · 解放雙手</div>
+      <div class="s-pick">👉 Insta360 GO Ultra — 最佳選擇</div>
+      <div class="s-reason">27g 業界最輕，磁吸掛著就能拍，AI 幫你剪片。適合日常 Vlog、開箱、親子紀錄、騎車 POV。</div>
+    </div>
+
+    <div class="scenario-card pick2">
+      <div class="s-title">🌙 夜拍 + Vlog 畫質優先</div>
+      <div class="s-pick">👉 DJI Osmo Pocket 3 — 最佳選擇</div>
+      <div class="s-reason">1 吋感光元件 + 3 軸機械雲台，夜拍表現同級最強。適合室內拍攝、訪談、直播、重視畫質的 Vlogger。</div>
+    </div>
+
+    <div class="scenario-card pick3">
+      <div class="s-title">🏔️ 戶外極限運動 · 全天錄影</div>
+      <div class="s-pick">👉 DJI Osmo Action 5 Pro 或 GoPro Hero 13</div>
+      <div class="s-reason">裸機防水、耐摔耐用、續航長。Action 5 Pro 續航 240 分鐘最強，GoPro Hero 13 裸機防水 10m。</div>
+    </div>
+
+    <div class="scenario-card">
+      <div class="s-title">💰 預算最省</div>
+      <div class="s-pick">👉 Insta360 GO Ultra</div>
+      <div class="s-reason">NT$12,000 起跳，四台中最便宜。如果預算可以 +NT$2,000~4,000，DJI Action 5 Pro 在續航與防水上大升級。</div>
+    </div>
+  </div>
+
+  <!-- 綜合評分 -->
+  <div class="section">
+    <div class="section-title"><span class="icon">📊</span> 綜合評分</div>
+    <div class="score-wrap">
+      <div class="score-card green">
+        <div class="score-num">8.0</div>
+        <div class="score-label">GO Ultra</div>
+      </div>
+      <div class="score-card blue">
+        <div class="score-num">8.5</div>
+        <div class="score-label">Action 5 Pro</div>
+      </div>
+      <div class="score-card blue">
+        <div class="score-num">9.0</div>
+        <div class="score-label">Pocket 3</div>
+      </div>
+      <div class="score-card yellow">
+        <div class="score-num">7.5</div>
+        <div class="score-label">Hero 13</div>
+      </div>
+    </div>
+
+    <div class="verdict-box">
+      <h3>🔥 最終推薦</h3>
+      <p><strong>如果你追求極致輕巧、隨拍隨剪、不在意夜拍：</strong> GO Ultra 是無敵的選擇，27g + 全景 + AI 剪輯，市場上找不到第二台。</p>
+      <br>
+      <p><strong>如果你願意多花一點，換取全面升級：</strong> DJI Osmo Pocket 3（夜拍 Vlog）或 DJI Osmo Action 5 Pro（戶外運動）是更好的長期投資。</p>
+      <br>
+      <p><strong>一句話總結：</strong> GO Ultra 賣的是「輕巧 + 生態」，不是「畫質性價比」。想清楚自己的拍攝場景再下手。</p>
+    </div>
+  </div>
+
+  <a class="back-link" href="https://hshkevin-web.github.io/lee-yung-tools/food/">← 回美食地圖</a>
+
+</div>
+
+<div class="footer">
+  資料來源：相機城市、Insta360 官方、DJI 官方、GoPro 官方 | 價格為台灣通路推估值<br>
+  報告日期：2026-07-23
+</div>
+
+</body>
+</html>
