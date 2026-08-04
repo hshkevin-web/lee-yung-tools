@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0a0e14">
+<title>記憶體超級週期分析：DRAM / NAND / HBM 市場預測報告</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body {
+    font-family: -apple-system, 'PingFang TC', 'Noto Sans TC', sans-serif;
+    background: #0a0e14; color: #e8edf5;
+    font-size: 15px; line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    padding: 0 0 env(safe-area-inset-bottom);
+  }
+  .hero {
+    background: linear-gradient(135deg, #1a1f2e 0%, #0a0e14 50%, #1a0e1e 100%);
+    padding: calc(env(safe-area-inset-top) + 60px) 20px 40px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+  }
+  .hero .badge {
+    display: inline-block;
+    background: rgba(139,92,246,.15);
+    color: #a78bfa; font-size: 12px; font-weight: 700;
+    padding: 4px 14px; border-radius: 20px;
+    border: 1px solid rgba(139,92,246,.25);
+    margin-bottom: 14px;
+  }
+  .hero h1 { font-size: 26px; font-weight: 900; letter-spacing: -0.5px; line-height: 1.35; }
+  .hero h1 span { background: linear-gradient(135deg, #fff, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .hero .sub { color: #8892a8; font-size: 14px; margin-top: 8px; }
+  .hero .meta { color: #6b7280; font-size: 12px; margin-top: 12px; }
+
+  .content { padding: 20px; max-width: 680px; margin: 0 auto; }
+  .section { margin-bottom: 30px; }
+  .section-title {
+    font-size: 17px; font-weight: 800; color: #fff;
+    margin-bottom: 14px; padding-left: 14px;
+    border-left: 3px solid #a78bfa;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .section-title .icon { font-size: 18px; }
+
+  .card {
+    background: #10141c; border: 1px solid rgba(255,255,255,.06);
+    border-radius: 14px; padding: 16px; margin-bottom: 10px;
+  }
+  .card p { color: #d1d5db; font-size: 14px; margin-bottom: 8px; }
+  .card p:last-child { margin-bottom: 0; }
+  .card .hl { color: #fff; font-weight: 700; }
+  .card .hl-red { color: #ef4444; font-weight: 700; }
+  .card .hl-green { color: #22c55e; font-weight: 700; }
+  .card .hl-purple { color: #a78bfa; font-weight: 700; }
+
+  .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .stat-card {
+    background: #10141c; border: 1px solid rgba(255,255,255,.06);
+    border-radius: 14px; padding: 16px;
+  }
+  .stat-card .year { font-size: 12px; color: #6b7280; font-weight: 700; }
+  .stat-card .value { font-size: 22px; font-weight: 900; margin-top: 4px; }
+  .stat-card .growth { font-size: 12px; margin-top: 4px; font-weight: 700; }
+  .stat-card.red .value { color: #ef4444; }
+  .stat-card.green .value { color: #22c55e; }
+  .stat-card.purple .value { color: #a78bfa; }
+  .stat-card.yellow .value { color: #facc15; }
+  .stat-card .up { color: #ef4444; }
+  .stat-card .down { color: #22c55e; }
+
+  /* Bar charts */
+  .chart { margin-top: 10px; }
+  .chart-title { font-size: 13px; color: #9ca3af; font-weight: 600; margin-bottom: 8px; }
+  .bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+  .bar-label { width: 60px; font-size: 12px; color: #6b7280; text-align: right; flex-shrink: 0; }
+  .bar-track { flex: 1; height: 22px; background: rgba(255,255,255,.04); border-radius: 6px; overflow: hidden; }
+  .bar-fill {
+    height: 100%; border-radius: 6px;
+    display: flex; align-items: center; padding-left: 8px;
+    font-size: 11px; font-weight: 700; color: #fff;
+    white-space: nowrap; min-width: 24px;
+    transition: width 1s ease;
+  }
+  .bar-fill.dram { background: linear-gradient(90deg, #ef4444, #f97316); }
+  .bar-fill.nand { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+  .bar-fill.hbm { background: linear-gradient(90deg, #8b5cf6, #a78bfa); }
+  .bar-value { font-size: 12px; color: #d1d5db; width: 90px; flex-shrink: 0; text-align: right; }
+
+  table {
+    width: 100%; border-collapse: separate; border-spacing: 0 4px;
+    font-size: 13px;
+  }
+  table th {
+    padding: 10px 8px; text-align: center;
+    font-weight: 700; font-size: 12px;
+    background: #10141c;
+    border-bottom: 2px solid rgba(255,255,255,.08);
+  }
+  table th:first-child { text-align: left; padding-left: 12px; border-radius: 10px 0 0 0; }
+  table th:last-child { border-radius: 0 10px 0 0; }
+  table td {
+    padding: 10px 8px; text-align: center;
+    background: #10141c;
+    border-bottom: 1px solid rgba(255,255,255,.03);
+  }
+  table td:first-child { text-align: left; padding-left: 12px; color: #9ca3af; font-weight: 600; white-space: nowrap; }
+  table .num { font-weight: 700; }
+  table .up { color: #ef4444; }
+  table .down { color: #22c55e; }
+
+  .warning-box {
+    background: rgba(239,68,68,.05);
+    border: 1px solid rgba(239,68,68,.2);
+    border-radius: 14px; padding: 16px; margin-bottom: 10px;
+  }
+  .warning-box h4 { color: #ef4444; font-size: 15px; margin-bottom: 8px; }
+  .warning-box p { color: #d1d5db; font-size: 14px; margin-bottom: 6px; }
+  .warning-box p:last-child { margin-bottom: 0; }
+
+  .insight-box {
+    background: rgba(34,197,94,.05);
+    border: 1px solid rgba(34,197,94,.2);
+    border-radius: 14px; padding: 16px; margin-bottom: 10px;
+  }
+  .insight-box h4 { color: #22c55e; font-size: 15px; margin-bottom: 8px; }
+  .insight-box p { color: #d1d5db; font-size: 14px; margin-bottom: 6px; }
+  .insight-box p:last-child { margin-bottom: 0; }
+
+  .timeline { list-style: none; }
+  .timeline li {
+    padding: 12px 14px 12px 40px;
+    background: #10141c; border: 1px solid rgba(255,255,255,.06);
+    border-radius: 10px; margin-bottom: 8px;
+    position: relative; font-size: 14px; color: #d1d5db;
+  }
+  .timeline li::before {
+    content: attr(data-year);
+    position: absolute; left: 10px; top: 12px;
+    font-size: 11px; font-weight: 800; color: #a78bfa;
+  }
+
+  .verdict-box {
+    background: linear-gradient(135deg, rgba(139,92,246,.1), rgba(139,92,246,.03));
+    border: 1px solid rgba(139,92,246,.25);
+    border-radius: 14px; padding: 18px; margin-top: 16px;
+  }
+  .verdict-box h3 { color: #a78bfa; font-size: 16px; margin-bottom: 8px; }
+  .verdict-box p { color: #d1d5db; font-size: 14px; margin-bottom: 8px; }
+  .verdict-box p:last-child { margin-bottom: 0; }
+
+  .disclaimer {
+    margin-top: 24px; padding: 14px;
+    background: rgba(255,255,255,.02); border-radius: 12px;
+    border: 1px solid rgba(255,255,255,.04);
+    font-size: 12px; color: #6b7280;
+  }
+  .back-link {
+    display: block; text-align: center; margin-top: 16px;
+    padding: 12px; border-radius: 12px;
+    background: rgba(255,255,255,.03);
+    color: #8892a8; font-size: 13px; text-decoration: none;
+  }
+  .footer {
+    text-align: center; padding: 30px 20px calc(env(safe-area-inset-bottom) + 30px);
+    color: #4b5563; font-size: 12px;
+  }
+
+  @media (prefers-color-scheme: light) {
+    body { background: #f5f5f7; color: #1d1d1f; }
+    .hero { background: linear-gradient(135deg, #fff 0%, #f5f5f7 50%, #f5f3ff 100%); border-color: rgba(0,0,0,.06); }
+    .card { background: #fff; border-color: rgba(0,0,0,.08); }
+    .card p { color: #374151; }
+    .stat-card { background: #fff; border-color: rgba(0,0,0,.08); }
+    table th { background: #fff; }
+    table td { background: #fff; border-color: rgba(0,0,0,.04); }
+    table td:first-child { color: #6b7280; }
+    .timeline li { background: #fff; border-color: rgba(0,0,0,.08); color: #374151; }
+    .bar-track { background: rgba(0,0,0,.04); }
+    .section-title { color: #1d1d1f; }
+    .warning-box p { color: #374151; }
+    .insight-box p { color: #374151; }
+    .verdict-box p { color: #374151; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="badge">📈 記憶體產業深度報告</div>
+  <h1><span>記憶體超級週期分析</span><br>DRAM / NAND / HBM 市場預測</h1>
+  <div class="sub">J.P. Morgan 預測解析 · 2026 結構性轉折點</div>
+  <div class="meta">資料來源：J.P. Morgan 產業預測 ｜ 分析日期：2026-07-23</div>
+</div>
+
+<div class="content">
+
+  <!-- 核心摘要 -->
+  <div class="section">
+    <div class="section-title"><span class="icon">⚡</span> 核心摘要</div>
+    <div class="card">
+      <p>市場原本容易理解的故事是：<span class="hl">AI 伺服器增加 / HBM 容量提升 / 高階 DRAM 需求上升 / 企業級 SSD 受益</span>。</p>
+      <p>但 J.P. Morgan 的預測顯示，<span class="hl-red">2026 年普通 DRAM 與 NAND 市場將突然爆炸式成長</span>，遠超單純 AI 需求的解釋範圍。</p>
+      <p>這份預測本質上是在押注：<span class="hl">ASP 大幅上漲 × 容量持續增加 × 客戶提前補庫存 × 供給長期受限</span>，四件事同時發生。</p>
+    </div>
+  </div>
+
+  <!-- 市場規模預測 -->
+  <div class="section">
+    <div class="section-title"><span class="icon">📊</span> 市場規模預測</div>
+
+    <div class="chart">
+      <div class="chart-title">DRAM 市場（億美元）— 2026 暴增 +346%</div>
+      <div class="bar-row"><div class="bar-label">2025</div><div class="bar-track"><div class="bar-fill dram" style="width:22%">1,430</div></div><div class="bar-value">$1,430 億</div></div>
+      <div class="bar-row"><div class="bar-label">2026</div><div class="bar-track"><div class="bar-fill dram" style="width:100%">6,360</div></div><div class="bar-value">$6,360 億 🔥</div></div>
+      <div class="bar-row"><div class="bar-label">2027</div><div class="bar-track"><div class="bar-fill dram" style="width:80%"></div></div><div class="bar-value">~$9,700 億</div></div>
+      <div class="bar-row"><div class="bar-label">2028</div><div class="bar-track"><div class="bar-fill dram" style="width:92%"></div></div><div class="bar-value">~$1.237 兆</div></div>
+    </div>
+
+    <div class="chart">
+      <div class="chart-title">NAND 市場（億美元）— 2026 暴增 +322%</div>
+      <div class="bar-row"><div class="bar-label">2025</div><div class="bar-track"><div class="bar-fill nand" style="width:24%">710</div></div><div class="bar-value">$710 億</div></div>
+      <div class="bar-row"><div class="bar-label">2026</div><div class="bar-track"><div class="bar-fill nand" style="width:100%">3,000</div></div><div class="bar-value">$3,000 億 🔥</div></div>
+      <div class="bar-row"><div class="bar-label">2027</div><div class="bar-track"><div class="bar-fill nand" style="width:85%"></div></div><div class="bar-value">~$3,900 億</div></div>
+      <div class="bar-row"><div class="bar-label">2028</div><div class="bar-track"><div class="bar-fill nand" style="width:90%"></div></div><div class="bar-value">~$4,500 億</div></div>
+    </div>
+
+    <div class="chart">
+      <div class="chart-title">HBM 市場（億美元）— 四年成長 13 倍</div>
+      <div class="bar-row"><div class="bar-label">2024</div><div class="bar-track"><div class="bar-fill hbm" style="width:8%">170</div></div><div class="bar-value">$170 億</div></div>
+      <div class="bar-row"><div class="bar-label">2025</div><div class="bar-track"><div class="bar-fill hbm" style="width:15%">340</div></div><div class="bar-value">$340 億</div></div>
+      <div class="bar-row"><div class="bar-label">2026</div><div class="bar-track"><div class="bar-fill hbm" style="width:29%">650</div></div><div class="bar-value">$650 億</div></div>
+      <div class="bar-row"><div class="bar-label">2027</div><div class="bar-track"><div class="bar-fill hbm" style="width:57%">1,290</div></div><div class="bar-value">$1,290 億</div></div>
+      <div class="bar-row"><div class="bar-label">2028</div><div class="bar-track"><div class="bar-fill hbm" style="width:100%">2,250</div></div><div class="bar-value">$2,250 億 🔥</div></div>
+    </div>
+  </div>
+
+  <!-- 成長速度 -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🚀</span> 成長速度：2026 是關鍵轉折</div>
+    <div class="card">
+      <p>DRAM 與 NAND 都在 <span class="hl-red">2026 年突然出現三倍以上成長</span>，但到了 2027、2028 年，增速快速下降：</p>
+    </div>
+    <table>
+      <tr><th></th><th>2026</th><th>2027</th><th>2028</th></tr>
+      <tr><td>DRAM 成長</td><td class="num up">+346% 🔥</td><td class="num">+53%</td><td class="num">+28%</td></tr>
+      <tr><td>NAND 成長</td><td class="num up">+322% 🔥</td><td class="num">+31%</td><td class="num">+15%</td></tr>
+    </table>
+    <div class="card" style="margin-top:10px">
+      <p><span class="hl">2026 年是價格重估與供給短缺的集中爆發</span>。模型假設記憶體價格在 2026 年發生一次結構性跳升，之後才進入正常化成長。</p>
+    </div>
+  </div>
+
+  <!-- 市場現象驗證 -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🔍</span> 與市場現象吻合</div>
+    <ul class="timeline">
+      <li data-year="①">DDR4 價格追上甚至超過 DDR5</li>
+      <li data-year="②">DRAM 合約價快速上升</li>
+      <li data-year="③">NAND 合約價大幅高於現貨價</li>
+      <li data-year="④">供應商把產能轉向 HBM 與高階伺服器，傳統記憶體供應出現缺口</li>
+    </ul>
+  </div>
+
+  <!-- HBM 分析 -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🧠</span> HBM：激進但有產業邏輯</div>
+    <div class="card">
+      <p>HBM 四年成長超過 13 倍，看起來很誇張，但至少它有清楚的產業驅動力：</p>
+      <p>· 每代 GPU 搭載更多 HBM</p>
+      <p>· HBM3E 轉向 HBM4</p>
+      <p>· 堆疊層數提高，單顆容量增加</p>
+      <p>· 大型 AI 叢集 GPU 數量增加</p>
+      <p>· HBM4 邏輯底層與封裝複雜度提高，ASP 遠高於一般 DRAM</p>
+    </div>
+    <div class="insight-box">
+      <h4>⚠️ 關鍵變數：每顆 GPU 的 HBM 容量不一定永遠線性增加</h4>
+      <p>若 Rubin Ultra 真的從 288GB 降到 192GB，HBM 需求依然會成長，但驅動方式會從「每顆 GPU 放更多 HBM」轉成「每個系統部署更多 GPU」。</p>
+    </div>
+    <div class="card">
+      <p><span class="hl">2250 億美元的 2028 年 HBM 市場不是不可能</span>，但需要幾件事同時成立：</p>
+      <p>① AI GPU 出貨量持續高速增加</p>
+      <p>② HBM4 與 HBM4E 維持高 ASP</p>
+      <p>③ AMD、NVIDIA 及 ASIC 都大量採用 HBM</p>
+      <p>④ 供應商沒有因擴產而快速壓低價格</p>
+      <p>⑤ AI 資本支出沒有在 2027~2028 年明顯降速</p>
+    </div>
+  </div>
+
+  <!-- 風險評估 -->
+  <div class="section">
+    <div class="section-title"><span class="icon">⚠️</span> 三項預測的風險排序</div>
+
+    <div class="warning-box">
+      <h4>🔥 NAND 2026 年 $3,000 億 — 風險最高</h4>
+      <p>三者中風險最高，最需要檢查定義與假設。尤其要確認 TAM 是否包含：</p>
+      <p>· NAND 晶圓</p>
+      <p>· SSD 控制器、模組</p>
+      <p>· 企業級 SSD 系統</p>
+      <p>· 其他儲存產品</p>
+      <p><span class="hl">若只是純 NAND 記憶體收入，這個跳升相當激進；若包含更下游的 SSD 或系統價值，才比較容易解釋。</span></p>
+    </div>
+
+    <div class="card">
+      <p><span class="hl-red">DRAM 2028 年 $1.237 兆 — 非常樂觀</span></p>
+      <p>需要價格、容量與 AI 伺服器需求共同維持。</p>
+    </div>
+
+    <div class="card">
+      <p><span class="hl-purple">HBM 2028 年 $2,250 億 — 激進但有邏輯</span></p>
+      <p>有產業邏輯可以支撐，是三項中相對合理的一張。</p>
+    </div>
+  </div>
+
+  <!-- 對原廠的含義 -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🏭</span> 對記憶體原廠的含義</div>
+    <div class="card">
+      <p><span class="hl">Micron 不是只吃 HBM，而是整個產品組合一起漲價。</span></p>
+      <p>很多人看 Micron 只看 HBM，但如果 J.P. Morgan 模型成立，Micron 的獲利彈性主要來自整個 DRAM 與 NAND 市場。</p>
+      <p>HBM 到 2028 年預估 $2,250 億，而整個 DRAM 市場是 $1.237 兆，<span class="hl-red">HBM 約只占 DRAM 市場的 18%</span>。</p>
+      <p>即使 HBM 是成長最快、毛利最好的產品，傳統 DRAM、伺服器 DDR5、LPDDR 及其他記憶體的價格與供需，仍然決定整個產業獲利規模。</p>
+    </div>
+
+    <div class="insight-box">
+      <h4>💎 真正的全產品超級週期</h4>
+      <p>對 Micron、SK hynix 與 Samsung 而言，最好的情境是：</p>
+      <p>· HBM 維持高毛利</p>
+      <p>· DDR5 與伺服器 DRAM 價格上漲</p>
+      <p>· DDR4 因退出供應產生稀缺溢價</p>
+      <p>· NAND 因企業 SSD 需求上升而改善</p>
+      <p>· 資本支出受控，沒有過度擴產</p>
+    </div>
+  </div>
+
+  <!-- 供給過剩風險 -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🔄</span> 供給過剩的隱憂</div>
+    <div class="warning-box">
+      <h4>⚠️ 2028~2029 供給過剩風險</h4>
+      <p>如果 DRAM 市場真的從 $1,430 億膨脹到 $6,360 億，再到 $1.2 兆，Samsung、SK hynix、Micron 不可能永遠保持克制。</p>
+      <p>接下來會發生：</p>
+      <p>· 新廠加速 / 製程轉換</p>
+      <p>· HBM 產能增加 / 舊產線重新利用</p>
+      <p>· 中國供應商擴產</p>
+      <p>· 客戶尋找替代方案</p>
+      <p>· 終端產品降低記憶體配置</p>
+    </div>
+    <div class="card">
+      <p><span class="hl">這份預測若成立：</span>對 2026~2027 年獲利是巨大正面；但同時也會提高 2028~2029 年供給過剩的風險。</p>
+    </div>
+  </div>
+
+  <!-- 結論 -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🎯</span> 綜合結論</div>
+    <div class="verdict-box">
+      <h3>📌 結論</h3>
+      <p><strong>HBM</strong>：2028 年 $2,250 億激進，但有產業邏輯支撐 ✅</p>
+      <p><strong>DRAM</strong>：2028 年 $1.237 兆非常樂觀，需價格、容量、AI 需求共同維持 ⚠️</p>
+      <p><strong>NAND</strong>：2026 年 $3,000 億風險最高，最需檢查定義與假設 ❌</p>
+      <br>
+      <p><strong>2026 年是整份預測最危險的轉折點</strong> — 如果價格沒漲到模型預期，或下游需求因漲價被破壞，整個 TAM 都可能大幅下修。</p>
+      <br>
+      <p><strong>最後提醒：TAM 是故事的天花板，但不是公司損益表。</strong></p>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    ⚠️ 免責聲明：本報告僅供研究參考，不構成任何投資買賣建議。市場預測存在高度不確定性，實際進出請搭配即時數據與個人風險承受能力獨立判斷。
+  </div>
+
+  <a class="back-link" href="https://hshkevin-web.github.io/lee-yung-tools/">← 回首頁</a>
+
+</div>
+
+<div class="footer">
+  里洋研究報告 · 2026-07-23
+</div>
+
+</body>
+</html>
