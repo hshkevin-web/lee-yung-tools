@@ -136,16 +136,35 @@
   @media (prefers-color-scheme: light) {
     body { background: #f5f7fa; color: #1d2333; }
     .hero { background: radial-gradient(ellipse at 50% 0%, #e0ecff 0%, #f5f7fa 60%); border-color: rgba(0,0,0,.06); }
+    .hero .badge { background: rgba(37,99,235,.08); color: #2563eb; border-color: rgba(37,99,235,.2); }
+    .hero h1 { color: #1d2333; }
+    .hero h1 span { background: linear-gradient(135deg, #1d2333, #2563eb); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero .sub { color: #4a5468; }
+    .hero .author-meta { color: #6b7280; }
     .card { background: #fff; border-color: rgba(0,0,0,.06); }
     .card p { color: #3d4757; }
+    .card .hl { color: #1d2333; }
+    .card .hl-blue { color: #2563eb; }
+    .card .hl-amber { color: #b45309; }
     .intro { background: #fff; border-color: rgba(0,0,0,.06); }
     .intro p { color: #4a5468; }
-    .quote-box { background: rgba(56,189,248,.05); }
-    .framework-box { background: #f8fafc; border-color: rgba(56,189,248,.2); }
+    .intro .hl { color: #2563eb; }
+    .quote-box { background: rgba(56,189,248,.05); border-left-color: #2563eb; color: #1d2333; }
+    .quote-box .q-src { color: #5a6478; }
+    .framework-box { background: #f8fafc; border-color: rgba(37,99,235,.25); }
+    .framework-box h4 { color: #2563eb; }
     .framework-box li { color: #3d4757; }
+    .framework-box li::before { color: #2563eb; }
     .section-title { color: #1d2333; }
-    .card .hl { color: #1d2333; }
-    .source-box { background: rgba(0,0,0,.02); }
+    .section-title .en { color: #6b7280; }
+    .takeaway { background: rgba(251,191,36,.09); border-color: rgba(180,83,9,.3); color: #3d4757; }
+    .takeaway .tag { color: #b45309; }
+    .takeaway .hl { color: #1d2333; font-weight: 700; }
+    .final-question { background: linear-gradient(135deg, #1a2340, #0d0f14); border-color: rgba(37,99,235,.3); }
+    .final-question .label { color: #7dd3fc; }
+    .final-question .q { color: #f8fafc; }
+    .source-box { background: rgba(0,0,0,.02); color: #5a6478; }
+    .back-link { background: rgba(0,0,0,.03); color: #4a5468; }
   }
 </style>
 </head>
