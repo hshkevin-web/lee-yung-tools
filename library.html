@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="小K書房">
+<meta name="theme-color" content="#f5f0e8">
+<link rel="manifest" href="library-manifest.json">
+<link rel="apple-touch-icon" href="library-icon-180.png">
+<title>小K書房 · 收藏館</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body {
+    font-family: -apple-system, 'PingFang TC', 'Noto Sans TC', 'Songti TC', serif;
+    background: #f5f0e8; color: #2d2a26;
+    font-size: 16px; line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    padding: 0 0 env(safe-area-inset-bottom);
+  }
+  .hero {
+    background: linear-gradient(180deg, #e8e0d0 0%, #f5f0e8 100%);
+    padding: calc(env(safe-area-inset-top) + 70px) 24px 44px;
+    text-align: center;
+    border-bottom: 1px solid rgba(0,0,0,.06);
+  }
+  .hero .icon { font-size: 52px; display: block; margin-bottom: 10px; }
+  .hero h1 {
+    font-size: 32px; font-weight: 900; letter-spacing: 6px;
+    color: #3a3428;
+  }
+  .hero .sub { color: #8a8172; font-size: 13px; margin-top: 10px; letter-spacing: 2px; }
+  .hero .count-badge {
+    display: inline-block;
+    background: rgba(184,168,138,.2);
+    color: #6b6355; font-size: 12px; font-weight: 700;
+    padding: 4px 16px; border-radius: 20px;
+    margin-top: 14px; letter-spacing: 1px;
+  }
+
+  .content { max-width: 640px; margin: 0 auto; padding: 28px 20px 60px; }
+  .category { margin-bottom: 30px; }
+  .cat-title {
+    font-size: 15px; font-weight: 800; color: #6b6355;
+    padding: 8px 12px; margin-bottom: 12px;
+    border-left: 3px solid #b8a88a;
+    display: flex; align-items: center; gap: 8px;
+    letter-spacing: 1px;
+  }
+  .cat-title .count { font-size: 11px; font-weight: 400; color: #a89e8d; margin-left: auto; }
+
+  .book-card {
+    display: flex; align-items: center; gap: 14px;
+    text-decoration: none;
+    background: #fffdf8; border: 1px solid rgba(184,168,138,.25);
+    border-radius: 16px; padding: 16px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.04);
+    transition: all .15s ease;
+  }
+  .book-card:active { transform: scale(.97); box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+  .book-card .cover {
+    width: 52px; height: 68px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; flex-shrink: 0;
+    box-shadow: 0 2px 6px rgba(0,0,0,.15);
+  }
+  .book-card .info { flex: 1; min-width: 0; }
+  .book-card .title { font-size: 16px; font-weight: 700; color: #3a3428; }
+  .book-card .desc { font-size: 12px; color: #8a8172; margin-top: 3px; }
+  .book-card .arrow { color: #c4b9a3; font-size: 16px; flex-shrink: 0; }
+
+  .cover-1 { background: linear-gradient(135deg, #3a3428, #6b6355); }
+  .cover-2 { background: linear-gradient(135deg, #1d2333, #38bdf8); }
+  .cover-3 { background: linear-gradient(135deg, #8b5cf6, #3a3428); }
+  .cover-4 { background: linear-gradient(135deg, #ef4444, #f97316); }
+  .cover-5 { background: linear-gradient(135deg, #166534, #22c55e); }
+  .cover-6 { background: linear-gradient(135deg, #1e40af, #60a5fa); }
+
+  .tool-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .tool-card {
+    text-decoration: none;
+    background: #fffdf8; border: 1px solid rgba(184,168,138,.25);
+    border-radius: 14px; padding: 16px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.04);
+    transition: all .15s ease;
+  }
+  .tool-card:active { transform: scale(.96); }
+  .tool-card .t-icon { font-size: 26px; display: block; margin-bottom: 8px; }
+  .tool-card .t-name { font-size: 14px; font-weight: 700; color: #3a3428; }
+  .tool-card .t-desc { font-size: 11px; color: #8a8172; margin-top: 3px; }
+
+  .footer {
+    text-align: center; padding: 30px 20px calc(env(safe-area-inset-bottom) + 30px);
+    color: #a89e8d; font-size: 12px; letter-spacing: 1px;
+  }
+  .footer a { color: #8a8172; text-decoration: none; }
+
+  @media (prefers-color-scheme: dark) {
+    body { background: #161410; color: #d8d2c6; }
+    .hero { background: linear-gradient(180deg, #1f1c16 0%, #161410 100%); border-color: rgba(255,255,255,.06); }
+    .hero h1 { color: #e8e0d0; }
+    .hero .sub { color: #8a8172; }
+    .hero .count-badge { background: rgba(184,168,138,.15); color: #a89e8d; }
+    .cat-title { color: #a89e8d; }
+    .book-card { background: #1f1c16; border-color: rgba(184,168,138,.15); }
+    .book-card .title { color: #e8e0d0; }
+    .book-card .desc { color: #8a8172; }
+    .tool-card { background: #1f1c16; border-color: rgba(184,168,138,.15); }
+    .tool-card .t-name { color: #e8e0d0; }
+    .tool-card .t-desc { color: #8a8172; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <span class="icon">📚</span>
+  <h1>小K書房</h1>
+  <div class="sub">里洋收藏館 · 閱讀 × 研究 × 工具</div>
+  <div class="count-badge" id="countBadge">7 件收藏</div>
+</div>
+
+<div class="content">
+
+  <!-- 閱讀收藏 -->
+  <div class="category">
+    <div class="cat-title">📖 閱讀收藏 <span class="count">2</span></div>
+
+    <a class="book-card" href="musk-almanack-review.html">
+      <div class="cover cover-2">🚀</div>
+      <div class="info">
+        <div class="title">《馬斯克寶典》讀後感</div>
+        <div class="desc">六個改變思維的觀點 · 當個有用的人、第一性原理</div>
+      </div>
+      <div class="arrow">›</div>
+    </a>
+
+    <a class="book-card" href="quiet-compounding.html">
+      <div class="cover cover-3">🌲</div>
+      <div class="info">
+        <div class="title">《安靜的人生》</div>
+        <div class="desc">Morgan Housel · 安靜的複利 · 真正的富有不需要證明</div>
+      </div>
+      <div class="arrow">›</div>
+    </a>
+  </div>
+
+  <!-- 研究報告 -->
+  <div class="category">
+    <div class="cat-title">📈 研究報告 <span class="count">2</span></div>
+
+    <a class="book-card" href="memory-market-report.html">
+      <div class="cover cover-4">🧠</div>
+      <div class="info">
+        <div class="title">記憶體超級週期分析</div>
+        <div class="desc">DRAM / NAND / HBM · J.P. Morgan 預測解析 · 2026 轉折點</div>
+      </div>
+      <div class="arrow">›</div>
+    </a>
+
+    <a class="book-card" href="food/report-go-ultra.html">
+      <div class="cover cover-1">📷</div>
+      <div class="info">
+        <div class="title">Insta360 GO Ultra 評測</div>
+        <div class="desc">四大隨身相機終極比較 · DJI / GoPro 對決</div>
+      </div>
+      <div class="arrow">›</div>
+    </a>
+  </div>
+
+  <!-- 個人工具 -->
+  <div class="category">
+    <div class="cat-title">🛠️ 個人工具 <span class="count">3</span></div>
+    <div class="tool-grid">
+
+      <a class="tool-card" href="index.html">
+        <span class="t-icon">📊</span>
+        <div class="t-name">操盤系統 v2</div>
+        <div class="t-desc">宏觀儀表板 · DCA 規則</div>
+      </a>
+
+      <a class="tool-card" href="habits.html">
+        <span class="t-icon">✅</span>
+        <div class="t-name">習慣追蹤</div>
+        <div class="t-desc">12 習慣 · 語音記錄</div>
+      </a>
+
+      <a class="tool-card" href="buffett-checklist.html">
+        <span class="t-icon">🧾</span>
+        <div class="t-name">巴菲特清單</div>
+        <div class="t-desc">投資檢查清單</div>
+      </a>
+
+      <a class="tool-card" href="food/">
+        <span class="t-icon">🍜</span>
+        <div class="t-name">美食地圖</div>
+        <div class="t-desc">小K的美食記錄本</div>
+      </a>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  小K書房 · 持續收藏中<br>
+  <a href="https://hshkevin-web.github.io/lee-yung-tools/">lee-yung-tools</a>
+</div>
+
+<script>
+  document.getElementById('countBadge').textContent =
+    document.querySelectorAll('.book-card, .tool-card').length + ' 件收藏';
+</script>
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+{
+  "name": "小K書房",
+  "short_name": "小K書房",
+  "description": "里洋收藏館 · 閱讀 × 研究 × 工具",
+  "start_url": "https://hshkevin-web.github.io/lee-yung-tools/library.html",
+  "scope": "https://hshkevin-web.github.io/lee-yung-tools/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f5f0e8",
+  "theme_color": "#b8a88a",
+  "categories": ["books", "lifestyle", "productivity"],
+  "icons": [
+    {
+      "src": "library-icon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "library-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
