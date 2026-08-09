@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0d0f14">
+<title>《馬斯克寶典》讀後感：六個改變思維的觀點</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body {
+    font-family: -apple-system, 'PingFang TC', 'Noto Sans TC', sans-serif;
+    background: #0d0f14; color: #e8edf5;
+    font-size: 16px; line-height: 1.85;
+    -webkit-font-smoothing: antialiased;
+    padding: 0 0 env(safe-area-inset-bottom);
+  }
+  .hero {
+    background: radial-gradient(ellipse at 50% 0%, #1a2340 0%, #0d0f14 60%);
+    padding: calc(env(safe-area-inset-top) + 70px) 24px 50px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+  }
+  .hero .book-emoji { font-size: 48px; display: block; margin-bottom: 12px; }
+  .hero .badge {
+    display: inline-block;
+    background: rgba(56,189,248,.12);
+    color: #38bdf8; font-size: 12px; font-weight: 700;
+    padding: 4px 14px; border-radius: 20px;
+    border: 1px solid rgba(56,189,248,.2);
+    margin-bottom: 14px; letter-spacing: 1px;
+  }
+  .hero h1 { font-size: 26px; font-weight: 900; letter-spacing: -0.5px; line-height: 1.4; }
+  .hero h1 span { background: linear-gradient(135deg, #fff, #38bdf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .hero .sub { color: #8892a8; font-size: 14px; margin-top: 10px; }
+  .hero .author-meta { color: #6b7280; font-size: 12px; margin-top: 14px; }
+  .hero .author-meta a { color: #38bdf8; text-decoration: none; }
+
+  .content { max-width: 660px; margin: 0 auto; padding: 30px 22px 60px; }
+
+  .intro {
+    background: #12161f; border: 1px solid rgba(255,255,255,.05);
+    border-radius: 14px; padding: 20px 22px; margin-bottom: 36px;
+  }
+  .intro p { color: #b8c0d0; font-size: 15px; margin-bottom: 10px; }
+  .intro p:last-child { margin-bottom: 0; }
+  .intro .hl { color: #38bdf8; font-weight: 700; }
+
+  .section { margin-bottom: 34px; }
+  .section-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 34px; height: 34px; border-radius: 10px;
+    background: linear-gradient(135deg, #38bdf8, #2563eb);
+    color: #fff; font-weight: 900; font-size: 16px;
+    margin-right: 10px; flex-shrink: 0;
+  }
+  .section-title {
+    font-size: 19px; font-weight: 800; color: #fff;
+    margin-bottom: 14px;
+    display: flex; align-items: center; gap: 10px;
+    letter-spacing: -0.3px;
+  }
+  .section-title .en { font-size: 11px; color: #4b5563; font-weight: 500; letter-spacing: 1px; }
+
+  .card {
+    background: #12161f; border: 1px solid rgba(255,255,255,.05);
+    border-radius: 14px; padding: 18px 20px; margin-bottom: 10px;
+  }
+  .card p { color: #c0c8d8; font-size: 14.5px; margin-bottom: 10px; }
+  .card p:last-child { margin-bottom: 0; }
+  .card .hl { color: #fff; font-weight: 700; }
+  .card .hl-blue { color: #38bdf8; font-weight: 700; }
+  .card .hl-amber { color: #fbbf24; font-weight: 700; }
+
+  .quote-box {
+    background: rgba(56,189,248,.06);
+    border-left: 3px solid #38bdf8;
+    padding: 18px 20px; border-radius: 0 12px 12px 0;
+    margin: 16px 0; font-size: 16px; font-weight: 600;
+    color: #e8edf5; line-height: 1.9;
+  }
+  .quote-box .q-src { display: block; font-size: 12px; color: #6b7280; font-weight: 400; margin-top: 8px; }
+
+  .framework-box {
+    background: #0f131c; border: 1px solid rgba(56,189,248,.15);
+    border-radius: 14px; padding: 20px; margin: 14px 0;
+  }
+  .framework-box h4 { color: #38bdf8; font-size: 14px; margin-bottom: 10px; letter-spacing: 1px; }
+  .framework-box ul { list-style: none; }
+  .framework-box li {
+    padding: 8px 0 8px 26px; position: relative;
+    font-size: 14px; color: #c0c8d8;
+  }
+  .framework-box li::before { content: "→"; position: absolute; left: 0; color: #38bdf8; font-weight: 700; }
+
+  .takeaway {
+    background: rgba(251,191,36,.05);
+    border: 1px solid rgba(251,191,36,.15);
+    border-radius: 12px; padding: 14px 18px; margin-top: 12px;
+    font-size: 14px; color: #e8edf5;
+  }
+  .takeaway .tag { color: #fbbf24; font-weight: 700; margin-right: 6px; }
+
+  .final-question {
+    background: linear-gradient(135deg, #1a2340, #0d0f14);
+    border: 1px solid rgba(56,189,248,.2);
+    border-radius: 16px; padding: 30px 26px; text-align: center;
+    margin-top: 40px;
+  }
+  .final-question .label { font-size: 12px; color: #38bdf8; letter-spacing: 3px; font-weight: 700; margin-bottom: 14px; }
+  .final-question .q {
+    font-size: 18px; font-weight: 700; color: #fff;
+    line-height: 1.8;
+  }
+
+  .source-box {
+    margin-top: 28px; padding: 16px;
+    background: rgba(255,255,255,.02); border-radius: 12px;
+    border: 1px solid rgba(255,255,255,.04);
+    font-size: 13px; color: #6b7280; text-align: center;
+  }
+  .source-box a { color: #38bdf8; text-decoration: none; }
+
+  .back-link {
+    display: block; text-align: center; margin-top: 16px;
+    padding: 12px; border-radius: 12px;
+    background: rgba(255,255,255,.03);
+    color: #8892a8; font-size: 13px; text-decoration: none;
+  }
+  .footer {
+    text-align: center; padding: 30px 20px calc(env(safe-area-inset-bottom) + 30px);
+    color: #4b5563; font-size: 12px;
+  }
+
+  @media (prefers-color-scheme: light) {
+    body { background: #f5f7fa; color: #1d2333; }
+    .hero { background: radial-gradient(ellipse at 50% 0%, #e0ecff 0%, #f5f7fa 60%); border-color: rgba(0,0,0,.06); }
+    .card { background: #fff; border-color: rgba(0,0,0,.06); }
+    .card p { color: #3d4757; }
+    .intro { background: #fff; border-color: rgba(0,0,0,.06); }
+    .intro p { color: #4a5468; }
+    .quote-box { background: rgba(56,189,248,.05); }
+    .framework-box { background: #f8fafc; border-color: rgba(56,189,248,.2); }
+    .framework-box li { color: #3d4757; }
+    .section-title { color: #1d2333; }
+    .card .hl { color: #1d2333; }
+    .source-box { background: rgba(0,0,0,.02); }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <span class="book-emoji">🚀</span>
+  <div class="badge">BOOK REVIEW</div>
+  <h1>《馬斯克寶典》<br><span>讀後感：六個改變思維的觀點</span></h1>
+  <div class="sub">讀完不像在讀書，更像馬斯克親口對你說話</div>
+  <div class="author-meta">來源：<a href="https://readingoutpost.com">閱讀前哨站</a> · 瓦基 ｜ 2026-07-23</div>
+</div>
+
+<div class="content">
+
+  <!-- 引言 -->
+  <div class="intro">
+    <p>這本書之所以特別，在於作者的編排方式：<span class="hl">書裡的每一句話，都出自馬斯克本人之口。</span></p>
+    <p>作者 Eric Jorgenson 投入超過 1,000 個小時，翻遍馬斯克過去 20 年的訪談、推文、Podcast、股東會議、TED 演講，從數百萬字原始素材中篩選出最有用的想法，重新編排成一本首尾連貫的書。</p>
+    <p>編輯哲學很簡單：<span class="hl">「沒有廢話，沒有填充物。」</span>沒有記者的臆測，也沒有編者的評論——你讀到的不是「別人眼中的馬斯克」，而是「馬斯克腦中的馬斯克」。</p>
+  </div>
+
+  <!-- 觀點一 -->
+  <div class="section">
+    <div class="section-title"><span class="section-num">一</span> 當個有用的人，勝過當個完美的人 <span class="en">BE USEFUL</span></div>
+    <div class="quote-box">
+      「為你的同胞和世界做有益的事，要成為一個有用的人，讓自己的貢獻大於消耗。」<br>
+      「不要追求榮耀，要追求貢獻價值。」
+      <span class="q-src">—— Elon Musk</span>
+    </div>
+    <div class="card">
+      <p>當你專注在創造價值、發揮效用，<span class="hl">你就不再需要靠「完美」來證明自己</span>，也不用討好任何人，因為你的存在本身就對別人有用。</p>
+      <p>與其問「我夠不夠完美」，不如問「我有沒有用」。<span class="hl-amber">前者讓人焦慮，後者讓人自由。</span></p>
+    </div>
+  </div>
+
+  <!-- 觀點二 -->
+  <div class="section">
+    <div class="section-title"><span class="section-num">二</span> 類比思考與第一性原理 <span class="en">FIRST PRINCIPLES</span></div>
+    <div class="quote-box">
+      「物理學是定律，其餘一切只是建議。」
+      <span class="q-src">—— Elon Musk</span>
+    </div>
+    <div class="card">
+      <p>類比思考很省力，大部分時候也夠用，但只會帶來小幅度的迭代進步。在重要的事情上，它會被慣例綁死。</p>
+      <p>用 SpaceX 舉例：如果用類比推理，只會去問其他火箭公司的成本是多少——那樣永遠看不見事情真正的潛力。</p>
+    </div>
+    <div class="takeaway">
+      <span class="tag">💡 一句話</span><span class="hl">類比思考帶來迭代，第一性原理帶來顛覆。</span>先看清楚最根本的要素，以此建立推論，再拿結論去對照基礎事實。
+    </div>
+  </div>
+
+  <!-- 觀點三 -->
+  <div class="section">
+    <div class="section-title"><span class="section-num">三</span> 先種樹幹，再撿樹葉 <span class="en">SEMANTIC TREE</span></div>
+    <div class="quote-box">
+      「我鼓勵每個人多讀書，就是去讀，儘可能吸收大量資訊。」
+      <span class="q-src">—— Elon Musk</span>
+    </div>
+    <div class="card">
+      <p>馬斯克把知識視為一棵<span class="hl">「語意樹」</span>：先確保自己理解基本原理（樹幹和大樹枝），之後再深入細節（樹葉），細節才有地方可以依附。</p>
+      <p>套用到現代：<span class="hl-blue">書本是知識的樹幹，短影音只是樹葉。</span>看了一堆樹葉，如果沒有樹幹可以依附，看跟沒看一樣。</p>
+      <p>演算法可以餵你一輩子的樹葉，但樹幹，只能靠你自己長出來。</p>
+    </div>
+  </div>
+
+  <!-- 觀點四 -->
+  <div class="section">
+    <div class="section-title"><span class="section-num">四</span> 最好的流程，就是沒有流程 <span class="en">DELETE FIRST</span></div>
+    <div class="quote-box">
+      「聰明工程師最常犯的錯誤，就是去優化一個根本不該存在的東西。」
+      <span class="q-src">—— Elon Musk</span>
+    </div>
+    <div class="card">
+      <p>馬斯克的原則：<span class="hl">「最好的零件，就是沒有零件；最好的流程，就是沒有流程。」</span>而且自動化永遠是最後一步。</p>
+      <p>特斯拉的車頭車尾原本由大量零件組裝，後來改用一體成型壓鑄——零件不見了，公差問題也跟著不見，成本更低、量產更順。</p>
+      <p>但簡化有前提：<span class="hl">你必須對要簡化的流程有大量認識與實戰經驗</span>，才有判斷力知道什麼值得留下、什麼應該刪掉。</p>
+    </div>
+    <div class="takeaway">
+      <span class="tag">⚠️ 警鐘</span>別優化一個根本不該存在的東西。少，但是更好。
+    </div>
+  </div>
+
+  <!-- 觀點五 -->
+  <div class="section">
+    <div class="section-title"><span class="section-num">五</span> 批評是免費的教練 <span class="en">SEEK CRITICISM</span></div>
+    <div class="quote-box">
+      「要特別留意負面回饋，甚至主動懇求別人提出批評，尤其是來自朋友的，這幫助非常大。」
+      <span class="q-src">—— Elon Musk</span>
+    </div>
+    <div class="card">
+      <p>PayPal 的例子：他們前身是綜合性金融服務平臺，展示時總愛秀最複雜的部分，結果沒人感興趣；反而是<span class="hl"> Email 付款這個小功能</span>讓所有人的眼睛亮起來——PayPal 才真正起飛。</p>
+      <p>關鍵在於：不要把回饋當成對個人的人身攻擊，而是去看有哪些地方可以改善、可以改進。</p>
+    </div>
+    <div class="takeaway">
+      <span class="tag">💡 心法</span>主動懇求負面回饋，快速修正你的假設。批評是免費的教練，就看你願不願意聽。
+    </div>
+  </div>
+
+  <!-- 觀點六 -->
+  <div class="section">
+    <div class="section-title"><span class="section-num">六</span> 當一件事足夠重要，就放手去做 <span class="en">JUST DO IT</span></div>
+    <div class="quote-box">
+      「當一件事足夠重要時，即使勝算不高，你還是該放手去做。」
+      <span class="q-src">—— Elon Musk</span>
+    </div>
+    <div class="card">
+      <p>如果用風險調整後的報酬率評估，製造火箭和汽車大概排在榜單最尾端——但馬斯克還是做了，<span class="hl">因為那件事對他來說足夠重要</span>。</p>
+      <p>擁擠的賽道已經有很多厲害的人，讓別人去做就好；但在你真正認為重要的領域，如果沒有人把它做好，那事情永遠不會發生。</p>
+    </div>
+    <div class="takeaway">
+      <span class="tag">🏆 捨我其誰</span>當一件事足夠重要，即使勝算不高也該放手去做——這或許就是做出抉擇的最大原因。
+    </div>
+  </div>
+
+  <!-- 後記 -->
+  <div class="section">
+    <div class="section-title"><span class="section-num">✎</span> 後記 <span class="en">EPILOGUE</span></div>
+    <div class="card">
+      <p>《馬斯克寶典》是一本可以放在手邊、隨時翻開任何一頁的書。書中沒有神話，也沒有八卦，只有一個把物理學當成信仰的人，毫無保留地攤開自己的思考方式：</p>
+      <p><span class="hl-blue">當個有用的人 → 回到第一性原理 → 先種知識的樹幹 → 刪掉不該存在的東西 → 主動懇求負面回饋 → 在足夠重要的事情上放手一搏。</span></p>
+    </div>
+  </div>
+
+  <!-- 留給讀者的問題 -->
+  <div class="final-question">
+    <div class="label">留給你的問題</div>
+    <div class="q">如果把「風險調整後的報酬率」<br>從人生的計算式裡拿掉，<br>有哪一件你認為足夠重要的事，<br>是你明知勝算不高，<br>也想放手去做的？</div>
+  </div>
+
+  <div class="source-box">
+    原文出處：<a href="https://readingoutpost.com">閱讀前哨站電子報</a>（超過 10 萬名愛書人訂閱）<br>
+    書籍：<a href="#">《馬斯克寶典》Eric Jorgenson 著</a>｜ 前作：《納瓦爾寶典》
+  </div>
+
+  <a class="back-link" href="https://hshkevin-web.github.io/lee-yung-tools/">← 回首頁</a>
+
+</div>
+
+<div class="footer">
+  里洋收藏 · 書評筆記 · 2026-07-23
+</div>
+
+</body>
+</html>
