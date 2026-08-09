@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#f5f0e8">
+<title>安靜的人生，往往更容易走向自由</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body {
+    font-family: -apple-system, 'PingFang TC', 'Noto Sans TC', 'Songti TC', serif;
+    background: #f5f0e8; color: #2d2a26;
+    font-size: 17px; line-height: 2;
+    -webkit-font-smoothing: antialiased;
+    padding: 0 0 env(safe-area-inset-bottom);
+  }
+  .hero {
+    background: linear-gradient(180deg, #e8e0d0 0%, #f5f0e8 100%);
+    padding: calc(env(safe-area-inset-top) + 80px) 30px 60px;
+    text-align: center;
+    border-bottom: 1px solid rgba(0,0,0,.06);
+  }
+  .hero .quote-mark { font-size: 60px; color: #b8a88a; line-height: 1; margin-bottom: 10px; font-family: Georgia, serif; }
+  .hero h1 {
+    font-size: 26px; font-weight: 800; letter-spacing: 2px;
+    color: #3a3428; line-height: 1.6;
+  }
+  .hero .sub {
+    color: #8a8172; font-size: 13px; margin-top: 16px;
+    letter-spacing: 3px; font-weight: 400;
+  }
+  .hero .author {
+    margin-top: 24px; font-size: 13px; color: #6b6355;
+  }
+  .hero .author strong { color: #3a3428; }
+
+  .content { max-width: 640px; margin: 0 auto; padding: 40px 28px 60px; }
+  .para { margin-bottom: 28px; font-size: 16.5px; color: #403a30; }
+  .para .hl { background: linear-gradient(180deg, transparent 55%, rgba(184,168,138,.35) 55%); padding: 0 2px; }
+  .para .hl-strong { background: linear-gradient(180deg, transparent 40%, rgba(184,168,138,.55) 40%); padding: 0 2px; font-weight: 700; color: #2d2a26; }
+
+  .pull-quote {
+    border-left: 3px solid #b8a88a;
+    padding: 20px 22px;
+    margin: 36px 0;
+    background: rgba(184,168,138,.08);
+    border-radius: 0 12px 12px 0;
+    font-size: 18px; font-weight: 600;
+    color: #4a4438; line-height: 2;
+  }
+
+  .section-divider {
+    text-align: center; margin: 44px 0; color: #b8a88a;
+    font-size: 14px; letter-spacing: 8px;
+  }
+
+  .nature-box {
+    background: #efe9dc;
+    border-radius: 16px; padding: 24px 26px;
+    margin: 32px 0;
+    border: 1px solid rgba(184,168,138,.2);
+  }
+  .nature-box p { font-size: 16px; color: #4a4438; margin-bottom: 14px; }
+  .nature-box p:last-child { margin-bottom: 0; }
+
+  .question-box {
+    background: #3a3428;
+    border-radius: 16px; padding: 32px 26px;
+    margin: 36px 0;
+    text-align: center;
+  }
+  .question-box .q-label {
+    font-size: 12px; color: #b8a88a; letter-spacing: 3px;
+    margin-bottom: 14px; font-weight: 700;
+  }
+  .question-box .q-text {
+    font-size: 19px; font-weight: 700; color: #f5f0e8;
+    line-height: 1.9;
+  }
+
+  .list-question { list-style: none; margin: 24px 0; }
+  .list-question li {
+    padding: 14px 18px 14px 44px;
+    background: #efe9dc; border-radius: 10px;
+    margin-bottom: 8px; position: relative;
+    font-size: 16px; color: #403a30;
+  }
+  .list-question li::before {
+    content: "❓";
+    position: absolute; left: 14px; top: 14px;
+    font-size: 14px;
+  }
+
+  .ending {
+    text-align: center;
+    margin-top: 48px; padding: 36px 10px;
+  }
+  .ending .big {
+    font-size: 20px; font-weight: 800; color: #3a3428;
+    line-height: 1.8; letter-spacing: 1px;
+  }
+  .ending .small {
+    font-size: 14px; color: #8a8172; margin-top: 16px;
+    letter-spacing: 2px;
+  }
+
+  .tags {
+    text-align: center; margin-top: 36px;
+    display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+  }
+  .tag {
+    font-size: 12px; color: #8a8172;
+    background: #efe9dc; border-radius: 20px;
+    padding: 6px 14px; border: 1px solid rgba(184,168,138,.25);
+  }
+
+  .footer {
+    text-align: center; padding: 30px 20px calc(env(safe-area-inset-bottom) + 30px);
+    color: #a89e8d; font-size: 12px; letter-spacing: 1px;
+  }
+  .footer a { color: #8a8172; text-decoration: none; }
+  .back-link {
+    display: block; text-align: center; margin-top: 16px;
+    padding: 12px; border-radius: 12px;
+    background: rgba(0,0,0,.03);
+    color: #8a8172; font-size: 13px; text-decoration: none;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body { background: #161410; color: #d8d2c6; }
+    .hero { background: linear-gradient(180deg, #1f1c16 0%, #161410 100%); border-color: rgba(255,255,255,.06); }
+    .hero h1 { color: #e8e0d0; }
+    .hero .sub { color: #8a8172; }
+    .hero .author { color: #a89e8d; }
+    .hero .author strong { color: #e8e0d0; }
+    .para { color: #c8c2b6; }
+    .para .hl { background: linear-gradient(180deg, transparent 55%, rgba(184,168,138,.25) 55%); }
+    .para .hl-strong { color: #e8e0d0; }
+    .pull-quote { background: rgba(184,168,138,.08); color: #d8d2c6; }
+    .nature-box { background: #1f1c16; border-color: rgba(184,168,138,.15); }
+    .nature-box p { color: #c8c2b6; }
+    .question-box { background: #26221a; }
+    .list-question li { background: #1f1c16; color: #c8c2b6; }
+    .tag { color: #a89e8d; background: #1f1c16; }
+    .ending .big { color: #e8e0d0; }
+    .ending .small { color: #8a8172; }
+    .back-link { background: rgba(255,255,255,.03); color: #a89e8d; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="quote-mark">“</div>
+  <h1>安靜的人生，<br>往往更容易走向自由</h1>
+  <div class="sub">—— 安靜的複利 ——</div>
+  <div class="author">靈感來自 <strong>《花錢的藝術》</strong> · Morgan Housel</div>
+</div>
+
+<div class="content">
+
+  <div class="para">
+    不知道你有沒有發現：<span class="hl">現在很多事情，不是做給自己看的，而是做給別人看的。</span>
+  </div>
+
+  <div class="para">
+    旅行，要拍照打卡。<br>
+    買新車，要分享。<br>
+    投資賺錢，要曬績效。<br>
+    就連努力，好像也要讓全世界知道。
+  </div>
+
+  <div class="para">
+    可是，當人生開始變成一場表演，<span class="hl-strong">你就很難知道，哪些是真正想要的，哪些只是想得到別人的掌聲。</span>
+  </div>
+
+  <div class="section-divider">❖ ❖ ❖</div>
+
+  <div class="para">
+    《花錢的藝術》提到一個我非常喜歡的概念——<span class="hl-strong">安靜的複利</span>。
+  </div>
+
+  <div class="nature-box">
+    <p>大自然最偉大的作品，都不是一夜之間完成的。</p>
+    <p>一棵紅杉，可以默默生長幾百年。</p>
+    <p>一座山，不會因為今天沒長高，就失去它的力量。</p>
+  </div>
+
+  <div class="para">
+    真正有力量的成長，通常都是安安靜靜發生的。人生也是。
+  </div>
+
+  <div class="para">
+    那些真正累積財富的人，很多並不高調。<br>
+    他們沒有天天炫耀投資績效，也沒有不停比較誰賺得更多。<br>
+    他們只是默默存錢、持續投資、專心工作，把時間留給真正重要的人與事。<br>
+    <span class="hl-strong">因為他們知道，真正的富有，不需要一直向別人證明。</span>
+  </div>
+
+  <div class="pull-quote">
+    「如果除了你和家人之外，沒有人知道這件事，<br>你還會這麼做嗎？」
+  </div>
+
+  <div class="para">
+    這不只是理財問題，也是人生問題。
+  </div>
+
+  <ul class="list-question">
+    <li>如果沒有人按讚，你還會旅行嗎？</li>
+    <li>如果沒有人稱讚，你還會閱讀嗎？</li>
+    <li>如果沒有人羨慕，你還會選擇現在的工作與生活嗎？</li>
+  </ul>
+
+  <div class="para">
+    很多時候，我們不是活在自己的價值觀裡，而是活在別人的眼光裡。
+  </div>
+
+  <div class="para">
+    社會比較沒有終點。<br>
+    一定有人比你更有錢、更成功、更有名。<br>
+    <span class="hl-strong">所以，贏得比較，不代表贏得人生。</span>
+  </div>
+
+  <div class="section-divider">❖ ❖ ❖</div>
+
+  <div class="para">
+    真正的自由，是停止這場比賽。<br>
+    把注意力從「別人怎麼看我」，慢慢轉回「我想成為什麼樣的人」。
+  </div>
+
+  <div class="para">
+    <span class="hl-strong">你會發現，最快的致富方式，反而是慢慢來；最深刻的成長，反而是安靜地累積。</span>
+  </div>
+
+  <div class="para">
+    就像複利一樣，每一天看起來都沒有太大的變化，但多年之後，你會驚訝於它帶來的力量。<span class="hl">人生也是一種複利。</span>
+  </div>
+
+  <div class="para">
+    每天多讀一點書、多存一點錢、多陪伴家人、多照顧健康、多活出自己的價值觀。<br>
+    這些努力，也許今天沒有人看見。<br>
+    <span class="hl-strong">但時間，都看見了。</span>
+  </div>
+
+  <div class="ending">
+    <div class="big">能好好做自己的人，<br>是那些不用向任何人證明什麼，<br>但依然一步一步，<br>把人生過得越來越好的人。</div>
+  </div>
+
+  <div class="tags">
+    <span class="tag">#TheArtofSpendingMoney</span>
+    <span class="tag">#MorganHousel</span>
+    <span class="tag">#安靜的複利</span>
+  </div>
+
+  <a class="back-link" href="https://hshkevin-web.github.io/lee-yung-tools/">← 回首頁</a>
+
+</div>
+
+<div class="footer">
+  里洋收藏 · 心靈與理財哲學 · 2026-07-23
+</div>
+
+</body>
+</html>
