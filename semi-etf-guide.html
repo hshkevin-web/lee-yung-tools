@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0b0e14">
+<title>半導體 / 科技股 ETF 懶人包：10 檔完整比較</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body {
+    font-family: -apple-system, 'PingFang TC', 'Noto Sans TC', sans-serif;
+    background: #0b0e14; color: #dfe6f0;
+    font-size: 16px; line-height: 1.85;
+    -webkit-font-smoothing: antialiased;
+    padding: 0 0 env(safe-area-inset-bottom);
+  }
+  .hero {
+    background: radial-gradient(ellipse at 50% -20%, #12264d 0%, #0b0e14 65%);
+    padding: calc(env(safe-area-inset-top) + 70px) 24px 46px;
+    text-align: center;
+    border-bottom: 1px solid rgba(94,174,255,.12);
+  }
+  .hero .icon { font-size: 46px; display: block; margin-bottom: 12px; }
+  .hero .badge {
+    display: inline-block;
+    background: rgba(56,189,248,.1); color: #38bdf8;
+    font-size: 11px; font-weight: 700; padding: 4px 14px;
+    border-radius: 20px; border: 1px solid rgba(56,189,248,.2);
+    margin-bottom: 14px; letter-spacing: 2px;
+  }
+  .hero h1 { font-size: 24px; font-weight: 900; letter-spacing: -.5px; line-height: 1.45; }
+  .hero .sub { color: #7c8ba3; font-size: 14px; margin-top: 12px; }
+  .hero .author-meta { color: #55627a; font-size: 12px; margin-top: 14px; }
+
+  .content { max-width: 700px; margin: 0 auto; padding: 30px 20px 60px; }
+
+  .section { margin-bottom: 34px; }
+  .section-title {
+    font-size: 18px; font-weight: 800; color: #fff;
+    margin-bottom: 14px; display: flex; align-items: center; gap: 10px;
+  }
+  .section-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: 30px; height: 30px; padding: 0 6px; border-radius: 8px;
+    background: linear-gradient(135deg, #38bdf8, #2563eb);
+    color: #fff; font-weight: 900; font-size: 14px; flex-shrink: 0;
+  }
+  .card {
+    background: #101623; border: 1px solid rgba(255,255,255,.05);
+    border-radius: 14px; padding: 18px 20px; margin-bottom: 10px;
+  }
+  .card p { color: #b8c4d6; font-size: 14.5px; margin-bottom: 10px; }
+  .card p:last-child { margin-bottom: 0; }
+  .hl { color: #38bdf8; font-weight: 700; }
+  .hl-amber { color: #fbbf24; font-weight: 700; }
+  .hl-red { color: #f87171; font-weight: 700; }
+  .hl-green { color: #4ade80; font-weight: 700; }
+
+  .table-wrap { overflow-x: auto; margin: 14px 0; border-radius: 12px; border: 1px solid rgba(255,255,255,.06); }
+  table { width: 100%; border-collapse: collapse; font-size: 12.5px; min-width: 520px; }
+  th {
+    background: rgba(56,189,248,.08); color: #7dd3fc;
+    padding: 10px 10px; text-align: left; font-weight: 700;
+    border-bottom: 1px solid rgba(56,189,248,.2); white-space: nowrap;
+  }
+  td { padding: 9px 10px; border-bottom: 1px solid rgba(255,255,255,.05); color: #c2cbd9; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  td:first-child { color: #9fb0c8; font-weight: 600; white-space: nowrap; }
+  .tbl-head { background: rgba(251,191,36,.08); color: #fcd34d; font-weight: 800; }
+
+  .takeaway {
+    background: rgba(251,191,36,.05);
+    border: 1px solid rgba(251,191,36,.16);
+    border-radius: 12px; padding: 14px 18px; margin-top: 12px;
+    font-size: 14px; color: #dfe6f0;
+  }
+  .takeaway .tag { color: #fbbf24; font-weight: 700; margin-right: 6px; }
+
+  .quote-box {
+    background: rgba(56,189,248,.05);
+    border-left: 3px solid #38bdf8;
+    padding: 16px 18px; border-radius: 0 12px 12px 0;
+    margin: 14px 0; font-size: 15px; font-weight: 600;
+    color: #dfe6f0; line-height: 1.9;
+  }
+
+  .my-analysis {
+    background: linear-gradient(135deg, #12264d, #0b0e14);
+    border: 1px solid rgba(56,189,248,.22);
+    border-radius: 16px; padding: 24px 22px; margin-top: 30px;
+  }
+  .my-analysis .label { font-size: 11px; color: #38bdf8; letter-spacing: 4px; font-weight: 700; margin-bottom: 14px; }
+  .my-analysis h4 { color: #fff; font-size: 15px; margin: 14px 0 8px; }
+  .my-analysis p, .my-analysis li { color: #c2cbd9; font-size: 14px; line-height: 1.8; }
+  .my-analysis ul { padding-left: 18px; margin: 6px 0; }
+  .my-analysis li { margin-bottom: 6px; }
+
+  .source-box {
+    margin-top: 26px; padding: 16px;
+    background: rgba(255,255,255,.02); border-radius: 12px;
+    border: 1px solid rgba(255,255,255,.04);
+    font-size: 12px; color: #5a6a84; text-align: center;
+  }
+  .back-link {
+    display: block; text-align: center; margin-top: 16px;
+    padding: 12px; border-radius: 12px;
+    background: rgba(255,255,255,.03);
+    color: #7c8ba3; font-size: 13px; text-decoration: none;
+  }
+  .footer { text-align: center; padding: 30px 20px calc(env(safe-area-inset-bottom) + 30px); color: #44536e; font-size: 12px; }
+
+  @media (prefers-color-scheme: light) {
+    body { background: #f5f7fb; color: #1d2333; }
+    .hero { background: radial-gradient(ellipse at 50% -20%, #dbe9ff 0%, #f5f7fb 65%); border-color: rgba(37,99,235,.12); }
+    .hero .badge { background: rgba(37,99,235,.08); color: #2563eb; border-color: rgba(37,99,235,.2); }
+    .hero h1 { color: #1d2333; }
+    .hero .sub { color: #5a6478; }
+    .hero .author-meta { color: #8892a8; }
+    .section-title { color: #1d2333; }
+    .card { background: #fff; border-color: rgba(0,0,0,.06); }
+    .card p { color: #3d4757; }
+    .hl { color: #2563eb; }
+    .hl-amber { color: #b45309; }
+    .hl-red { color: #dc2626; }
+    .hl-green { color: #15803d; }
+    .table-wrap { border-color: rgba(0,0,0,.08); }
+    th { background: rgba(37,99,235,.06); color: #2563eb; border-color: rgba(37,99,235,.2); }
+    td { border-color: rgba(0,0,0,.06); color: #3d4757; }
+    td:first-child { color: #6b7280; }
+    .tbl-head { background: rgba(251,191,36,.1); color: #b45309; }
+    .takeaway { background: rgba(251,191,36,.07); border-color: rgba(180,83,9,.25); color: #3d4757; }
+    .takeaway .tag { color: #b45309; }
+    .quote-box { background: rgba(37,99,235,.04); border-left-color: #2563eb; color: #1d2333; }
+    .my-analysis { background: linear-gradient(135deg, #dbe9ff, #f5f7fb); border-color: rgba(37,99,235,.25); }
+    .my-analysis .label { color: #2563eb; }
+    .my-analysis h4 { color: #1d2333; }
+    .my-analysis p, .my-analysis li { color: #3d4757; }
+    .source-box { background: rgba(0,0,0,.02); color: #6b7280; }
+    .back-link { background: rgba(0,0,0,.03); color: #4a5468; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <span class="icon">📊</span>
+  <div class="badge">ETF GUIDE · 懶人包</div>
+  <h1>半導體 / 科技股 ETF 懶人包<br>10 檔完整比較</h1>
+  <div class="sub">QQQ · VGT · XLK · SMH · SOXX · SOXQ · XSD · 00830 · 00891 · 00941</div>
+  <div class="author-meta">來源：永豐金證券「豐雲學堂」· 美股咩角專欄 ｜ 小K 收藏 2026-08</div>
+</div>
+
+<div class="content">
+
+  <!-- 差異解析 -->
+  <div class="section">
+    <div class="section-title"><span class="section-num">1</span> 科技股 vs 半導體 ETF：先搞懂差異</div>
+    <div class="card">
+      <p><span class="hl">科技股 ETF</span>：涵蓋範圍較廣，軟體、雲端、網路平台、硬體、晶片大廠全納入（蘋果、微軟、Meta 等），產業結構相對多元。</p>
+      <p><span class="hl">半導體 ETF</span>：聚焦晶片上中下游（IC 設計、晶圓製造、設備材料），權重高度傾斜少數龍頭（特別是輝達）。</p>
+      <p>資產範圍越窄，集中度與波動度越高，且直接受半導體景氣循環影響。簡言之：<span class="hl-amber">科技 ETF 訴求穩健成長，半導體 ETF 則具備強悍的爆發力。</span></p>
+    </div>
+  </div>
+
+  <!-- 科技股 ETF -->
+  <div class="section">
+    <div class="section-title"><span class="section-num">2</span> 科技股 ETF：QQQ / VGT / XLK</div>
+    <div class="table-wrap">
+    <table>
+      <tr><th></th><th>QQQ</th><th>VGT</th><th>XLK</th></tr>
+      <tr><td>全名</td><td>Invesco QQQ Trust</td><td>Vanguard 資訊科技 ETF</td><td>科技精選類股 SPDR</td></tr>
+      <tr><td>追蹤指數</td><td>Nasdaq-100</td><td>MSCI 美國資訊科技 25/50</td><td>Technology Select Sector</td></tr>
+      <tr><td>費用率</td><td class="hl-red">0.18%</td><td class="hl-green">0.09%</td><td class="hl-green">0.08%</td></tr>
+      <tr><td>規模</td><td>約 4,780 億美元</td><td>約 1,692 億美元</td><td>約 1,214 億美元</td></tr>
+      <tr><td>前十大集中度</td><td>約近半</td><td>約 54%</td><td>約 61%</td></tr>
+      <tr><td>適合誰</td><td>科技為主、非 100% 純科技的廣泛成長曝險</td><td>純科技曝險、極度在意內扣費用</td><td>重押微軟、蘋果等頂尖權值股</td></tr>
+    </table>
+    </div>
+    <div class="takeaway"><span class="tag">💡</span>三檔費用率都極低（0.08%～0.18%），核心差異在「集中度」與「是否純科技」：QQQ 最廣、XLK 最集中。</div>
+  </div>
+
+  <!-- 半導體 ETF -->
+  <div class="section">
+    <div class="section-title"><span class="section-num">3</span> 半導體 ETF：SMH / SOXX / SOXQ / XSD</div>
+    <div class="table-wrap">
+    <table>
+      <tr><th></th><th>SMH</th><th>SOXX</th><th>SOXQ</th><th>XSD</th></tr>
+      <tr><td>全名</td><td>VanEck 半導體</td><td>iShares 半導體</td><td>Invesco 費半</td><td>SPDR S&amp;P 半導體</td></tr>
+      <tr><td>追蹤指數</td><td>MVIS 美掛半導體 25</td><td>ICE 半導體指數</td><td>費城半導體指數</td><td>S&amp;P 半導體精選（等權）</td></tr>
+      <tr><td>費用率</td><td class="hl-red">0.35%</td><td class="hl-red">0.33%</td><td class="hl-green">0.19%</td><td class="hl-red">0.35%</td></tr>
+      <tr><td>持股檔數</td><td>約 26 檔</td><td>約 34 檔</td><td>約 33 檔</td><td>約 48 檔</td></tr>
+      <tr><td>加權方式</td><td>市值加權，龍頭權重高</td><td>市值加權 + 單一持股上限</td><td>修正式市值加權</td><td>修正式等權重</td></tr>
+      <tr><td>特色</td><td class="hl-amber">龍頭集中、爆發力極強</td><td>權重均衡、波動較溫和</td><td class="hl-green">費用最低的平價版 SOXX</td><td>最分散、中小型占比高</td></tr>
+    </table>
+    </div>
+    <div class="quote-box">
+      SMH 與 SOXX 的核心差異在「個股集中度」：SMH 持股少、未設單一權重上限，輝達占比極高、爆發力強但波動最大；SOXX 設單一持股上限、前十大較均衡、走勢溫和。
+    </div>
+  </div>
+
+  <!-- 決策對照表 -->
+  <div class="section">
+    <div class="section-title"><span class="section-num">4</span> 你適合哪一檔？決策對照表</div>
+    <div class="table-wrap">
+    <table>
+      <tr class="tbl-head"><td>投資需求／風險屬性</td><td>優先標的</td><td>核心原因</td></tr>
+      <tr><td>新手入門、廣泛分散、低維護</td><td class="hl">QQQ</td><td>涵蓋面廣，降低單一產業景氣衝擊</td></tr>
+      <tr><td>資產穩健、極度在意成本</td><td class="hl">VGT / XLK</td><td>費用率數一數二低，長期成本優勢</td></tr>
+      <tr><td>追求 AI 晶片高成長、能承受波動</td><td class="hl">SMH / SOXX</td><td>精準命中半導體核心供應鏈</td></tr>
+      <tr><td>半導體配置、高度敏感成本</td><td class="hl">SOXQ</td><td>0.19% 低費用，兼顧指數追蹤</td></tr>
+      <tr><td>避開權值過度集中、看好中小型</td><td class="hl">XSD</td><td>等權重，最高分散度</td></tr>
+    </table>
+    </div>
+  </div>
+
+  <!-- 台股掛牌 -->
+  <div class="section">
+    <div class="section-title"><span class="section-num">5</span> 台股掛牌 vs 美股直買：00830 vs SOXQ</div>
+    <div class="table-wrap">
+    <table>
+      <tr><th></th><th>00830（台股掛牌）</th><th>直接買 SOXQ</th></tr>
+      <tr><td>交易幣別</td><td>新台幣</td><td>美金</td></tr>
+      <tr><td>追蹤標的</td><td>費城半導體指數</td><td>費城半導體指數</td></tr>
+      <tr><td>內扣費用</td><td class="hl-red">經理費 0.35% + 保管費 0.08%，市場估實際約 1%</td><td class="hl-green">總費用率 0.19%</td></tr>
+      <tr><td>配息課稅</td><td>計入個人海外所得（最低稅負制）</td><td class="hl-red">美股股利預扣 30% 所得稅</td></tr>
+      <tr><td>交易時間</td><td>台股盤中</td><td>美股盤中（台灣夜間）</td></tr>
+      <tr><td>匯率風險</td><td>具備（受台幣升值影響）</td><td>具備（美元計價 + 換匯成本）</td></tr>
+    </table>
+    </div>
+  </div>
+
+  <!-- 稅務與成本 -->
+  <div class="section">
+    <div class="section-title"><span class="section-num">6</span> 進場前必看：稅務與成本</div>
+    <div class="card">
+      <p><span class="hl-red">● 股利預扣稅</span>：複委託／海外券商持有美股 ETF，現金股利由美國稅務機關預扣 <span class="hl-red">30% 所得稅</span>，多數無法在台灣抵稅或退稅——這是計算實際總報酬不可忽略的隱藏成本。</p>
+      <p><span class="hl">● 海外所得申報</span>：同一申報戶全年海外所得<span class="hl">未達 100 萬元</span>免申報；達 100 萬以上須納入基本所得額申報。但只有當「基本所得額」扣除 <span class="hl">750 萬元免稅額</span>後仍有餘額，才需就超出部分按 <span class="hl-amber">20%</span> 稅率計算基本稅額。</p>
+    </div>
+  </div>
+
+  <!-- 下單途徑 -->
+  <div class="section">
+    <div class="section-title"><span class="section-num">7</span> 三種下單途徑</div>
+    <div class="card">
+      <p><span class="hl">① 複委託</span>：開戶簡便、稅務股利由券商處理；劣勢是手續費較高、多設最低手續費門檻。永豐「大戶投」開好複委託後，SOXX、SMH、QQQ 都能直接 APP 下單。</p>
+      <p><span class="hl">② 海外券商</span>：手續費低廉甚至零手續費；劣勢是開戶繁複、跨境匯款費時、維權成本高。</p>
+      <p><span class="hl">③ 台股掛牌 ETF</span>：不想繁雜海外開戶，可直接在台股用新台幣買追蹤海外指數的國內掛牌 ETF（如 00830、00891、00941）。</p>
+    </div>
+  </div>
+
+  <!-- 小K分析 -->
+  <div class="my-analysis">
+    <div class="label">小K 的整理與分析</div>
+    <h4>🔍 這篇文章的價值</h4>
+    <p>把散落各處的科技／半導體 ETF 一次比較清楚，尤其「決策對照表」直接對應你的風險屬性，不用自己慢慢查。核心其實就三句話：</p>
+    <ul>
+      <li><span class="hl-green">求穩</span> → QQQ（最分散）或 VGT/XLK（費用最低）</li>
+      <li><span class="hl-amber">求爆發</span> → SMH（最集中、輝達權重最高）</li>
+      <li><span class="hl">求平衡</span> → SOXX（設單一持股上限、較均衡）</li>
+    </ul>
+
+    <h4>⚠️ 容易被忽略的三個坑</h4>
+    <ul>
+      <li><span class="hl-red">內扣費用陷阱</span>：台股掛牌的 00830 實際總費用率估約 1%，是 SOXQ（0.19%）的 5 倍多——長期複利下來差距很大。</li>
+      <li><span class="hl-red">30% 預扣稅</span>：美股 ETF 股利被美國預扣 30%，且多半無法退稅，這是實打實的成本。</li>
+      <li><span class="hl-amber">匯率風險</span>：無論台股掛牌或美股直買，都躲不掉美元匯率波動（台幣升值 = 匯損）。</li>
+    </ul>
+
+    <h4>📌 我的建議框架</h4>
+    <p>與其糾結「哪一檔最好」，不如先問自己三個問題：</p>
+    <ul>
+      <li>① 你能承受多大的波動？（決定 SMH 還是 SOXX）</li>
+      <li>② 你的持有期間多長？（長期 → 費用率優先，選 VGT/XLK/SOXQ）</li>
+      <li>③ 你想用台幣還是美金交易？（決定 00830 還是 SOXQ）</li>
+    </ul>
+    <p style="margin-top:8px">對於長期持有、又在意成本的投資人，<span class="hl-green">SOXQ（0.19%）+ 複委託</span> 是性價比最高的半導體曝險組合；追求極致彈性才考慮 SMH，但要有承受單一巨頭（輝達）大起大落的心理準備。</p>
+  </div>
+
+  <div class="source-box">
+    來源：永豐金證券「豐雲學堂」· 美股咩角專欄 ｜ 原文《2026 美股科技股、半導體 ETF 懶人包》<br>
+    本文為內容整理筆記，非買賣建議，投資請自行判斷風險
+  </div>
+
+  <a class="back-link" href="library.html">← 回小K書房</a>
+
+</div>
+
+<div class="footer">
+  小K書房 · ETF 收藏筆記 · 2026-08
+</div>
+
+</body>
+</html>
