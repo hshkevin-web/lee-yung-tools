@@ -341,4 +341,6 @@ document.getElementById('wrCopyBtn').addEventListener('click',copyWeeklyNotes);
 document.getElementById('rb').addEventListener('click',()=>{if(!confirm('確定重設本週？'))return;const k=wk();Object.keys(st.weekly).forEach(y=>{if(y.startsWith(k+'-'))delete st.weekly[y]});rW();sv();showToast('🔄 本週已重設');});
 document.getElementById('sb').addEventListener('click',()=>alert('📸 請截圖保存本週進度'));
 render();window.addEventListener('beforeunload',sv);
-</script></body></html>
+</script>
+<div style="text-align:center;padding:16px 0 26px;"><a href="library.html" style="display:inline-block;padding:9px 22px;border-radius:20px;border:1px solid rgba(120,120,120,.4);color:#666;text-decoration:none;font-size:13px;">← 回小K書房</a></div>
+</body></html>
