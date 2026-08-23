@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0b0e14">
+<title>莊主的第一性原理操盤策略</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body {
+    font-family: -apple-system, 'PingFang TC', 'Noto Sans TC', sans-serif;
+    background: #0b0e14; color: #dfe6f0;
+    font-size: 16px; line-height: 1.9;
+    -webkit-font-smoothing: antialiased;
+    padding: 0 0 env(safe-area-inset-bottom);
+  }
+  .hero {
+    background: radial-gradient(ellipse at 50% -20%, #2a1420 0%, #0b0e14 65%);
+    padding: calc(env(safe-area-inset-top) + 70px) 24px 46px;
+    text-align: center;
+    border-bottom: 1px solid rgba(248,113,113,.14);
+  }
+  .hero .icon { font-size: 46px; display: block; margin-bottom: 12px; }
+  .hero .badge {
+    display: inline-block;
+    background: rgba(248,113,113,.1); color: #fca5a5;
+    font-size: 11px; font-weight: 700; padding: 4px 14px;
+    border-radius: 20px; border: 1px solid rgba(248,113,113,.2);
+    margin-bottom: 14px; letter-spacing: 2px;
+  }
+  .hero h1 { font-size: 24px; font-weight: 900; letter-spacing: -.5px; line-height: 1.45; }
+  .hero h1 span { background: linear-gradient(135deg, #fff, #fca5a5); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .hero .sub { color: #8a7b82; font-size: 14px; margin-top: 12px; }
+  .hero .author-meta { color: #5a4a52; font-size: 12px; margin-top: 14px; }
+
+  .content { max-width: 680px; margin: 0 auto; padding: 30px 22px 60px; }
+
+  .intro {
+    background: #16101a; border: 1px solid rgba(248,113,113,.14);
+    border-radius: 14px; padding: 20px 22px; margin-bottom: 34px;
+  }
+  .intro p { color: #b8a8b2; font-size: 15px; margin-bottom: 10px; }
+  .intro p:last-child { margin-bottom: 0; }
+  .intro .hl { color: #fca5a5; font-weight: 700; }
+
+  .section { margin-bottom: 34px; }
+  .section-title {
+    font-size: 18px; font-weight: 800; color: #fff;
+    margin-bottom: 14px; display: flex; align-items: center; gap: 10px;
+  }
+  .section-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: 30px; height: 30px; padding: 0 6px; border-radius: 8px;
+    background: linear-gradient(135deg, #f87171, #dc2626);
+    color: #fff; font-weight: 900; font-size: 14px; flex-shrink: 0;
+  }
+  .card {
+    background: #101623; border: 1px solid rgba(255,255,255,.05);
+    border-radius: 14px; padding: 18px 20px; margin-bottom: 10px;
+  }
+  .card p { color: #b8c4d6; font-size: 14.5px; margin-bottom: 10px; }
+  .card p:last-child { margin-bottom: 0; }
+  .hl { color: #38bdf8; font-weight: 700; }
+  .hl-amber { color: #fbbf24; font-weight: 700; }
+  .hl-red { color: #f87171; font-weight: 700; }
+  .hl-green { color: #4ade80; font-weight: 700; }
+
+  .strategy-list { list-style: none; }
+  .strategy-list li {
+    padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,.05);
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .strategy-list li:last-child { border-bottom: none; }
+  .strategy-list .n {
+    color: #f87171; font-weight: 900; flex-shrink: 0;
+    font-size: 15px; width: 22px; text-align: center; line-height: 1.6;
+  }
+  .strategy-list .t { color: #c2cbd9; font-size: 14.5px; }
+  .strategy-list .t b { color: #fff; }
+
+  .quote-box {
+    background: rgba(248,113,113,.05);
+    border-left: 3px solid #f87171;
+    padding: 16px 18px; border-radius: 0 12px 12px 0;
+    margin: 14px 0; font-size: 15px; font-weight: 600;
+    color: #dfe6f0; line-height: 1.9;
+  }
+  .quote-box.blue { background: rgba(56,189,248,.05); border-left-color: #38bdf8; }
+
+  .vs-box { margin: 14px 0; }
+  .vs-row {
+    display: flex; flex-direction: column; gap: 4px;
+    padding: 12px 14px; margin-bottom: 8px;
+    background: #101623; border: 1px solid rgba(255,255,255,.05);
+    border-radius: 12px;
+  }
+  .vs-row .q { color: #f87171; font-size: 13px; font-weight: 700; }
+  .vs-row .a { color: #4ade80; font-size: 14px; font-weight: 600; }
+
+  .final-box {
+    background: linear-gradient(135deg, #2a1420, #0b0e14);
+    border: 1px solid rgba(248,113,113,.22);
+    border-radius: 16px; padding: 28px 24px; text-align: center;
+    margin-top: 36px;
+  }
+  .final-box .label { font-size: 11px; color: #fca5a5; letter-spacing: 4px; font-weight: 700; margin-bottom: 14px; }
+  .final-box .q { font-size: 17px; font-weight: 700; color: #fff; line-height: 1.9; }
+
+  .source-box {
+    margin-top: 26px; padding: 16px;
+    background: rgba(255,255,255,.02); border-radius: 12px;
+    border: 1px solid rgba(255,255,255,.04);
+    font-size: 12px; color: #5a6a84; text-align: center;
+  }
+  .back-link {
+    display: block; text-align: center; margin-top: 16px;
+    padding: 12px; border-radius: 12px;
+    background: rgba(255,255,255,.03);
+    color: #7c8ba3; font-size: 13px; text-decoration: none;
+  }
+  .footer { text-align: center; padding: 30px 20px calc(env(safe-area-inset-bottom) + 30px); color: #44536e; font-size: 12px; }
+
+  @media (prefers-color-scheme: light) {
+    body { background: #fbf7f8; color: #2a1a20; }
+    .hero { background: radial-gradient(ellipse at 50% -20%, #fde8e8 0%, #fbf7f8 65%); border-color: rgba(220,38,38,.12); }
+    .hero .badge { background: rgba(220,38,38,.08); color: #dc2626; border-color: rgba(220,38,38,.2); }
+    .hero h1 { color: #2a1a20; }
+    .hero h1 span { background: linear-gradient(135deg, #2a1a20, #dc2626); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero .sub { color: #7a5a62; }
+    .hero .author-meta { color: #a88a92; }
+    .intro { background: #fff; border-color: rgba(220,38,38,.15); }
+    .intro p { color: #5a4a50; }
+    .intro .hl { color: #dc2626; }
+    .section-title { color: #2a1a20; }
+    .card { background: #fff; border-color: rgba(0,0,0,.06); }
+    .card p { color: #4a3a40; }
+    .hl { color: #2563eb; }
+    .hl-amber { color: #b45309; }
+    .hl-red { color: #dc2626; }
+    .hl-green { color: #15803d; }
+    .strategy-list li { border-color: rgba(0,0,0,.05); }
+    .strategy-list .n { color: #dc2626; }
+    .strategy-list .t { color: #4a3a40; }
+    .strategy-list .t b { color: #2a1a20; }
+    .quote-box { background: rgba(220,38,38,.04); border-left-color: #dc2626; color: #2a1a20; }
+    .quote-box.blue { background: rgba(37,99,235,.04); border-left-color: #2563eb; }
+    .vs-row { background: #fff; border-color: rgba(0,0,0,.06); }
+    .vs-row .q { color: #dc2626; }
+    .vs-row .a { color: #15803d; }
+    .final-box { background: linear-gradient(135deg, #fde8e8, #fbf7f8); border-color: rgba(220,38,38,.25); }
+    .final-box .label { color: #dc2626; }
+    .final-box .q { color: #2a1a20; }
+    .source-box { background: rgba(0,0,0,.02); color: #6b7280; }
+    .back-link { background: rgba(0,0,0,.03); color: #4a5468; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <span class="icon">🛡️</span>
+  <div class="badge">RISK ADVISORY · 風險勸告</div>
+  <h1>莊主的第一性原理<br><span>操盤策略</span></h1>
+  <div class="sub">風險報酬比正在改變 · 把風險放在報酬之前</div>
+  <div class="author-meta">銀河投資論壇 · 莊主 敬上 ｜ 小K 收藏 2026-08</div>
+</div>
+
+<div class="content">
+
+  <!-- 開篇 -->
+  <div class="intro">
+    <p>台股現在不是不能做，而是<span class="hl">風險報酬比正在改變</span>。越是多頭氣氛高昂，越要開始準備退路。</p>
+    <p>這不是看空台股，也不是叫大家全面撤退，而是用<span class="hl">第一性原理</span>重新拆解現在的市場。手上持股務必只能降到 <span class="hl-red">50%</span>——哪怕是小虧，以目前美債的惡劣情況，隨時資本會再次逃離股市。</p>
+  </div>
+
+  <!-- 第一性原理 -->
+  <div class="section">
+    <div class="section-title"><span class="section-num">1</span> 第一性原理：回到最底層的三件事</div>
+    <div class="card">
+      <p>把所有市場雜訊、情緒、故事與共識先拿掉，只回到最底層的事實。股票為什麼會漲？最終回到三件事：</p>
+      <p>① <span class="hl">企業未來能賺多少錢</span><br>② <span class="hl">這些獲利能成長多久</span><br>③ <span class="hl">市場願意給多少估值</span></p>
+      <p>真正要問的不是「大家還看不看 AI」，而是<span class="hl-amber">AI 產業的實際需求、企業獲利與現金流，能不能持續超過目前股價已經反映的預期</span>。</p>
+    </div>
+    <div class="quote-box">
+      好產業，不等於所有公司都值得買。<br>
+      好公司，不等於任何價格都值得追。<br>
+      基本面成長，不等於股價永遠上漲。
+    </div>
+    <div class="card">
+      <p>當市場已提前反映大量未來成長，接下來最重要的就不是找更多利多，而是<span class="hl-red">計算預期與現實之間還剩多少落差</span>。</p>
+    </div>
+  </div>
+
+  <!-- 五個策略 -->
+  <div class="section">
+    <div class="section-title"><span class="section-num">2</span> 下一階段的五個操盤策略</div>
+    <ul class="strategy-list">
+      <li><span class="n">1</span><div class="t"><b>不追價格，只追價值與成長的落差。</b></div></li>
+      <li><span class="n">2</span><div class="t"><b>不因題材熱門而加碼</b>，只在基本面、籌碼與價格三者同時合理時出手。</div></li>
+      <li><span class="n">3</span><div class="t"><b>不把帳面獲利當成真正獲利</b>。高位階、爆量、短線漲幅過大的股票，開始分批停利。</div></li>
+      <li><span class="n">4</span><div class="t"><b>降低沒有基本面支撐的題材股部位。</b>市場越熱，越要問：如果明天市場不再相信這個故事，我還願不願意持有？</div></li>
+      <li><span class="n">5</span><div class="t"><b>提高現金比重。</b></div></li>
+    </ul>
+    <div class="quote-box blue">
+      現金不是看空，而是選擇權。市場繼續上漲，我們有核心持股享受行情；市場突然轉弱，我們手上有現金，就有能力在別人恐慌時重新取得發球權。
+    </div>
+  </div>
+
+  <!-- 思考方式 -->
+  <div class="section">
+    <div class="section-title"><span class="section-num">3</span> 要改變的，是思考方式</div>
+    <div class="vs-box">
+      <div class="vs-row"><span class="q">❌ 不要問：這檔股票還能不能漲？</span><span class="a">✅ 要問：它現在的價格，究竟反映了多少未來？</span></div>
+      <div class="vs-row"><span class="q">❌ 不要問：大家都在買，我是不是也要買？</span><span class="a">✅ 要問：如果拿掉市場情緒，只剩企業本身，這個價格還合理嗎？</span></div>
+      <div class="vs-row"><span class="q">❌ 不要問：已經漲這麼多了，還能不能抱？</span><span class="a">✅ 要問：從現在開始，我承擔多少下行風險，可以換取多少上行報酬？</span></div>
+    </div>
+    <div class="quote-box">
+      這才是第一性原理。
+    </div>
+  </div>
+
+  <!-- 結論 -->
+  <div class="section">
+    <div class="section-title"><span class="section-num">4</span> 結論：管理不確定性</div>
+    <div class="card">
+      <p>真正成熟的投資，不是永遠滿倉，也不是永遠看空，而是<span class="hl">根據風險報酬比調整部位</span>。行情強我們進攻，估值過高我們收斂，風險升高我們防守，市場恐慌、價格錯殺，再重新進攻。</p>
+      <p>莊主從來不要求各位猜中最高點或最低點，只做一件事：<span class="hl-amber">在看得懂的地方重兵出擊，在看不懂的地方保持現金，在風險報酬比失衡的地方主動撤退。</span></p>
+      <p>因為投資真正的第一性原理，不是預測未來，而是<span class="hl-red">管理不確定性</span>。</p>
+    </div>
+    <div class="quote-box blue">
+      現在不是撤退。現在是把風險放在報酬之前，把本金放在獲利之前，把紀律放在情緒之前。
+    </div>
+  </div>
+
+  <div class="final-box">
+    <div class="label">莊主的結語</div>
+    <div class="q">手上有現金，<br>市場永遠都有下一次機會。<br><br>銀河不是來市場證明自己多會猜，<br>而是來市場<span style="color:#fca5a5">長期活下來</span>，<br>把本金守住，把獲利留下，<br>等待下一個真正值得重兵出擊的機會。</div>
+  </div>
+
+  <div class="source-box">
+    銀河投資論壇 · 莊主 敬上 ｜ 小K書房收藏<br>
+    本文為投資心法整理筆記，非買賣建議，投資請自行判斷風險
+  </div>
+
+  <a class="back-link" href="library.html">← 回小K書房</a>
+
+</div>
+
+<div class="footer">
+  小K書房 · 第一性原理操盤策略 · 2026-08
+</div>
+
+</body>
+</html>
