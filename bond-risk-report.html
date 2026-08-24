@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0b0e14">
+<title>長天期債券風險評估報告</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body {
+    font-family: -apple-system, 'PingFang TC', 'Noto Sans TC', sans-serif;
+    background: #0b0e14; color: #dfe6f0;
+    font-size: 16px; line-height: 1.9;
+    -webkit-font-smoothing: antialiased;
+    padding: 0 0 env(safe-area-inset-bottom);
+  }
+  .hero {
+    background: radial-gradient(ellipse at 50% -20%, #1a2340 0%, #0b0e14 65%);
+    padding: calc(env(safe-area-inset-top) + 70px) 24px 46px;
+    text-align: center;
+    border-bottom: 1px solid rgba(94,174,255,.12);
+  }
+  .hero .icon { font-size: 46px; display: block; margin-bottom: 12px; }
+  .hero .badge {
+    display: inline-block;
+    background: rgba(248,113,113,.1); color: #fca5a5;
+    font-size: 11px; font-weight: 700; padding: 4px 14px;
+    border-radius: 20px; border: 1px solid rgba(248,113,113,.2);
+    margin-bottom: 14px; letter-spacing: 2px;
+  }
+  .hero h1 { font-size: 24px; font-weight: 900; letter-spacing: -.5px; line-height: 1.45; }
+  .hero h1 span { background: linear-gradient(135deg, #fff, #fca5a5); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .hero .sub { color: #7c8ba3; font-size: 14px; margin-top: 12px; }
+  .hero .author-meta { color: #55627a; font-size: 12px; margin-top: 14px; }
+
+  .content { max-width: 680px; margin: 0 auto; padding: 30px 22px 60px; }
+
+  .intro {
+    background: #101623; border: 1px solid rgba(248,113,113,.14);
+    border-radius: 14px; padding: 20px 22px; margin-bottom: 34px;
+  }
+  .intro p { color: #9fb0c8; font-size: 15px; margin-bottom: 10px; }
+  .intro p:last-child { margin-bottom: 0; }
+  .intro .hl { color: #fca5a5; font-weight: 700; }
+
+  .section { margin-bottom: 34px; }
+  .section-title {
+    font-size: 18px; font-weight: 800; color: #fff;
+    margin-bottom: 14px; display: flex; align-items: center; gap: 10px;
+  }
+  .section-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: 30px; height: 30px; padding: 0 6px; border-radius: 8px;
+    background: linear-gradient(135deg, #f87171, #dc2626);
+    color: #fff; font-weight: 900; font-size: 14px; flex-shrink: 0;
+  }
+  .card {
+    background: #101623; border: 1px solid rgba(255,255,255,.05);
+    border-radius: 14px; padding: 18px 20px; margin-bottom: 10px;
+  }
+  .card p { color: #b8c4d6; font-size: 14.5px; margin-bottom: 10px; }
+  .card p:last-child { margin-bottom: 0; }
+  .hl { color: #38bdf8; font-weight: 700; }
+  .hl-amber { color: #fbbf24; font-weight: 700; }
+  .hl-red { color: #f87171; font-weight: 700; }
+  .hl-green { color: #4ade80; font-weight: 700; }
+
+  .data-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0; }
+  .data-card {
+    background: #101623; border: 1px solid rgba(255,255,255,.06);
+    border-radius: 12px; padding: 14px; text-align: center;
+  }
+  .data-card .val { font-size: 22px; font-weight: 900; color: #fca5a5; }
+  .data-card .lbl { font-size: 12px; color: #7c8ba3; margin-top: 3px; }
+
+  .table-wrap { overflow-x: auto; margin: 14px 0; border-radius: 12px; border: 1px solid rgba(255,255,255,.06); }
+  table { width: 100%; border-collapse: collapse; font-size: 12.5px; min-width: 520px; }
+  th {
+    background: rgba(248,113,113,.08); color: #fca5a5;
+    padding: 10px 10px; text-align: left; font-weight: 700;
+    border-bottom: 1px solid rgba(248,113,113,.2); white-space: nowrap;
+  }
+  td { padding: 10px 10px; border-bottom: 1px solid rgba(255,255,255,.05); color: #c2cbd9; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  td:first-child { color: #9fb0c8; font-weight: 700; white-space: nowrap; }
+
+  .quote-box {
+    background: rgba(248,113,113,.05);
+    border-left: 3px solid #f87171;
+    padding: 16px 18px; border-radius: 0 12px 12px 0;
+    margin: 14px 0; font-size: 15px; font-weight: 600;
+    color: #dfe6f0; line-height: 1.9;
+  }
+  .quote-box.blue { background: rgba(56,189,248,.05); border-left-color: #38bdf8; }
+
+  .pill { display: inline-block; background: rgba(248,113,113,.1); color: #fca5a5; font-size: 12px; font-weight: 700; padding: 3px 11px; border-radius: 14px; border: 1px solid rgba(248,113,113,.2); margin: 2px 3px 2px 0; }
+  .pill.green { background: rgba(74,222,128,.1); color: #86efac; border-color: rgba(74,222,128,.2); }
+  .pill.amber { background: rgba(251,191,36,.1); color: #fcd34d; border-color: rgba(251,191,36,.2); }
+
+  .takeaway {
+    background: rgba(251,191,36,.05);
+    border: 1px solid rgba(251,191,36,.16);
+    border-radius: 12px; padding: 14px 18px; margin-top: 12px;
+    font-size: 14px; color: #dfe6f0;
+  }
+  .takeaway .tag { color: #fbbf24; font-weight: 700; margin-right: 6px; }
+
+  .final-box {
+    background: linear-gradient(135deg, #2a1420, #0b0e14);
+    border: 1px solid rgba(248,113,113,.22);
+    border-radius: 16px; padding: 28px 24px; text-align: center;
+    margin-top: 36px;
+  }
+  .final-box .label { font-size: 11px; color: #fca5a5; letter-spacing: 4px; font-weight: 700; margin-bottom: 14px; }
+  .final-box .q { font-size: 17px; font-weight: 700; color: #fff; line-height: 1.9; }
+
+  .source-box {
+    margin-top: 26px; padding: 16px;
+    background: rgba(255,255,255,.02); border-radius: 12px;
+    border: 1px solid rgba(255,255,255,.04);
+    font-size: 12px; color: #5a6a84; text-align: center;
+  }
+  .back-link {
+    display: block; text-align: center; margin-top: 16px;
+    padding: 12px; border-radius: 12px;
+    background: rgba(255,255,255,.03);
+    color: #7c8ba3; font-size: 13px; text-decoration: none;
+  }
+  .footer { text-align: center; padding: 30px 20px calc(env(safe-area-inset-bottom) + 30px); color: #44536e; font-size: 12px; }
+
+  @media (prefers-color-scheme: light) {
+    body { background: #fbf7f8; color: #2a1a20; }
+    .hero { background: radial-gradient(ellipse at 50% -20%, #fde8e8 0%, #fbf7f8 65%); border-color: rgba(220,38,38,.12); }
+    .hero .badge { background: rgba(220,38,38,.08); color: #dc2626; border-color: rgba(220,38,38,.2); }
+    .hero h1 { color: #2a1a20; }
+    .hero h1 span { background: linear-gradient(135deg, #2a1a20, #dc2626); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero .sub { color: #7a5a62; }
+    .hero .author-meta { color: #a88a92; }
+    .intro { background: #fff; border-color: rgba(220,38,38,.15); }
+    .intro p { color: #5a4a50; }
+    .intro .hl { color: #dc2626; }
+    .section-title { color: #2a1a20; }
+    .card { background: #fff; border-color: rgba(0,0,0,.06); }
+    .card p { color: #4a3a40; }
+    .hl { color: #2563eb; }
+    .hl-amber { color: #b45309; }
+    .hl-red { color: #dc2626; }
+    .hl-green { color: #15803d; }
+    .data-card { background: #fff; border-color: rgba(0,0,0,.06); }
+    .data-card .val { color: #dc2626; }
+    .data-card .lbl { color: #7a5a62; }
+    .table-wrap { border-color: rgba(0,0,0,.08); }
+    th { background: rgba(220,38,38,.06); color: #dc2626; border-color: rgba(220,38,38,.2); }
+    td { border-color: rgba(0,0,0,.06); color: #4a3a40; }
+    td:first-child { color: #6b7280; }
+    .quote-box { background: rgba(220,38,38,.04); border-left-color: #dc2626; color: #2a1a20; }
+    .quote-box.blue { background: rgba(37,99,235,.04); border-left-color: #2563eb; }
+    .pill { background: rgba(220,38,38,.06); color: #dc2626; border-color: rgba(220,38,38,.2); }
+    .pill.green { background: rgba(21,128,61,.06); color: #15803d; border-color: rgba(21,128,61,.2); }
+    .pill.amber { background: rgba(180,83,9,.06); color: #b45309; border-color: rgba(180,83,9,.2); }
+    .takeaway { background: rgba(251,191,36,.07); border-color: rgba(180,83,9,.25); color: #4a3a40; }
+    .takeaway .tag { color: #b45309; }
+    .final-box { background: linear-gradient(135deg, #fde8e8, #fbf7f8); border-color: rgba(220,38,38,.25); }
+    .final-box .label { color: #dc2626; }
+    .final-box .q { color: #2a1a20; }
+    .source-box { background: rgba(0,0,0,.02); color: #6b7280; }
+    .back-link { background: rgba(0,0,0,.03); color: #4a5468; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <span class="icon">📉</span>
+  <div class="badge">BOND RISK · 債券風險評估</div>
+  <h1>長天期債券風險評估：<br><span>你的債券部位安全嗎？</span></h1>
+  <div class="sub">美債殖利率數十年高 · 長天期債券的利率風險解析</div>
+  <div class="author-meta">小K書房 · 債券體檢報告 ｜ 2026-08</div>
+</div>
+
+<div class="content">
+
+  <!-- 開篇 -->
+  <div class="intro">
+    <p>你的觀察是對的：<span class="hl">長天期債券（尤其是美債與長天期公司債）近期隱藏很大的風險。</span>這正是莊主警告「美債情況惡劣」的核心原因。</p>
+    <p>這份報告幫你把「長天期債券為什麼危險」講透，並對你手上 4 檔債券 ETF 做一次完整的風險體檢。</p>
+  </div>
+
+  <!-- 一、風險本質 -->
+  <div class="section">
+    <div class="section-title"><span class="section-num">1</span> 長天期債券的風險本質：存續期間</div>
+    <div class="card">
+      <p>債券價格與殖利率成<span class="hl-red">反向關係</span>：殖利率上升，債券價格下跌。而「長天期」債券對殖利率的敏感度，由一個數字決定——<span class="hl">存續期間（Duration）</span>。</p>
+      <p>簡單的經驗法則：<span class="hl-amber">殖利率每上升 1%，債券價格大約下跌「存續期間」的百分比。</span></p>
+      <p>舉例：一檔存續期間 15 年的債券 ETF，當殖利率上升 1%，它的價格就大約跌 15%。<span class="hl-red">這就是長天期債券的「隱藏風險」——看似安全，實則對利率極度敏感。</span></p>
+    </div>
+    <div class="data-grid">
+      <div class="data-card"><div class="val">4.74%</div><div class="lbl">美國 10 年期公債殖利率（8/21）</div></div>
+      <div class="data-card"><div class="val">5.28%</div><div class="lbl">美國 30 年期公債殖利率（8/21）</div></div>
+    </div>
+    <div class="quote-box">
+      美債殖利率已飆至數十年高位，加上聯準會中性偏鷹（甚至 3 位委員主張升息），殖利率若進一步上行，長天期債券將首當其衝。
+    </div>
+  </div>
+
+  <!-- 二、三大風險 -->
+  <div class="section">
+    <div class="section-title"><span class="section-num">2</span> 長天期債券的三大風險</div>
+    <div class="card">
+      <p><span class="hl-red">① 利率風險（最致命）</span>：存續期間越長，對殖利率越敏感。美債殖利率飆升 = 長天期債券價格重挫。</p>
+      <p><span class="hl-amber">② 通膨風險</span>：長天期債券的固定利息會被通膨侵蝕。通膨黏性仍高於聯準會 2% 目標，長天期實質報酬被壓縮。</p>
+      <p><span class="hl">③ 美國財政／債務風險</span>：美國財政赤字擴大、債務擔憂升溫（財政部 8/20 甚至出手干預債市），市場對長天期美債的信任度下降，導致殖利率被迫上行、債價下跌。</p>
+    </div>
+  </div>
+
+  <!-- 三、體檢 -->
+  <div class="section">
+    <div class="section-title"><span class="section-num">3</span> 你的 4 檔債券 ETF 風險體檢</div>
+    <div class="card">
+      <p>你手上的債券 ETF 其實分成<span class="hl">兩個截然不同的風險屬性</span>，這是最關鍵的發現：</p>
+    </div>
+    <div class="table-wrap">
+    <table>
+      <tr><th>代碼</th><th>名稱</th><th>債券類型</th><th>存續期間</th><th>殖利率升1%價格影響</th><th>主要風險</th></tr>
+      <tr>
+        <td>00933B</td><td>國泰金融債</td><td class="hl-red">長天期投資級金融債</td><td class="hl-red">約 11.5 年</td><td class="hl-red">約 -11.5%</td><td class="hl-red">利率風險極大</td>
+      </tr>
+      <tr>
+        <td>00937B</td><td>群益 ESG 投等債</td><td class="hl-red">超長天期投資級債</td><td class="hl-red">約 15 年</td><td class="hl-red">約 -15%</td><td class="hl-red">利率風險最大</td>
+      </tr>
+      <tr>
+        <td>00945B</td><td>凱基非投等債</td><td class="hl-green">短天期高收益債</td><td class="hl-green">約 2.5 年</td><td class="hl-green">約 -2.5%</td><td>信用風險（違約）</td>
+      </tr>
+      <tr>
+        <td>00953B</td><td>群益非投等債</td><td class="hl-green">短天期高收益債</td><td class="hl-green">約 2.5 年</td><td class="hl-green">約 -2.5%</td><td>信用風險（違約）</td>
+      </tr>
+    </table>
+    </div>
+    <div class="takeaway">
+      <span class="tag">🔍 關鍵發現</span>你的債券組合「一半是長天期投資級、一半是短天期高收益」。真正暴露在長天期利率風險下的，是 <b>00933B 與 00937B</b> 這兩檔——它們的價格對美債殖利率極度敏感。
+    </div>
+  </div>
+
+  <!-- 四、利率敏感性試算 -->
+  <div class="section">
+    <div class="section-title"><span class="section-num">4</span> 利率敏感性試算</div>
+    <div class="card">
+      <p>假設美債殖利率再上升 <span class="hl-amber">1%</span>（在當前聯準會偏鷹環境下並非不可能），你的債券部位會受到多大衝擊？</p>
+      <div class="table-wrap">
+      <table>
+        <tr><th>代碼</th><th>存續期間</th><th>殖利率 +1% 價格變化</th><th>風險等級</th></tr>
+        <tr><td>00933B 國泰金融債</td><td>11.5 年</td><td class="hl-red">-11.5%</td><td><span class="pill">🔴 高風險</span></td></tr>
+        <tr><td>00937B 群益 ESG 投等債</td><td>15 年</td><td class="hl-red">-15%</td><td><span class="pill">🔴 高風險</span></td></tr>
+        <tr><td>00945B 凱基非投等債</td><td>2.5 年</td><td class="hl-green">-2.5%</td><td><span class="pill green">🟢 低利率風險</span></td></tr>
+        <tr><td>00953B 群益非投等債</td><td>2.5 年</td><td class="hl-green">-2.5%</td><td><span class="pill green">🟢 低利率風險</span></td></tr>
+      </table>
+      </div>
+    </div>
+    <div class="quote-box blue">
+      同樣是「債券」，長天期（00937B）與短天期（00945B/00953B）的利率風險相差 6 倍。你的觀察完全命中要害。
+    </div>
+  </div>
+
+  <!-- 五、結論建議 -->
+  <div class="section">
+    <div class="section-title"><span class="section-num">5</span> 結論與建議</div>
+    <div class="card">
+      <p><span class="hl-red">⚠️ 需要正視的風險</span>：00933B、00937B 這兩檔長天期投資級債，正暴露在「美債殖利率數十年高 + 聯準會偏鷹 + 美國債務擔憂」的三重夾擊下。若殖利率續升，價格還有顯著下修空間。</p>
+      <p><span class="hl-green">✅ 相對安心的部分</span>：00945B、00953B 是短天期高收益債，存續期間短、利率風險低，殖利率飆升對它們的衝擊小很多。但它們有另一種風險——<span class="hl-amber">信用風險</span>（若經濟衰退、企業違約率上升，高收益債會被拋售）。</p>
+    </div>
+    <div class="card">
+      <p style="margin-bottom:4px">📌 <span class="hl">參考調整方向</span>（依莊主「降低風險、守護本金」的精神）：</p>
+      <p>① 長天期債（00933B / 00937B）→ 考慮<span class="hl-red">分批減碼</span>，或轉向短天期／浮動利率債，降低存續期間。</p>
+      <p>② 短天期高收益債（00945B / 00953B）→ 利率風險可控，<span class="hl-green">可續抱</span>，但需留意企業違約風險與信用利差變化。</p>
+      <p>③ 整體債券部位 → 在聯準會尚未轉鴿、殖利率未見頂前，<span class="hl-amber">「縮短存續期間」</span>是主要防守方向。</p>
+    </div>
+  </div>
+
+  <div class="final-box">
+    <div class="label">核心結論</div>
+    <div class="q">長天期債券的「安全」，<br>是建立在<span style="color:#fca5a5">殖利率走低</span>的前提上。<br><br>當殖利率飆升、聯準會偏鷹，<br>長天期債券反而變成<br>最危險的資產之一。</div>
+  </div>
+
+  <div class="source-box">
+    數據來源：CBOE（美債殖利率 TNX/TYX）· 存續期間為指數追蹤特性估算 ｜ 小K書房收藏<br>
+    本報告為風險評估筆記，非買賣建議，投資請自行判斷風險
+  </div>
+
+  <a class="back-link" href="library.html">← 回小K書房</a>
+
+</div>
+
+<div class="footer">
+  小K書房 · 長天期債券風險評估 · 2026-08
+</div>
+
+</body>
+</html>
