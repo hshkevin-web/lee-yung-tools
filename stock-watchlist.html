@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0b0e14">
+<title>投資標的觀察清單</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body {
+    font-family: -apple-system, 'PingFang TC', 'Noto Sans TC', sans-serif;
+    background: #0b0e14; color: #dfe6f0;
+    font-size: 16px; line-height: 1.85;
+    -webkit-font-smoothing: antialiased;
+    padding: 0 0 env(safe-area-inset-bottom);
+  }
+  .hero {
+    background: radial-gradient(ellipse at 50% -20%, #12264d 0%, #0b0e14 65%);
+    padding: calc(env(safe-area-inset-top) + 70px) 24px 46px;
+    text-align: center;
+    border-bottom: 1px solid rgba(94,174,255,.12);
+  }
+  .hero .icon { font-size: 46px; display: block; margin-bottom: 12px; }
+  .hero .badge {
+    display: inline-block;
+    background: rgba(56,189,248,.1); color: #38bdf8;
+    font-size: 11px; font-weight: 700; padding: 4px 14px;
+    border-radius: 20px; border: 1px solid rgba(56,189,248,.2);
+    margin-bottom: 14px; letter-spacing: 2px;
+  }
+  .hero h1 { font-size: 24px; font-weight: 900; letter-spacing: -.5px; line-height: 1.45; }
+  .hero h1 span { background: linear-gradient(135deg, #fff, #38bdf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .hero .sub { color: #7c8ba3; font-size: 14px; margin-top: 12px; }
+  .hero .author-meta { color: #55627a; font-size: 12px; margin-top: 14px; }
+
+  .content { max-width: 700px; margin: 0 auto; padding: 30px 20px 60px; }
+
+  .disclaimer {
+    background: rgba(248,113,113,.06); border: 1px solid rgba(248,113,113,.2);
+    border-radius: 12px; padding: 14px 16px; margin-bottom: 28px;
+    font-size: 13px; color: #fca5a5;
+  }
+
+  .group { margin-bottom: 36px; }
+  .group-title {
+    font-size: 16px; font-weight: 800; color: #fff;
+    padding: 10px 14px; margin-bottom: 12px;
+    border-left: 4px solid #38bdf8; background: rgba(56,189,248,.06);
+    border-radius: 0 10px 10px 0; display: flex; align-items: center; gap: 8px;
+  }
+  .group-1 .group-title { border-left-color: #fbbf24; background: rgba(251,191,36,.06); }
+  .group-2 .group-title { border-left-color: #a78bfa; background: rgba(167,139,250,.06); }
+  .group-3 .group-title { border-left-color: #4ade80; background: rgba(74,222,128,.06); }
+  .group-4 .group-title { border-left-color: #f87171; background: rgba(248,113,113,.06); }
+
+  .stock-card {
+    background: #101623; border: 1px solid rgba(255,255,255,.06);
+    border-radius: 14px; padding: 16px 18px; margin-bottom: 10px;
+  }
+  .stock-header {
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+    margin-bottom: 10px; padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255,255,255,.05);
+  }
+  .stock-name { font-size: 17px; font-weight: 800; color: #fff; }
+  .stock-code {
+    font-size: 12px; color: #7dd3fc; font-weight: 700;
+    background: rgba(56,189,248,.08); padding: 2px 9px; border-radius: 10px;
+    border: 1px solid rgba(56,189,248,.15);
+  }
+  .stock-tag { font-size: 11px; color: #9fb0c8; margin-left: auto; }
+
+  .stock-row { display: flex; gap: 8px; margin-bottom: 7px; align-items: flex-start; }
+  .stock-row .label {
+    font-size: 12px; font-weight: 700; flex-shrink: 0; min-width: 52px;
+    padding-top: 1px;
+  }
+  .stock-row .txt { font-size: 13.5px; color: #c2cbd9; }
+  .l-定位 { color: #7dd3fc; }
+  .l-看點 { color: #4ade80; }
+  .l-風險 { color: #f87171; }
+  .l-買進 { color: #fbbf24; }
+  .l-賣出 { color: #fca5a5; }
+
+  .footer { text-align: center; padding: 30px 20px calc(env(safe-area-inset-bottom) + 30px); color: #44536e; font-size: 12px; }
+  .back-link {
+    display: block; text-align: center; margin-top: 16px;
+    padding: 12px; border-radius: 12px;
+    background: rgba(255,255,255,.03);
+    color: #7c8ba3; font-size: 13px; text-decoration: none;
+  }
+
+  @media (prefers-color-scheme: light) {
+    body { background: #f5f7fb; color: #1d2333; }
+    .hero { background: radial-gradient(ellipse at 50% -20%, #dbe9ff 0%, #f5f7fb 65%); border-color: rgba(37,99,235,.12); }
+    .hero .badge { background: rgba(37,99,235,.08); color: #2563eb; border-color: rgba(37,99,235,.2); }
+    .hero h1 { color: #1d2333; }
+    .hero h1 span { background: linear-gradient(135deg, #1d2333, #2563eb); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero .sub { color: #5a6478; }
+    .hero .author-meta { color: #8892a8; }
+    .disclaimer { background: rgba(220,38,38,.04); border-color: rgba(220,38,38,.2); color: #dc2626; }
+    .group-title { color: #1d2333; background: rgba(37,99,235,.05); }
+    .stock-card { background: #fff; border-color: rgba(0,0,0,.06); }
+    .stock-header { border-color: rgba(0,0,0,.05); }
+    .stock-name { color: #1d2333; }
+    .stock-code { background: rgba(37,99,235,.06); color: #2563eb; border-color: rgba(37,99,235,.15); }
+    .stock-tag { color: #6b7280; }
+    .stock-row .txt { color: #3d4757; }
+    .l-定位 { color: #2563eb; }
+    .l-看點 { color: #15803d; }
+    .l-風險 { color: #dc2626; }
+    .l-買進 { color: #b45309; }
+    .l-賣出 { color: #dc2626; }
+    .back-link { background: rgba(0,0,0,.03); color: #4a5468; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <span class="icon">🎯</span>
+  <div class="badge">WATCHLIST · 投資決策參考</div>
+  <h1>投資標的觀察清單<br><span>買賣風險管控手冊</span></h1>
+  <div class="sub">13F 機構共識標的 · 完整細節與買賣紀律</div>
+  <div class="author-meta">小K書房 · 投資決策參考 ｜ 2026-08</div>
+</div>
+
+<div class="content">
+
+  <div class="disclaimer">
+    ⚠️ 本清單為研究整理，非買賣建議。買進/賣出條件為「風險管控框架」，實際操作請搭配即時數據與個人風險承受能力判斷。
+  </div>
+
+  <!-- 板塊一 -->
+  <div class="group group-1">
+    <div class="group-title">🥇 AI 半導體 / 記憶體 / 設備（機構最強共識）</div>
+
+    <div class="stock-card">
+      <div class="stock-header"><span class="stock-name">NVIDIA 輝達</span><span class="stock-code">NVDA</span><span class="stock-tag">GPU · AI 算力核心</span></div>
+      <div class="stock-row"><span class="label l-定位">定位</span><span class="txt">AI GPU 霸主，資料中心算力的絕對核心，13F 最強共識第一名。</span></div>
+      <div class="stock-row"><span class="label l-看點">看點</span><span class="txt">AI 訓練/推論需求持續爆發；CUDA 生態壁壘深；資料中心營收高速成長。</span></div>
+      <div class="stock-row"><span class="label l-風險">風險</span><span class="txt">估值偏高、股價波動劇烈；AI CapEx 若放緩首當其衝；客戶（雲端巨頭）自研晶片分食。</span></div>
+      <div class="stock-row"><span class="label l-買進">買進</span><span class="txt">不追高；拉回至關鍵支撐（季線/前低）且成交量縮時分批承接；財報確認成長續航再考慮。</span></div>
+      <div class="stock-row"><span class="label l-賣出">賣出</span><span class="txt">短線爆量急漲分批停利；跌破主要支撐或財報指引轉弱減碼；AI CapEx 下修警訊出現時離場。</span></div>
+    </div>
+
+    <div class="stock-card">
+      <div class="stock-header"><span class="stock-name">台積電</span><span class="stock-code">2330 / TSM</span><span class="stock-tag">Foundry · 晶圓代工</span></div>
+      <div class="stock-row"><span class="label l-定位">定位</span><span class="txt">全球晶圓代工龍頭，AI 晶片唯一代工夥伴，護城河極深。</span></div>
+      <div class="stock-row"><span class="label l-看點">看點</span><span class="txt">先進製程獨佔；AI 需求拉動 HPC 營收；長期技術領先穩固。</span></div>
+      <div class="stock-row"><span class="label l-風險">風險</span><span class="txt">地緣政治風險（台海）；客戶集中度高；資本支出龐大。</span></div>
+      <div class="stock-row"><span class="label l-買進">買進</span><span class="txt">定期定額長期累積；拉回分批承接；不因短線消息追高。</span></div>
+      <div class="stock-row"><span class="label l-賣出">賣出</span><span class="txt">地緣政治急遽升溫時檢視；基本面未變不因波動恐慌殺出。</span></div>
+    </div>
+
+    <div class="stock-card">
+      <div class="stock-header"><span class="stock-name">Micron 美光</span><span class="stock-code">MU</span><span class="stock-tag">Memory · 記憶體</span></div>
+      <div class="stock-row"><span class="label l-定位">定位</span><span class="txt">美國記憶體龍頭，DRAM/HBM 核心供應商，你的核心持股之一。</span></div>
+      <div class="stock-row"><span class="label l-看點">看點</span><span class="txt">HBM 供不應求；記憶體週期上行；多年期長約（LTA）鎖定需求。</span></div>
+      <div class="stock-row"><span class="label l-風險">風險</span><span class="txt">記憶體是強週期股，景氣反轉殺傷力大；中國 CXMT 競爭；HBM 產能若回流一般 DRAM 恐供過於求。</span></div>
+      <div class="stock-row"><span class="label l-買進">買進</span><span class="txt">只在「價格已反映衰退但基本面未轉壞」時找落難機會；追蹤合約價/現貨價背離。</span></div>
+      <div class="stock-row"><span class="label l-賣出">賣出</span><span class="txt">庫存上升、ASP 轉弱、LTA 鬆動時分批減碼——記憶體週期「退場不是認輸，是風險管理」。</span></div>
+    </div>
+
+    <div class="stock-card">
+      <div class="stock-header"><span class="stock-name">AMD</span><span class="stock-code">AMD</span><span class="stock-tag">CPU / GPU 挑戰者</span></div>
+      <div class="stock-row"><span class="label l-定位">定位</span><span class="txt">NVIDIA 在 AI GPU 的最大挑戰者，資料中心 CPU 也強勁。</span></div>
+      <div class="stock-row"><span class="label l-看點">看點</span><span class="txt">MI 系列 AI 加速器搶市；雲端客戶尋求第二供應源。</span></div>
+      <div class="stock-row"><span class="label l-風險">風險</span><span class="txt">與 NVIDIA 差距仍大；AI 生態（軟體）落後；估值已反映高期待。</span></div>
+      <div class="stock-row"><span class="label l-買進">買進</span><span class="txt">AI 加速器市佔有實質進展、財報確認才考慮；不因題材追高。</span></div>
+      <div class="stock-row"><span class="label l-賣出">賣出</span><span class="txt">市佔未見起色、成長不如預期時減碼。</span></div>
+    </div>
+
+    <div class="stock-card">
+      <div class="stock-header"><span class="stock-name">ASML</span><span class="stock-code">ASML</span><span class="stock-tag">EUV 設備獨家</span></div>
+      <div class="stock-row"><span class="label l-定位">定位</span><span class="txt">EUV 微影設備唯一供應商，先進製程的「賣鏟人」。</span></div>
+      <div class="stock-row"><span class="label l-看點">看點</span><span class="txt">先進製程擴產必買設備；壟斷地位無可取代。</span></div>
+      <div class="stock-row"><span class="label l-風險">風險</span><span class="txt">半導體資本支出週期敏感；地緣政治出口管制；中國需求受限。</span></div>
+      <div class="stock-row"><span class="label l-買進">買進</span><span class="txt">半導體擴產週期確認、資本支出回升時分批布局。</span></div>
+      <div class="stock-row"><span class="label l-賣出">賣出</span><span class="txt">晶圓廠資本支出下修、訂單能見度轉弱時減碼。</span></div>
+    </div>
+
+    <div class="stock-card">
+      <div class="stock-header"><span class="stock-name">Broadcom 博通</span><span class="stock-code">AVGO</span><span class="stock-tag">網通 / AI ASIC</span></div>
+      <div class="stock-row"><span class="label l-定位">定位</span><span class="txt">網通晶片龍頭 + 客製化 AI 晶片（ASIC）主要供應商。</span></div>
+      <div class="stock-row"><span class="label l-看點">看點</span><span class="txt">AI 資料中心網路需求；大型雲端客戶客製晶片訂單。</span></div>
+      <div class="stock-row"><span class="label l-風險">風險</span><span class="txt">客戶集中度高；ASIC 競爭加劇；高估值。</span></div>
+      <div class="stock-row"><span class="label l-買進">買進</span><span class="txt">拉回至合理估值區間、訂單能見度佳時承接。</span></div>
+      <div class="stock-row"><span class="label l-賣出">賣出</span><span class="txt">大客戶訂單流失、成長放緩時減碼。</span></div>
+    </div>
+  </div>
+
+  <!-- 板塊二 -->
+  <div class="group group-2">
+    <div class="group-title">🥈 Mega Tech / Cloud / AI Platform（跨風格共識資產）</div>
+
+    <div class="stock-card">
+      <div class="stock-header"><span class="stock-name">Microsoft 微軟</span><span class="stock-code">MSFT</span><span class="stock-tag">雲端 + AI 助理</span></div>
+      <div class="stock-row"><span class="label l-定位">定位</span><span class="txt">全球最大雲端 + 生產力軟體平台，OpenAI 最大股東。</span></div>
+      <div class="stock-row"><span class="label l-看點">看點</span><span class="txt">Azure 雲端成長；Copilot AI 變現；企業客戶黏性極高。</span></div>
+      <div class="stock-row"><span class="label l-風險">風險</span><span class="txt">AI 資本支出巨大；估值偏高；雲端競爭激烈。</span></div>
+      <div class="stock-row"><span class="label l-買進">買進</span><span class="txt">拉回分批；長期核心資產，適合定期投入。</span></div>
+      <div class="stock-row"><span class="label l-賣出">賣出</span><span class="txt">雲端成長放緩、AI 投資回報不如預期時檢視。</span></div>
+    </div>
+
+    <div class="stock-card">
+      <div class="stock-header"><span class="stock-name">Alphabet 谷歌</span><span class="stock-code">GOOGL</span><span class="stock-tag">搜尋 + AI 模型</span></div>
+      <div class="stock-row"><span class="label l-定位">定位</span><span class="txt">搜尋與廣告科技龍頭，Gemini AI 模型，你的核心持股之一。</span></div>
+      <div class="stock-row"><span class="label l-看點">看點</span><span class="txt">搜尋廣告現金流強勁；Google Cloud 成長；AI 技術領先。</span></div>
+      <div class="stock-row"><span class="label l-風險">風險</span><span class="txt">AI 顛覆搜尋模式的潛在威脅；反壟斷訴訟。</span></div>
+      <div class="stock-row"><span class="label l-買進">買進</span><span class="txt">估值合理時分批；長期現金流穩健，適合核心持有。</span></div>
+      <div class="stock-row"><span class="label l-賣出">賣出</span><span class="txt">搜尋廣告市佔明顯流失、AI 競爭落後時檢視。</span></div>
+    </div>
+
+    <div class="stock-card">
+      <div class="stock-header"><span class="stock-name">Amazon 亞馬遜</span><span class="stock-code">AMZN</span><span class="stock-tag">電商 + 雲端龍頭</span></div>
+      <div class="stock-row"><span class="label l-定位">定位</span><span class="txt">全球電商 + AWS 雲端雙龍頭，物流網路護城河深。</span></div>
+      <div class="stock-row"><span class="label l-看點">看點</span><span class="txt">AWS 是 AI 雲端核心；零售現金流強勁；多元成長引擎。</span></div>
+      <div class="stock-row"><span class="label l-風險">風險</span><span class="txt">零售利潤薄；AI 資本支出大；監管壓力。</span></div>
+      <div class="stock-row"><span class="label l-買進">買進</span><span class="txt">拉回分批；AWS 成長與零售利潤率改善時加碼。</span></div>
+      <div class="stock-row"><span class="label l-賣出">賣出</span><span class="txt">AWS 成長明顯放緩、零售虧損擴大時減碼。</span></div>
+    </div>
+
+    <div class="stock-card">
+      <div class="stock-header"><span class="stock-name">Meta 平台</span><span class="stock-code">META</span><span class="stock-tag">社群 + AI 廣告</span></div>
+      <div class="stock-row"><span class="label l-定位">定位</span><span class="txt">全球最大社群平台，AI 驅動廣告變現。</span></div>
+      <div class="stock-row"><span class="label l-看點">看點</span><span class="txt">AI 廣告推薦提升變現；Reels 成長；現金流強勁。</span></div>
+      <div class="stock-row"><span class="label l-風險">風險</span><span class="txt">元宇宙/AR 燒錢；監管與隱私；用戶成長趨緩。</span></div>
+      <div class="stock-row"><span class="label l-買進">買進</span><span class="txt">估值合理、廣告變現持續改善時分批。</span></div>
+      <div class="stock-row"><span class="label l-賣出">賣出</span><span class="txt">廣告營收轉弱、燒錢業務失控時檢視。</span></div>
+    </div>
+  </div>
+
+  <!-- 板塊三 -->
+  <div class="group group-3">
+    <div class="group-title">🥉 AI Data Center / Power / Grid（新興共識）</div>
+
+    <div class="stock-card">
+      <div class="stock-header"><span class="stock-name">GE Vernova</span><span class="stock-code">GEV</span><span class="stock-tag">發電設備</span></div>
+      <div class="stock-row"><span class="label l-定位">定位</span><span class="txt">全球發電設備龍頭（燃氣/風力/電網），AI 用電擴張的關鍵受益者。</span></div>
+      <div class="stock-row"><span class="label l-看點">看點</span><span class="txt">AI 資料中心用電需求暴增；燃氣渦輪與電網設備訂單強勁。</span></div>
+      <div class="stock-row"><span class="label l-風險">風險</span><span class="txt">能源政策變化；訂單週期波動。</span></div>
+      <div class="stock-row"><span class="label l-買進">買進</span><span class="txt">訂單能見度佳、拉回時分批；屬長線趨勢。</span></div>
+      <div class="stock-row"><span class="label l-賣出">賣出</span><span class="txt">電力需求題材退燒、訂單下滑時減碼。</span></div>
+    </div>
+
+    <div class="stock-card">
+      <div class="stock-header"><span class="stock-name">Eaton 伊頓</span><span class="stock-code">ETN</span><span class="stock-tag">電力設備 / 電網</span></div>
+      <div class="stock-row"><span class="label l-定位">定位</span><span class="txt">電力管理與配電設備龍頭，資料中心供電關鍵。</span></div>
+      <div class="stock-row"><span class="label l-看點">看點</span><span class="txt">資料中心電力設備需求；電網升級趨勢。</span></div>
+      <div class="stock-row"><span class="label l-風險">風險</span><span class="txt">工業景氣循環；估值已反映成長期待。</span></div>
+      <div class="stock-row"><span class="label l-買進">買進</span><span class="txt">訂單與積壓訂單（backlog）成長時分批。</span></div>
+      <div class="stock-row"><span class="label l-賣出">賣出</span><span class="txt">資料中心資本支出放緩、訂單轉弱時減碼。</span></div>
+    </div>
+
+    <div class="stock-card">
+      <div class="stock-header"><span class="stock-name">Vistra</span><span class="stock-code">VST</span><span class="stock-tag">電力公司 / 核能</span></div>
+      <div class="stock-row"><span class="label l-定位">定位</span><span class="txt">美國獨立發電商，核能+天然氣+再生能源，AI 用電直接受益。</span></div>
+      <div class="stock-row"><span class="label l-看點">看點</span><span class="txt">資料中心購電長約；核能重啟題材；電價上漲。</span></div>
+      <div class="stock-row"><span class="label l-風險">風險</span><span class="txt">電價波動；監管風險；高負債。</span></div>
+      <div class="stock-row"><span class="label l-買進">買進</span><span class="txt">購電長約簽訂、電價趨勢向上時分批。</span></div>
+      <div class="stock-row"><span class="label l-賣出">賣出</span><span class="txt">電價大幅回落、長約取消時減碼。</span></div>
+    </div>
+
+    <div class="stock-card">
+      <div class="stock-header"><span class="stock-name">Equinix</span><span class="stock-code">EQIX</span><span class="stock-tag">資料中心 REIT</span></div>
+      <div class="stock-row"><span class="label l-定位">定位</span><span class="txt">全球最大資料中心不動產（REIT），AI 算力部署的實體載體。</span></div>
+      <div class="stock-row"><span class="label l-看點">看點</span><span class="txt">資料中心供不應求；租金上漲；穩定現金流。</span></div>
+      <div class="stock-row"><span class="label l-風險">風險</span><span class="txt">利率敏感（REIT）；供給增加；重資產折舊。</span></div>
+      <div class="stock-row"><span class="label l-買進">買進</span><span class="txt">利率見頂、REIT 估值修復時分批。</span></div>
+      <div class="stock-row"><span class="label l-賣出">賣出</span><span class="txt">利率急升、出租率下滑時減碼。</span></div>
+    </div>
+  </div>
+
+  <!-- 板塊四 -->
+  <div class="group group-4">
+    <div class="group-title">🇹🇼 你的核心台股</div>
+
+    <div class="stock-card">
+      <div class="stock-header"><span class="stock-name">鴻海</span><span class="stock-code">2317</span><span class="stock-tag">AI 伺服器組裝</span></div>
+      <div class="stock-row"><span class="label l-定位">定位</span><span class="txt">全球最大電子代工，AI 伺服器（GB 系列）主要組裝廠。</span></div>
+      <div class="stock-row"><span class="label l-看點">看點</span><span class="txt">AI 伺服器訂單爆發；電動車布局；本益比相對低。</span></div>
+      <div class="stock-row"><span class="label l-風險">風險</span><span class="txt">代工毛利薄；客戶集中；AI 訂單若放緩衝擊大。</span></div>
+      <div class="stock-row"><span class="label l-買進">買進</span><span class="txt">AI 伺服器出貨確認、拉回支撐分批。</span></div>
+      <div class="stock-row"><span class="label l-賣出">賣出</span><span class="txt">AI 訂單下修、毛利率惡化時減碼。</span></div>
+    </div>
+
+    <div class="stock-card">
+      <div class="stock-header"><span class="stock-name">旺宏</span><span class="stock-code">2337</span><span class="stock-tag">記憶體（NOR Flash）</span></div>
+      <div class="stock-row"><span class="label l-定位">定位</span><span class="txt">全球 NOR Flash 龍頭，車用/工業記憶體。</span></div>
+      <div class="stock-row"><span class="label l-看點">看點</span><span class="txt">車用電子需求；記憶體景氣循環。</span></div>
+      <div class="stock-row"><span class="label l-風險">風險</span><span class="txt">強週期股；NOR Flash 價格波動大；中國競爭。</span></div>
+      <div class="stock-row"><span class="label l-買進">買進</span><span class="txt">景氣落底、報價回升訊號出現時布局。</span></div>
+      <div class="stock-row"><span class="label l-賣出">賣出</span><span class="txt">報價轉弱、庫存上升時減碼——週期股嚴格執行停損。</span></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    小K書房 · 投資標的觀察清單 · 2026-08
+  </div>
+
+  <a class="back-link" href="library.html">← 回小K書房</a>
+
+</div>
+
+</body>
+</html>
