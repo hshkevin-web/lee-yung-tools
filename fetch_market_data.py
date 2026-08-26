@@ -90,8 +90,8 @@ def main():
         ("MSFT","微軟","Mega Tech"),("GOOGL","谷歌","Mega Tech"),("AMZN","亞馬遜","Mega Tech"),("META","Meta","Mega Tech"),
         ("GEV","GE Vernova","資料中心/電力"),("ETN","伊頓 Eaton","資料中心/電力"),("VST","Vistra","資料中心/電力"),("EQIX","Equinix","資料中心/REIT"),
         ("2330.TW","台積電","核心台股"),("2317.TW","鴻海","核心台股"),("2337.TW","旺宏","核心台股/記憶體"),
-        ("4772.TWO","台特化","核心台股"),("3689.TWO","湧德","核心台股"),("1815.TWO","富喬","核心台股"),("3042.TW","晶技","核心台股"),
-        ("0050.TW","元大台灣50","ETF"),("VOO","Vanguard S&P500","ETF"),("QQQ","Invesco QQQ","ETF"),
+        ("4772.TWO","台特化","核心台股"),("3689.TWO","湧德","核心台股"),("1815.TWO","富喬","核心台股"),
+        ("0050.TW","元大台灣50","ETF"),("009816.TW","凱基台灣TOP50","ETF"),("VOO","Vanguard S&P500","ETF"),("QQQ","Invesco QQQ","ETF"),
         ("00933B.TWO","國泰金融債","債券ETF"),("00937B.TWO","群益ESG投等債","債券ETF"),("00945B.TW","凱基非投等債","債券ETF"),("00953B.TW","群益非投等債","債券ETF"),
     ]
     for sym, label, grp in tickers:

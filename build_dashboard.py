@@ -17,14 +17,13 @@ GROUPS = [
     ("🥉 AI 資料中心 / 電力 / 基礎建設", "g3", "green",
      ["GEV","ETN","VST","EQIX"], (18, 28)),
     ("🇹🇼 核心台股", "g4", "red",
-     ["2330.TW","2317.TW","2337.TW","4772.TWO","3689.TWO","1815.TWO","3042.TW"], (15, 25)),
+     ["2330.TW","2317.TW","2337.TW","4772.TWO","3689.TWO","1815.TWO"], (15, 25)),
     ("📦 持有 ETF（指數/債券）", "g5", "teal",
-     ["0050.TW","VOO","QQQ","00933B.TWO","00937B.TWO","00945B.TW","00953B.TW"], (15, 25)),
+     ["0050.TW","009816.TW","VOO","QQQ","00933B.TWO","00937B.TWO","00945B.TW","00953B.TW"], (15, 25)),
 ]
-HOLDINGS = {"NVDA","2330.TW","2317.TW","2337.TW","MU","GOOGL","TSM",
-            "4772.TWO","3689.TWO","1815.TWO","3042.TW",
-            "0050.TW","VOO","QQQ","00933B.TWO","00937B.TWO","00945B.TW","00953B.TW"}
-ETF_SYMBOLS = {"0050.TW","VOO","QQQ","00933B.TWO","00937B.TWO","00945B.TW","00953B.TW"}
+HOLDINGS = {"NVDA","2330.TW","2317.TW","2337.TW","4772.TWO","3689.TWO","1815.TWO","MU","GOOGL","TSM",
+            "0050.TW","009816.TW","VOO","QQQ","00933B.TWO","00937B.TWO","00945B.TW","00953B.TW"}
+ETF_SYMBOLS = {"0050.TW","009816.TW","VOO","QQQ","00933B.TWO","00937B.TWO","00945B.TW","00953B.TW"}
 BOND_ETFS = {"00933B.TWO","00937B.TWO","00945B.TW","00953B.TW"}
 
 def fnum(v, d=2):
@@ -75,7 +74,7 @@ def advice(pos, fpe, g, low, high, sym):
     if sym in ETF_SYMBOLS:
         if sym in BOND_ETFS:
             return "📦 債券ETF：收息型，重點看殖利率與利率風險，長天期對利率較敏感"
-        if sym == "0050.TW":
+        if sym in ("0050.TW", "009816.TW"):
             return "📦 台股大盤ETF：追蹤台灣50，看水位＋定期定額，逢低承接"
         return "📦 指數ETF：長期核心配置，定期定額＋拉回加碼，不因短線波動停扣"
     wl = water_light(pos)[1]
