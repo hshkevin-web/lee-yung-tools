@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0b0e14">
+<title>華爾街 13F 機構持倉大解密 2026Q2</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body {
+    font-family: -apple-system, 'PingFang TC', 'Noto Sans TC', sans-serif;
+    background: #0b0e14; color: #dfe6f0;
+    font-size: 16px; line-height: 1.9;
+    -webkit-font-smoothing: antialiased;
+    padding: 0 0 env(safe-area-inset-bottom);
+  }
+  .hero {
+    background: radial-gradient(ellipse at 50% -20%, #12264d 0%, #0b0e14 65%);
+    padding: calc(env(safe-area-inset-top) + 70px) 24px 46px;
+    text-align: center;
+    border-bottom: 1px solid rgba(94,174,255,.12);
+  }
+  .hero .icon { font-size: 46px; display: block; margin-bottom: 12px; }
+  .hero .badge {
+    display: inline-block;
+    background: rgba(56,189,248,.1); color: #38bdf8;
+    font-size: 11px; font-weight: 700; padding: 4px 14px;
+    border-radius: 20px; border: 1px solid rgba(56,189,248,.2);
+    margin-bottom: 14px; letter-spacing: 2px;
+  }
+  .hero h1 { font-size: 24px; font-weight: 900; letter-spacing: -.5px; line-height: 1.45; }
+  .hero h1 span { background: linear-gradient(135deg, #fff, #38bdf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .hero .sub { color: #7c8ba3; font-size: 14px; margin-top: 12px; }
+  .hero .author-meta { color: #55627a; font-size: 12px; margin-top: 14px; }
+
+  .content { max-width: 700px; margin: 0 auto; padding: 30px 20px 60px; }
+
+  .intro {
+    background: #101623; border: 1px solid rgba(56,189,248,.12);
+    border-radius: 14px; padding: 20px 22px; margin-bottom: 34px;
+  }
+  .intro p { color: #9fb0c8; font-size: 15px; margin-bottom: 10px; }
+  .intro p:last-child { margin-bottom: 0; }
+  .intro .hl { color: #38bdf8; font-weight: 700; }
+
+  .section { margin-bottom: 36px; }
+  .section-title {
+    font-size: 18px; font-weight: 800; color: #fff;
+    margin-bottom: 14px; display: flex; align-items: center; gap: 10px;
+  }
+  .rank-badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: 34px; height: 34px; padding: 0 8px; border-radius: 10px;
+    color: #fff; font-weight: 900; font-size: 15px; flex-shrink: 0;
+  }
+  .rank-1 { background: linear-gradient(135deg, #fbbf24, #d97706); }
+  .rank-2 { background: linear-gradient(135deg, #94a3b8, #475569); }
+  .rank-3 { background: linear-gradient(135deg, #b45309, #78350f); }
+  .rank-x { background: linear-gradient(135deg, #38bdf8, #2563eb); }
+
+  .card {
+    background: #101623; border: 1px solid rgba(255,255,255,.05);
+    border-radius: 14px; padding: 18px 20px; margin-bottom: 10px;
+  }
+  .card p { color: #b8c4d6; font-size: 14.5px; margin-bottom: 10px; }
+  .card p:last-child { margin-bottom: 0; }
+  .card h4 { color: #7dd3fc; font-size: 13px; margin-bottom: 8px; letter-spacing: 1px; }
+  .hl { color: #38bdf8; font-weight: 700; }
+  .hl-amber { color: #fbbf24; font-weight: 700; }
+  .hl-red { color: #f87171; font-weight: 700; }
+  .hl-green { color: #4ade80; font-weight: 700; }
+
+  .tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
+  .tag {
+    display: inline-block; background: rgba(56,189,248,.08); color: #7dd3fc;
+    font-size: 12px; font-weight: 600; padding: 5px 11px; border-radius: 14px;
+    border: 1px solid rgba(56,189,248,.15);
+  }
+  .tag.inst { background: rgba(167,139,250,.08); color: #c4b5fd; border-color: rgba(167,139,250,.18); }
+  .tag.amber { background: rgba(251,191,36,.08); color: #fcd34d; border-color: rgba(251,191,36,.2); }
+  .tag.green { background: rgba(74,222,128,.08); color: #86efac; border-color: rgba(74,222,128,.2); }
+
+  /* AI 產業鏈 */
+  .chain { margin: 14px 0; }
+  .chain-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    background: #101623; border: 1px solid rgba(255,255,255,.05);
+    border-left: 3px solid #38bdf8;
+    border-radius: 0 12px 12px 0; padding: 12px 16px; margin-bottom: 8px;
+  }
+  .chain-item .stage {
+    color: #7dd3fc; font-size: 12px; font-weight: 800;
+    min-width: 92px; flex-shrink: 0; letter-spacing: .5px;
+  }
+  .chain-item .companies { color: #dfe6f0; font-size: 13.5px; font-weight: 600; }
+  .chain-item.final { border-left-color: #4ade80; }
+  .chain-item.final .stage { color: #86efac; }
+  .chain-item.power { border-left-color: #fbbf24; }
+  .chain-item.power .stage { color: #fcd34d; }
+
+  .quote-box {
+    background: rgba(56,189,248,.05);
+    border-left: 3px solid #38bdf8;
+    padding: 16px 18px; border-radius: 0 12px 12px 0;
+    margin: 14px 0; font-size: 15px; font-weight: 600;
+    color: #dfe6f0; line-height: 1.9;
+  }
+  .warn-box {
+    background: rgba(248,113,113,.06);
+    border: 1px solid rgba(248,113,113,.22);
+    border-radius: 14px; padding: 18px 20px; margin: 16px 0;
+  }
+  .warn-box h4 { color: #fca5a5; font-size: 14px; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+  .warn-box p { color: #c9d4e4; font-size: 14px; margin-bottom: 8px; }
+  .warn-box p:last-child { margin-bottom: 0; }
+
+  .consensus-list { list-style: none; }
+  .consensus-list li {
+    padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,.05);
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .consensus-list li:last-child { border-bottom: none; }
+  .consensus-list .n {
+    color: #38bdf8; font-weight: 900; flex-shrink: 0;
+    font-size: 15px; width: 22px; text-align: center; line-height: 1.6;
+  }
+  .consensus-list .t { color: #c2cbd9; font-size: 14.5px; }
+  .consensus-list .t b { color: #fff; }
+
+  .final-box {
+    background: linear-gradient(135deg, #12264d, #0b0e14);
+    border: 1px solid rgba(56,189,248,.22);
+    border-radius: 16px; padding: 28px 24px; text-align: center;
+    margin-top: 36px;
+  }
+  .final-box .label { font-size: 11px; color: #38bdf8; letter-spacing: 4px; font-weight: 700; margin-bottom: 14px; }
+  .final-box .q { font-size: 17px; font-weight: 700; color: #fff; line-height: 1.9; }
+
+  .source-box {
+    margin-top: 26px; padding: 16px;
+    background: rgba(255,255,255,.02); border-radius: 12px;
+    border: 1px solid rgba(255,255,255,.04);
+    font-size: 12px; color: #5a6a84; text-align: center;
+  }
+  .back-link {
+    display: block; text-align: center; margin-top: 16px;
+    padding: 12px; border-radius: 12px;
+    background: rgba(255,255,255,.03);
+    color: #7c8ba3; font-size: 13px; text-decoration: none;
+  }
+  .footer { text-align: center; padding: 30px 20px calc(env(safe-area-inset-bottom) + 30px); color: #44536e; font-size: 12px; }
+
+  @media (prefers-color-scheme: light) {
+    body { background: #f5f7fb; color: #1d2333; }
+    .hero { background: radial-gradient(ellipse at 50% -20%, #dbe9ff 0%, #f5f7fb 65%); border-color: rgba(37,99,235,.12); }
+    .hero .badge { background: rgba(37,99,235,.08); color: #2563eb; border-color: rgba(37,99,235,.2); }
+    .hero h1 { color: #1d2333; }
+    .hero h1 span { background: linear-gradient(135deg, #1d2333, #2563eb); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero .sub { color: #5a6478; }
+    .hero .author-meta { color: #8892a8; }
+    .intro { background: #fff; border-color: rgba(37,99,235,.15); }
+    .intro p { color: #4a5468; }
+    .intro .hl { color: #2563eb; }
+    .section-title { color: #1d2333; }
+    .card { background: #fff; border-color: rgba(0,0,0,.06); }
+    .card p { color: #3d4757; }
+    .card h4 { color: #2563eb; }
+    .hl { color: #2563eb; }
+    .hl-amber { color: #b45309; }
+    .hl-red { color: #dc2626; }
+    .hl-green { color: #15803d; }
+    .tag { background: rgba(37,99,235,.06); color: #2563eb; border-color: rgba(37,99,235,.18); }
+    .tag.inst { background: rgba(124,58,237,.06); color: #7c3aed; border-color: rgba(124,58,237,.18); }
+    .tag.amber { background: rgba(180,83,9,.06); color: #b45309; border-color: rgba(180,83,9,.2); }
+    .tag.green { background: rgba(21,128,61,.06); color: #15803d; border-color: rgba(21,128,61,.2); }
+    .chain-item { background: #fff; border-color: rgba(0,0,0,.06); border-left-color: #2563eb; }
+    .chain-item .stage { color: #2563eb; }
+    .chain-item .companies { color: #1d2333; }
+    .chain-item.final { border-left-color: #15803d; }
+    .chain-item.final .stage { color: #15803d; }
+    .chain-item.power { border-left-color: #b45309; }
+    .chain-item.power .stage { color: #b45309; }
+    .quote-box { background: rgba(37,99,235,.04); border-left-color: #2563eb; color: #1d2333; }
+    .warn-box { background: rgba(220,38,38,.04); border-color: rgba(220,38,38,.2); }
+    .warn-box h4 { color: #dc2626; }
+    .warn-box p { color: #4a3a40; }
+    .consensus-list li { border-color: rgba(0,0,0,.05); }
+    .consensus-list .n { color: #2563eb; }
+    .consensus-list .t { color: #3d4757; }
+    .consensus-list .t b { color: #1d2333; }
+    .final-box { background: linear-gradient(135deg, #dbe9ff, #f5f7fb); border-color: rgba(37,99,235,.25); }
+    .final-box .label { color: #2563eb; }
+    .final-box .q { color: #1d2333; }
+    .source-box { background: rgba(0,0,0,.02); color: #6b7280; }
+    .back-link { background: rgba(0,0,0,.03); color: #4a5468; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <span class="icon">🏦</span>
+  <div class="badge">13F FILING · 2026 Q2 最終章</div>
+  <h1>華爾街 13F 機構持倉大解密<br><span>三大板塊 × 完整 AI 產業鏈</span></h1>
+  <div class="sub">重複度最高的三大板塊 · 機構共識與未來方向</div>
+  <div class="author-meta">來源：Uncle Stock Notes（大叔）｜ 小K 收藏 2026-08</div>
+</div>
+
+<div class="content">
+
+  <!-- 開篇 -->
+  <div class="intro">
+    <p>從 2026 Q2 的 13F 報告機構持倉中，篩選出<span class="hl">「重複度最高的三大板塊」</span>，並繪製出真實具體的 AI 產業鏈圖譜。</p>
+    <p>華爾街對 AI 的看法正在成熟——第一階段大家問「誰會贏 AI？」，現在開始問：<span class="hl">「不管誰贏，整個產業都必須買什麼？」</span></p>
+  </div>
+
+  <!-- 第一名 -->
+  <div class="section">
+    <div class="section-title"><span class="rank-badge rank-1">1</span> AI Semiconductor / Memory / Equipment</div>
+    <div class="card">
+      <p>這是<span class="hl-amber">最強的機構共識</span>板塊。華爾街的思考從「賭贏家」轉向「賭整個產業的必需品」——不管最後誰勝出，這些公司的產品都必須被買。</p>
+      <h4>相關公司（15 家）</h4>
+      <div class="tag-row">
+        <span class="tag">NVIDIA</span><span class="tag">AMD</span><span class="tag">TSMC 台積電</span>
+        <span class="tag">Intel</span><span class="tag">Micron 美光</span><span class="tag">SanDisk</span>
+        <span class="tag">Seagate</span><span class="tag">ASML</span><span class="tag">Lam Research</span>
+        <span class="tag">Applied Materials</span><span class="tag">KLA</span><span class="tag">Broadcom</span>
+        <span class="tag">Credo</span><span class="tag">Arista</span><span class="tag">Cerebras</span>
+      </div>
+      <h4>涉及機構（14 家）</h4>
+      <div class="tag-row">
+        <span class="tag inst">Tiger Global</span><span class="tag inst">Druckenmiller</span><span class="tag inst">Tepper</span>
+        <span class="tag inst">Situational Awareness</span><span class="tag inst">Bridgewater</span><span class="tag inst">Soros Capital</span>
+        <span class="tag inst">Citadel</span><span class="tag inst">NVIDIA strategic portfolio</span><span class="tag inst">Baillie Gifford</span>
+        <span class="tag inst">Altimeter</span><span class="tag inst">Coatue</span><span class="tag inst">Lone Pine</span>
+        <span class="tag inst">Pat Dorsey</span><span class="tag inst">Point72</span>
+      </div>
+    </div>
+    <div class="quote-box">
+      「華爾街對 AI 的看法正在成熟。第一階段大家問『誰會贏 AI？』<br>
+      現在大家開始問：<b>『不管誰贏，整個產業都必須買什麼？』</b>」
+    </div>
+  </div>
+
+  <!-- 第二名 -->
+  <div class="section">
+    <div class="section-title"><span class="rank-badge rank-2">2</span> Mega Tech / Cloud / AI Platform</div>
+    <div class="card">
+      <p>核心平台股已<span class="hl">跨越風格限制</span>，成為多類型資金共同持有的核心資產。</p>
+      <h4>核心公司（4 家）</h4>
+      <div class="tag-row">
+        <span class="tag green">Amazon · 電商生態 / 雲端服務 / 物流網路</span>
+      </div>
+      <div class="tag-row">
+        <span class="tag green">Alphabet · 搜尋廣告 / AI 模型 / YouTube</span>
+      </div>
+      <div class="tag-row">
+        <span class="tag green">Meta · 社群平台 / 廣告變現 / VR·AR</span>
+      </div>
+      <div class="tag-row">
+        <span class="tag green">Microsoft · 生產力軟體 / 雲端平台 / AI 助理</span>
+      </div>
+      <h4>主要持有機構（13 家）</h4>
+      <div class="tag-row">
+        <span class="tag inst">Baupost</span><span class="tag inst">Tepper</span><span class="tag inst">Berkshire</span>
+        <span class="tag inst">Coatue</span><span class="tag inst">Point72</span><span class="tag inst">Tiger Global</span>
+        <span class="tag inst">Bridgewater</span><span class="tag inst">Baillie Gifford</span><span class="tag inst">Pat Dorsey</span>
+        <span class="tag inst">Druckenmiller</span><span class="tag inst">Soros</span><span class="tag inst">Altimeter</span>
+        <span class="tag inst">Pershing Square</span>
+      </div>
+    </div>
+    <div class="quote-box">
+      「這一類最大的特色是<b>它們已經跨越風格限制</b>。」<br>
+      <span style="font-size:13.5px;font-weight:600">Growth fund 買。Value investor 也買。Macro fund 買。Quality investor 也買。</span>
+    </div>
+  </div>
+
+  <!-- 第三名 -->
+  <div class="section">
+    <div class="section-title"><span class="rank-badge rank-3">3</span> AI Data Center / Cloud / Power / 實體基礎設施</div>
+    <div class="card">
+      <p>這是目前值得注意的<span class="hl-amber">新興共識</span>。雖然還沒有半導體那麼成熟，但它的<span class="hl">增量非常快</span>。</p>
+      <p>因為 AI Data Center 最終遇到的問題，不只是算力夠不夠，而是——<span class="hl-red">電從哪裡來？</span></p>
+    </div>
+    <div class="quote-box">
+      Data Center / Power / Grid 正在<b>從邊緣題材，逐漸變成正式的機構配置</b>。
+    </div>
+  </div>
+
+  <!-- AI 產業鏈 -->
+  <div class="section">
+    <div class="section-title"><span class="rank-badge rank-x">⚡</span> 完整 AI 產業鏈圖譜</div>
+    <div class="card">
+      <p>透過 13F 錯綜的資訊洞察出的真實 AI Trade 產業鏈，涵蓋範圍從晶片、製造、記憶體、設備、網通，一路到資料中心、電力與最終應用——顯示 <span class="hl">AI Trade 正在全面擴散</span>。</p>
+    </div>
+    <div class="chain">
+      <div class="chain-item"><span class="stage">GPU</span><span class="companies">NVIDIA</span></div>
+      <div class="chain-item"><span class="stage">Foundry</span><span class="companies">TSMC 台積電</span></div>
+      <div class="chain-item"><span class="stage">Memory / Storage</span><span class="companies">Micron · SanDisk · Seagate</span></div>
+      <div class="chain-item"><span class="stage">Equipment</span><span class="companies">ASML · Lam Research · Applied Materials · KLA</span></div>
+      <div class="chain-item"><span class="stage">Networking</span><span class="companies">Broadcom · Credo · Arista</span></div>
+      <div class="chain-item"><span class="stage">AI Cloud / DC</span><span class="companies">CoreWeave · Nebius · Equinix · Applied Digital</span></div>
+      <div class="chain-item power"><span class="stage">⚡ Power</span><span class="companies">GE Vernova · Eaton · Vistra · Bloom Energy · X-Energy</span></div>
+      <div class="chain-item final"><span class="stage">💰 最終變現</span><span class="companies">Amazon · Google · Meta · Microsoft</span></div>
+    </div>
+  </div>
+
+  <!-- 誤區提醒 -->
+  <div class="section">
+    <div class="section-title"><span class="rank-badge rank-x">⚠️</span> 最重要的提醒：這不是購物清單</div>
+    <div class="warn-box">
+      <h4>🚫 這是個誤區</h4>
+      <p>我要特別強調，<span class="hl-red">這不是一份「照著買」的清單</span>。</p>
+      <p>我們真正要學的，是<span class="hl-amber">「這些機構他們在看什麼」</span>——這才是 13F 有價值的地方。</p>
+    </div>
+  </div>
+
+  <!-- 總結 -->
+  <div class="section">
+    <div class="section-title"><span class="rank-badge rank-x">✎</span> 2026 Q2 三大機構共識</div>
+    <ul class="consensus-list">
+      <li><span class="n">1</span><div class="t"><b>AI Semiconductor / Memory / Equipment</b> 仍然是最強的機構共識。</div></li>
+      <li><span class="n">2</span><div class="t"><b>Amazon、Google、Meta、Microsoft</b> 已成為跨 Value、Growth、Macro 的核心品質資產。</div></li>
+      <li><span class="n">3</span><div class="t"><b>Data Center / Power / Grid</b> 正從邊緣題材，逐漸變成正式的機構配置。</div></li>
+    </ul>
+    <div class="card" style="margin-top:12px">
+      <p>📌 如果只看未來值得研究的方向，會繼續追蹤：</p>
+      <div class="tag-row">
+        <span class="tag amber">Memory</span><span class="tag amber">Storage</span>
+        <span class="tag amber">Networking</span><span class="tag amber">Power</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="final-box">
+    <div class="label">核心洞察</div>
+    <div class="q">從「誰會贏 AI？」<br>到「不管誰贏，<br><span style="color:#38bdf8">整個產業都必須買什麼？</span>」<br><br>這就是華爾街 AI 思維的成熟。</div>
+  </div>
+
+  <div class="source-box">
+    來源：Uncle Stock Notes（大叔）· 2026 Q2 13F 機構持倉分析 ｜ 小K書房收藏<br>
+    本文為內容整理筆記，非買賣建議，投資請自行判斷風險
+  </div>
+
+  <a class="back-link" href="library.html">← 回小K書房</a>
+
+</div>
+
+<div class="footer">
+  小K書房 · 13F 機構持倉解密 · 2026-08
+</div>
+
+</body>
+</html>
