@@ -40,6 +40,7 @@
   .g2 .group-title { border-left-color:#a78bfa; background:rgba(167,139,250,.06); }
   .g3 .group-title { border-left-color:#4ade80; background:rgba(74,222,128,.06); }
   .g4 .group-title { border-left-color:#f87171; background:rgba(248,113,113,.06); }
+  .g5 .group-title { border-left-color:#2dd4bf; background:rgba(45,212,191,.06); }
   .scard { background:#101623; border:1px solid rgba(255,255,255,.06); border-radius:14px; padding:15px 16px; margin-bottom:10px; }
   .shead { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:8px; }
   .sname { font-size:16px; font-weight:800; color:#fff; }
@@ -108,8 +109,8 @@
   <span class="icon">📊</span>
   <div class="badge">INVESTMENT DASHBOARD · 估值評判</div>
   <h1>投資儀表板<br><span>即時報價 · 水位 · 總經</span></h1>
-  <div class="sub">17 檔核心標的 + 總經/債券/黃金 自動化評判</div>
-  <div class="upd">🕐 最後更新：2026-08-26 22:31:53</div>
+  <div class="sub">28 檔標的（台股/美股/ETF）＋ 總經/債券/黃金 自動化評判</div>
+  <div class="upd">🕐 最後更新：2026-08-26 22:51:25</div>
 </div>
 
 <div class="content">
@@ -118,17 +119,17 @@
   <div class="sec-title"><span class="bar"></span>🌍 總經儀表板</div>
   <div class="msub"><div class="msub-title">股市指數</div><div class="mgrid"><div class="mcard idx">
   <div class="mlabel">S&P 500</div>
-  <div class="mval">7,668.88</div>
+  <div class="mval">7,673.94</div>
   <div class="mpos"><span class="light 🔴">🔴</span> 52週水位 90% · 高位</div>
   <div class="mnote"></div>
 </div><div class="mcard idx">
   <div class="mlabel">Nasdaq</div>
-  <div class="mval">26,055.53</div>
-  <div class="mpos"><span class="light 🔴">🔴</span> 52週水位 82% · 高位</div>
+  <div class="mval">26,090.18</div>
+  <div class="mpos"><span class="light 🔴">🔴</span> 52週水位 83% · 高位</div>
   <div class="mnote"></div>
 </div><div class="mcard idx">
   <div class="mlabel">道瓊</div>
-  <div class="mval">53,443.11</div>
+  <div class="mval">53,461.01</div>
   <div class="mpos"><span class="light 🔴">🔴</span> 52週水位 87% · 高位</div>
   <div class="mnote"></div>
 </div><div class="mcard idx">
@@ -138,13 +139,13 @@
   <div class="mnote">台股水位</div>
 </div></div></div><div class="msub"><div class="msub-title">波動率</div><div class="mgrid"><div class="mcard risk">
   <div class="mlabel">VIX恐慌指數</div>
-  <div class="mval">15.47</div>
+  <div class="mval">15.52</div>
   <div class="mpos"><span class="light 🟢">🟢</span> 52週水位 10% · 低位</div>
   <div class="mnote">低位＝市場平靜</div>
 </div></div></div><div class="msub"><div class="msub-title">債券殖利率</div><div class="mgrid"><div class="mcard bond">
   <div class="mlabel">美10年債殖利率</div>
   <div class="mval">4.66%</div>
-  <div class="mpos"><span class="light 🔴">🔴</span> 52週水位 90% · 高位</div>
+  <div class="mpos"><span class="light 🔴">🔴</span> 52週水位 89% · 高位</div>
   <div class="mnote">殖利率高位＝債券承壓</div>
 </div><div class="mcard bond">
   <div class="mlabel">美30年債殖利率</div>
@@ -158,17 +159,17 @@
   <div class="mnote">殖利率高位＝債券承壓</div>
 </div></div></div><div class="msub"><div class="msub-title">商品 / 匯率</div><div class="mgrid"><div class="mcard comm">
   <div class="mlabel">黃金</div>
-  <div class="mval">4,679.60</div>
+  <div class="mval">4,674.80</div>
   <div class="mpos"><span class="light 🟡">🟡</span> 52週水位 59% · 中位</div>
   <div class="mnote">避險需求</div>
 </div><div class="mcard comm">
   <div class="mlabel">WTI原油</div>
-  <div class="mval">81.56</div>
-  <div class="mpos"><span class="light 🟡">🟡</span> 52週水位 41% · 中位</div>
+  <div class="mval">81.72</div>
+  <div class="mpos"><span class="light 🟡">🟡</span> 52週水位 42% · 中位</div>
   <div class="mnote"></div>
 </div><div class="mcard comm">
   <div class="mlabel">美元指數</div>
-  <div class="mval">99.19</div>
+  <div class="mval">99.18</div>
   <div class="mpos"><span class="light 🟡">🟡</span> 52週水位 58% · 中位</div>
   <div class="mnote"></div>
 </div></div></div>
@@ -176,201 +177,145 @@
   <div class="sec-title"><span class="bar"></span>🎯 標的估值評判</div>
   <div class="group strong"><div class="group-title">🥇 AI 半導體 / 記憶體 / 設備</div><div class="scard">
   <div class="shead"><span class="sname">NVIDIA 輝達</span><span class="scode">NVDA</span><span class="hold">★持有</span><span class="stag">AI半導體</span></div>
-  <div class="price-row"><span class="price">210.42 <i>USD</i></span><span class="uppos">目標 304.73（+45%）</span></div>
+  <div class="price-row"><span class="price">211.18 <i>USD</i></span><span class="uppos">目標 304.73（+44%）</span></div>
   <div class="lights">
-    <span class="chip mid">水位 🟡 中位 (64%)</span>
-    <span class="chip cheap">估值 🟢 本益比 16.1</span>
+    <span class="chip mid">水位 🟡 中位 (65%)</span>
+    <span class="chip cheap">估值 🟢 本益比 16.2</span>
     <span class="chip strong">成長 🟢 +85.2%</span>
   </div>
-  <div class="fund">
-    <span>毛利率 <b>+74.1%</b></span>
-    <span>淨利率 <b>+63.0%</b></span>
-    <span>市值 <b>50966億USD</b></span>
-  </div>
+  <div class="fund"><span>毛利率 <b>+74.1%</b></span><span>淨利率 <b>+63.0%</b></span><span>市值 <b>51152億USD</b></span></div>
   <div class="advice">🟢 估值偏低，具安全邊際，拉回承接</div>
 </div><div class="scard">
   <div class="shead"><span class="sname">台積電 ADR</span><span class="scode">TSM</span><span class="hold">★持有</span><span class="stag">AI半導體</span></div>
-  <div class="price-row"><span class="price">415.76 <i>USD</i></span><span class="uppos">目標 554.45（+33%）</span></div>
+  <div class="price-row"><span class="price">416.11 <i>USD</i></span><span class="uppos">目標 554.45（+33%）</span></div>
   <div class="lights">
     <span class="chip high">水位 🔴 高位 (75%)</span>
     <span class="chip fair">估值 🟡 本益比 19.1</span>
     <span class="chip strong">成長 🟢 +36.0%</span>
   </div>
-  <div class="fund">
-    <span>毛利率 <b>+64.2%</b></span>
-    <span>淨利率 <b>+49.9%</b></span>
-    <span>市值 <b>21563億USD</b></span>
-  </div>
+  <div class="fund"><span>毛利率 <b>+64.2%</b></span><span>淨利率 <b>+49.9%</b></span><span>市值 <b>21589億USD</b></span></div>
   <div class="advice">🟡 高位但估值尚合理，持有不追高</div>
 </div><div class="scard">
   <div class="shead"><span class="sname">美光</span><span class="scode">MU</span><span class="hold">★持有</span><span class="stag">AI半導體/記憶體</span></div>
-  <div class="price-row"><span class="price">929.33 <i>USD</i></span><span class="uppos">目標 1,515.11（+63%）</span></div>
+  <div class="price-row"><span class="price">938.71 <i>USD</i></span><span class="uppos">目標 1,515.11（+61%）</span></div>
   <div class="lights">
     <span class="chip high">水位 🔴 高位 (72%)</span>
-    <span class="chip cheap">估值 🟢 本益比 6.0</span>
+    <span class="chip cheap">估值 🟢 本益比 6.1</span>
     <span class="chip strong">成長 🟢 +345.7%</span>
   </div>
-  <div class="fund">
-    <span>毛利率 <b>+72.6%</b></span>
-    <span>淨利率 <b>+55.9%</b></span>
-    <span>市值 <b>10494億USD</b></span>
-  </div>
+  <div class="fund"><span>毛利率 <b>+72.6%</b></span><span>淨利率 <b>+55.9%</b></span><span>市值 <b>10602億USD</b></span></div>
   <div class="advice">🔴 高位＋週期股，低PE非便宜而是景氣疑慮，分批停利、嚴設停損</div>
 </div><div class="scard">
   <div class="shead"><span class="sname">AMD</span><span class="scode">AMD</span><span class="stag">AI半導體</span></div>
-  <div class="price-row"><span class="price">484.00 <i>USD</i></span><span class="uppos">目標 613.09（+27%）</span></div>
+  <div class="price-row"><span class="price">486.00 <i>USD</i></span><span class="uppos">目標 613.09（+26%）</span></div>
   <div class="lights">
     <span class="chip high">水位 🔴 高位 (77%)</span>
-    <span class="chip rich">估值 🔴 本益比 31.3</span>
+    <span class="chip rich">估值 🔴 本益比 31.4</span>
     <span class="chip strong">成長 🟢 +50.1%</span>
   </div>
-  <div class="fund">
-    <span>毛利率 <b>+55.7%</b></span>
-    <span>淨利率 <b>+15.6%</b></span>
-    <span>市值 <b>7901億USD</b></span>
-  </div>
+  <div class="fund"><span>毛利率 <b>+55.7%</b></span><span>淨利率 <b>+15.6%</b></span><span>市值 <b>7934億USD</b></span></div>
   <div class="advice">🔴 高位＋偏貴，追高風險大，等待拉回</div>
 </div><div class="scard">
   <div class="shead"><span class="sname">ASML</span><span class="scode">ASML</span><span class="stag">AI半導體/設備</span></div>
-  <div class="price-row"><span class="price">1,737.44 <i>USD</i></span><span class="uppos">目標 2,190.03（+26%）</span></div>
+  <div class="price-row"><span class="price">1,744.67 <i>USD</i></span><span class="uppos">目標 2,190.29（+26%）</span></div>
   <div class="lights">
     <span class="chip high">水位 🔴 高位 (80%)</span>
-    <span class="chip rich">估值 🔴 本益比 33.6</span>
+    <span class="chip rich">估值 🔴 本益比 33.8</span>
     <span class="chip ok">成長 🟡 +21.3%</span>
   </div>
-  <div class="fund">
-    <span>毛利率 <b>+52.7%</b></span>
-    <span>淨利率 <b>+30.1%</b></span>
-    <span>市值 <b>6674億USD</b></span>
-  </div>
+  <div class="fund"><span>毛利率 <b>+52.7%</b></span><span>淨利率 <b>+30.1%</b></span><span>市值 <b>6701億USD</b></span></div>
   <div class="advice">🔴 高位＋偏貴，追高風險大，等待拉回</div>
 </div><div class="scard">
   <div class="shead"><span class="sname">博通</span><span class="scode">AVGO</span><span class="stag">AI半導體</span></div>
-  <div class="price-row"><span class="price">351.84 <i>USD</i></span><span class="uppos">目標 526.30（+50%）</span></div>
+  <div class="price-row"><span class="price">352.70 <i>USD</i></span><span class="uppos">目標 526.30（+49%）</span></div>
   <div class="lights">
-    <span class="chip low">水位 🟢 低位 (31%)</span>
-    <span class="chip fair">估值 🟡 本益比 18.0</span>
+    <span class="chip low">水位 🟢 低位 (32%)</span>
+    <span class="chip fair">估值 🟡 本益比 18.1</span>
     <span class="chip strong">成長 🟢 +47.9%</span>
   </div>
-  <div class="fund">
-    <span>毛利率 <b>+76.3%</b></span>
-    <span>淨利率 <b>+38.8%</b></span>
-    <span>市值 <b>16738億USD</b></span>
-  </div>
+  <div class="fund"><span>毛利率 <b>+76.3%</b></span><span>淨利率 <b>+38.8%</b></span><span>市值 <b>16777億USD</b></span></div>
   <div class="advice">🟡 低位但估值中性，確認基本面後再進</div>
 </div></div><div class="group ok"><div class="group-title">🥈 Mega Tech / Cloud / AI 平台</div><div class="scard">
   <div class="shead"><span class="sname">微軟</span><span class="scode">MSFT</span><span class="stag">Mega Tech</span></div>
-  <div class="price-row"><span class="price">494.21 <i>USD</i></span><span class="uppos">目標 569.45（+15%）</span></div>
+  <div class="price-row"><span class="price">494.95 <i>USD</i></span><span class="uppos">目標 569.45（+15%）</span></div>
   <div class="lights">
     <span class="chip high">水位 🔴 高位 (71%)</span>
     <span class="chip fair">估值 🟡 本益比 21.0</span>
     <span class="chip ok">成長 🟡 +17.7%</span>
   </div>
-  <div class="fund">
-    <span>毛利率 <b>+67.9%</b></span>
-    <span>淨利率 <b>+40.3%</b></span>
-    <span>市值 <b>36700億USD</b></span>
-  </div>
+  <div class="fund"><span>毛利率 <b>+67.9%</b></span><span>淨利率 <b>+40.3%</b></span><span>市值 <b>36753億USD</b></span></div>
   <div class="advice">🟡 高位但估值尚合理，持有不追高</div>
 </div><div class="scard">
   <div class="shead"><span class="sname">谷歌</span><span class="scode">GOOGL</span><span class="hold">★持有</span><span class="stag">Mega Tech</span></div>
-  <div class="price-row"><span class="price">342.00 <i>USD</i></span><span class="uppos">目標 428.07（+25%）</span></div>
+  <div class="price-row"><span class="price">342.68 <i>USD</i></span><span class="uppos">目標 428.07（+25%）</span></div>
   <div class="lights">
-    <span class="chip mid">水位 🟡 中位 (67%)</span>
+    <span class="chip mid">水位 🟡 中位 (68%)</span>
     <span class="chip fair">估值 🟡 本益比 23.1</span>
     <span class="chip ok">成長 🟡 +24.2%</span>
   </div>
-  <div class="fund">
-    <span>毛利率 <b>+60.9%</b></span>
-    <span>淨利率 <b>+54.8%</b></span>
-    <span>市值 <b>41828億USD</b></span>
-  </div>
+  <div class="fund"><span>毛利率 <b>+60.9%</b></span><span>淨利率 <b>+54.8%</b></span><span>市值 <b>41910億USD</b></span></div>
   <div class="advice">🟡 中性，等待更好價位或催化劑</div>
 </div><div class="scard">
   <div class="shead"><span class="sname">亞馬遜</span><span class="scode">AMZN</span><span class="stag">Mega Tech</span></div>
-  <div class="price-row"><span class="price">259.05 <i>USD</i></span><span class="uppos">目標 327.00（+26%）</span></div>
+  <div class="price-row"><span class="price">259.71 <i>USD</i></span><span class="uppos">目標 327.00（+26%）</span></div>
   <div class="lights">
-    <span class="chip mid">水位 🟡 中位 (69%)</span>
-    <span class="chip fair">估值 🟡 本益比 24.9</span>
+    <span class="chip mid">水位 🟡 中位 (70%)</span>
+    <span class="chip fair">估值 🟡 本益比 25.0</span>
     <span class="chip ok">成長 🟡 +19.6%</span>
   </div>
-  <div class="fund">
-    <span>毛利率 <b>+50.8%</b></span>
-    <span>淨利率 <b>+17.4%</b></span>
-    <span>市值 <b>27941億USD</b></span>
-  </div>
+  <div class="fund"><span>毛利率 <b>+50.8%</b></span><span>淨利率 <b>+17.4%</b></span><span>市值 <b>28013億USD</b></span></div>
   <div class="advice">🟡 中性，等待更好價位或催化劑</div>
 </div><div class="scard">
   <div class="shead"><span class="sname">Meta</span><span class="scode">META</span><span class="stag">Mega Tech</span></div>
-  <div class="price-row"><span class="price">572.00 <i>USD</i></span><span class="uppos">目標 754.14（+32%）</span></div>
+  <div class="price-row"><span class="price">581.60 <i>USD</i></span><span class="uppos">目標 754.14（+30%）</span></div>
   <div class="lights">
-    <span class="chip low">水位 🟢 低位 (19%)</span>
-    <span class="chip cheap">估值 🟢 本益比 16.5</span>
+    <span class="chip low">水位 🟢 低位 (23%)</span>
+    <span class="chip cheap">估值 🟢 本益比 16.8</span>
     <span class="chip ok">成長 🟡 +28.0%</span>
   </div>
-  <div class="fund">
-    <span>毛利率 <b>+81.7%</b></span>
-    <span>淨利率 <b>+29.8%</b></span>
-    <span>市值 <b>14563億USD</b></span>
-  </div>
+  <div class="fund"><span>毛利率 <b>+81.7%</b></span><span>淨利率 <b>+29.8%</b></span><span>市值 <b>14821億USD</b></span></div>
   <div class="advice">🟢 低位＋低估，安全邊際浮現，可分批低接</div>
 </div></div><div class="group ok"><div class="group-title">🥉 AI 資料中心 / 電力 / 基礎建設</div><div class="scard">
   <div class="shead"><span class="sname">GE Vernova</span><span class="scode">GEV</span><span class="stag">資料中心/電力</span></div>
-  <div class="price-row"><span class="price">941.45 <i>USD</i></span><span class="uppos">目標 1,236.43（+31%）</span></div>
+  <div class="price-row"><span class="price">944.30 <i>USD</i></span><span class="uppos">目標 1,236.43（+31%）</span></div>
   <div class="lights">
     <span class="chip mid">水位 🟡 中位 (62%)</span>
-    <span class="chip rich">估值 🔴 本益比 37.5</span>
+    <span class="chip rich">估值 🔴 本益比 37.6</span>
     <span class="chip ok">成長 🟡 +21.9%</span>
   </div>
-  <div class="fund">
-    <span>毛利率 <b>+20.6%</b></span>
-    <span>淨利率 <b>+23.0%</b></span>
-    <span>市值 <b>2507億USD</b></span>
-  </div>
+  <div class="fund"><span>毛利率 <b>+20.6%</b></span><span>淨利率 <b>+23.0%</b></span><span>市值 <b>2515億USD</b></span></div>
   <div class="advice">🟡 中性，等待更好價位或催化劑</div>
 </div><div class="scard">
   <div class="shead"><span class="sname">伊頓 Eaton</span><span class="scode">ETN</span><span class="stag">資料中心/電力</span></div>
-  <div class="price-row"><span class="price">415.05 <i>USD</i></span><span class="uppos">目標 477.37（+15%）</span></div>
+  <div class="price-row"><span class="price">415.00 <i>USD</i></span><span class="uppos">目標 477.37（+15%）</span></div>
   <div class="lights">
     <span class="chip mid">水位 🟡 中位 (62%)</span>
     <span class="chip fair">估值 🟡 本益比 25.9</span>
     <span class="chip ok">成長 🟡 +21.4%</span>
   </div>
-  <div class="fund">
-    <span>毛利率 <b>+36.0%</b></span>
-    <span>淨利率 <b>+12.8%</b></span>
-    <span>市值 <b>1612億USD</b></span>
-  </div>
+  <div class="fund"><span>毛利率 <b>+36.0%</b></span><span>淨利率 <b>+12.8%</b></span><span>市值 <b>1611億USD</b></span></div>
   <div class="advice">🟡 中性，等待更好價位或催化劑</div>
 </div><div class="scard">
   <div class="shead"><span class="sname">Vistra</span><span class="scode">VST</span><span class="stag">資料中心/電力</span></div>
-  <div class="price-row"><span class="price">141.15 <i>USD</i></span><span class="uppos">目標 217.84（+54%）</span></div>
+  <div class="price-row"><span class="price">141.11 <i>USD</i></span><span class="uppos">目標 217.84（+54%）</span></div>
   <div class="lights">
     <span class="chip low">水位 🟢 低位 (10%)</span>
     <span class="chip cheap">估值 🟢 本益比 13.6</span>
     <span class="chip neg">成長 🔴 -5.5%</span>
   </div>
-  <div class="fund">
-    <span>毛利率 <b>+38.3%</b></span>
-    <span>淨利率 <b>+11.6%</b></span>
-    <span>市值 <b>474億USD</b></span>
-  </div>
+  <div class="fund"><span>毛利率 <b>+38.3%</b></span><span>淨利率 <b>+11.6%</b></span><span>市值 <b>474億USD</b></span></div>
   <div class="advice">🔴 營收衰退，先觀望基本面是否落底，暫不進場</div>
 </div><div class="scard">
   <div class="shead"><span class="sname">Equinix</span><span class="scode">EQIX</span><span class="stag">資料中心/REIT</span></div>
-  <div class="price-row"><span class="price">1,079.47 <i>USD</i></span><span class="uppos">目標 1,234.55（+14%）</span></div>
+  <div class="price-row"><span class="price">1,076.43 <i>USD</i></span><span class="uppos">目標 1,234.55（+15%）</span></div>
   <div class="lights">
-    <span class="chip high">水位 🔴 高位 (88%)</span>
-    <span class="chip rich">估值 🔴 本益比 57.7</span>
+    <span class="chip high">水位 🔴 高位 (87%)</span>
+    <span class="chip rich">估值 🔴 本益比 57.6</span>
     <span class="chip ok">成長 🟡 +16.7%</span>
   </div>
-  <div class="fund">
-    <span>毛利率 <b>+52.0%</b></span>
-    <span>淨利率 <b>+15.5%</b></span>
-    <span>市值 <b>1065億USD</b></span>
-  </div>
+  <div class="fund"><span>毛利率 <b>+52.0%</b></span><span>淨利率 <b>+15.5%</b></span><span>市值 <b>1062億USD</b></span></div>
   <div class="advice">🟡 REIT 高P/E屬重資產特性，改看殖利率與租金成長，利率見頂才加碼</div>
-</div></div><div class="group strong"><div class="group-title">🇹🇼 核心台股</div><div class="scard">
+</div></div><div class="group weak"><div class="group-title">🇹🇼 核心台股</div><div class="scard">
   <div class="shead"><span class="sname">台積電</span><span class="scode">2330.TW</span><span class="hold">★持有</span><span class="stag">核心台股</span></div>
   <div class="price-row"><span class="price">2,415.00 <i>TWD</i></span><span class="uppos">目標 3,229.33（+34%）</span></div>
   <div class="lights">
@@ -378,11 +323,7 @@
     <span class="chip fair">估值 🟡 本益比 17.0</span>
     <span class="chip strong">成長 🟢 +36.0%</span>
   </div>
-  <div class="fund">
-    <span>毛利率 <b>+64.2%</b></span>
-    <span>淨利率 <b>+49.9%</b></span>
-    <span>市值 <b>626267億TWD</b></span>
-  </div>
+  <div class="fund"><span>毛利率 <b>+64.2%</b></span><span>淨利率 <b>+49.9%</b></span><span>市值 <b>626267億TWD</b></span></div>
   <div class="advice">🟡 高位但估值尚合理，持有不追高</div>
 </div><div class="scard">
   <div class="shead"><span class="sname">鴻海</span><span class="scode">2317.TW</span><span class="hold">★持有</span><span class="stag">核心台股</span></div>
@@ -392,11 +333,7 @@
     <span class="chip cheap">估值 🟢 本益比 10.7</span>
     <span class="chip strong">成長 🟢 +40.8%</span>
   </div>
-  <div class="fund">
-    <span>毛利率 <b>+6.1%</b></span>
-    <span>淨利率 <b>+2.3%</b></span>
-    <span>市值 <b>34573億TWD</b></span>
-  </div>
+  <div class="fund"><span>毛利率 <b>+6.1%</b></span><span>淨利率 <b>+2.3%</b></span><span>市值 <b>34573億TWD</b></span></div>
   <div class="advice">🟢 代工低PE常態，看AI伺服器訂單與毛利變化，拉回分批</div>
 </div><div class="scard">
   <div class="shead"><span class="sname">旺宏</span><span class="scode">2337.TW</span><span class="hold">★持有</span><span class="stag">核心台股/記憶體</span></div>
@@ -406,16 +343,122 @@
     <span class="chip cheap">估值 🟢 本益比 3.0</span>
     <span class="chip strong">成長 🟢 +181.3%</span>
   </div>
-  <div class="fund">
-    <span>毛利率 <b>+43.0%</b></span>
-    <span>淨利率 <b>+18.3%</b></span>
-    <span>市值 <b>2421億TWD</b></span>
-  </div>
+  <div class="fund"><span>毛利率 <b>+43.0%</b></span><span>淨利率 <b>+18.3%</b></span><span>市值 <b>2421億TWD</b></span></div>
   <div class="advice">🟡 週期股低PE需辯證看待，追蹤報價/庫存，景氣反轉前退場</div>
+</div><div class="scard">
+  <div class="shead"><span class="sname">台特化</span><span class="scode">4772.TWO</span><span class="hold">★持有</span><span class="stag">核心台股</span></div>
+  <div class="price-row"><span class="price">261.00 <i>TWD</i></span><span class="uppos">目標 331.83（+27%）</span></div>
+  <div class="lights">
+    <span class="chip low">水位 🟢 低位 (29%)</span>
+    <span class="chip rich">估值 🔴 本益比 28.3</span>
+    <span class="chip strong">成長 🟢 +240.0%</span>
+  </div>
+  <div class="fund"><span>毛利率 <b>+52.7%</b></span><span>淨利率 <b>+35.3%</b></span><span>市值 <b>385億TWD</b></span></div>
+  <div class="advice">🟡 中性，等待更好價位或催化劑</div>
+</div><div class="scard">
+  <div class="shead"><span class="sname">湧德</span><span class="scode">3689.TWO</span><span class="hold">★持有</span><span class="stag">核心台股</span></div>
+  <div class="price-row"><span class="price">108.00 <i>TWD</i></span></div>
+  <div class="lights">
+    <span class="chip low">水位 🟢 低位 (32%)</span>
+    <span class="chip gray">估值 — 本益比 —</span>
+    <span class="chip strong">成長 🟢 +43.8%</span>
+  </div>
+  <div class="fund"><span>毛利率 <b>+30.0%</b></span><span>淨利率 <b>+9.9%</b></span><span>市值 <b>97億TWD</b></span></div>
+  <div class="advice">🟡 中性，等待更好價位或催化劑</div>
+</div><div class="scard">
+  <div class="shead"><span class="sname">富喬</span><span class="scode">1815.TWO</span><span class="hold">★持有</span><span class="stag">核心台股</span></div>
+  <div class="price-row"><span class="price">118.00 <i>TWD</i></span></div>
+  <div class="lights">
+    <span class="chip high">水位 🔴 高位 (84%)</span>
+    <span class="chip gray">估值 — 本益比 —</span>
+    <span class="chip strong">成長 🟢 +49.8%</span>
+  </div>
+  <div class="fund"><span>毛利率 <b>+33.6%</b></span><span>淨利率 <b>+28.1%</b></span><span>市值 <b>690億TWD</b></span></div>
+  <div class="advice">🟡 中性，等待更好價位或催化劑</div>
+</div><div class="scard">
+  <div class="shead"><span class="sname">晶技</span><span class="scode">3042.TW</span><span class="hold">★持有</span><span class="stag">核心台股</span></div>
+  <div class="price-row"><span class="price">185.50 <i>TWD</i></span><span class="upneg">目標 174.67（-6%）</span></div>
+  <div class="lights">
+    <span class="chip mid">水位 🟡 中位 (62%)</span>
+    <span class="chip fair">估值 🟡 本益比 21.7</span>
+    <span class="chip weak">成長 🟠 +9.9%</span>
+  </div>
+  <div class="fund"><span>毛利率 <b>+32.2%</b></span><span>淨利率 <b>+14.2%</b></span><span>市值 <b>631億TWD</b></span></div>
+  <div class="advice">🟡 中性，等待更好價位或催化劑</div>
+</div></div><div class="group gray"><div class="group-title">📦 持有 ETF（指數/債券）</div><div class="scard">
+  <div class="shead"><span class="sname">元大台灣50</span><span class="scode">0050.TW</span><span class="hold">★持有</span><span class="stag">ETF</span></div>
+  <div class="price-row"><span class="price">105.90 <i>TWD</i></span></div>
+  <div class="lights">
+    <span class="chip high">水位 🔴 高位 (89%)</span>
+    <span class="chip gray">ETF · 殖利率 —</span>
+    <span class="chip gray">被動追蹤</span>
+  </div>
+  <div class="fund"><span>殖利率 <b>—</b></span><span>市值 <b></b></span></div>
+  <div class="advice">📦 台股大盤ETF：追蹤台灣50，看水位＋定期定額，逢低承接</div>
+</div><div class="scard">
+  <div class="shead"><span class="sname">Vanguard S&P500</span><span class="scode">VOO</span><span class="hold">★持有</span><span class="stag">ETF</span></div>
+  <div class="price-row"><span class="price">703.84 <i>USD</i></span></div>
+  <div class="lights">
+    <span class="chip high">水位 🔴 高位 (91%)</span>
+    <span class="chip gray">ETF · 殖利率 —</span>
+    <span class="chip gray">被動追蹤</span>
+  </div>
+  <div class="fund"><span>殖利率 <b>—</b></span><span>市值 <b></b></span></div>
+  <div class="advice">📦 指數ETF：長期核心配置，定期定額＋拉回加碼，不因短線波動停扣</div>
+</div><div class="scard">
+  <div class="shead"><span class="sname">Invesco QQQ</span><span class="scode">QQQ</span><span class="hold">★持有</span><span class="stag">ETF</span></div>
+  <div class="price-row"><span class="price">710.33 <i>USD</i></span></div>
+  <div class="lights">
+    <span class="chip high">水位 🔴 高位 (80%)</span>
+    <span class="chip gray">ETF · 殖利率 —</span>
+    <span class="chip gray">被動追蹤</span>
+  </div>
+  <div class="fund"><span>殖利率 <b>—</b></span><span>市值 <b></b></span></div>
+  <div class="advice">📦 指數ETF：長期核心配置，定期定額＋拉回加碼，不因短線波動停扣</div>
+</div><div class="scard">
+  <div class="shead"><span class="sname">國泰金融債</span><span class="scode">00933B.TWO</span><span class="hold">★持有</span><span class="stag">債券ETF</span></div>
+  <div class="price-row"><span class="price">15.72 <i>TWD</i></span></div>
+  <div class="lights">
+    <span class="chip low">水位 🟢 低位 (18%)</span>
+    <span class="chip gray">ETF · 殖利率 —</span>
+    <span class="chip gray">被動追蹤</span>
+  </div>
+  <div class="fund"><span>殖利率 <b>—</b></span><span>類型 <b>債券</b></span></div>
+  <div class="advice">📦 債券ETF：收息型，重點看殖利率與利率風險，長天期對利率較敏感</div>
+</div><div class="scard">
+  <div class="shead"><span class="sname">群益ESG投等債</span><span class="scode">00937B.TWO</span><span class="hold">★持有</span><span class="stag">債券ETF</span></div>
+  <div class="price-row"><span class="price">14.41 <i>TWD</i></span></div>
+  <div class="lights">
+    <span class="chip low">水位 🟢 低位 (22%)</span>
+    <span class="chip gray">ETF · 殖利率 —</span>
+    <span class="chip gray">被動追蹤</span>
+  </div>
+  <div class="fund"><span>殖利率 <b>—</b></span><span>類型 <b>債券</b></span></div>
+  <div class="advice">📦 債券ETF：收息型，重點看殖利率與利率風險，長天期對利率較敏感</div>
+</div><div class="scard">
+  <div class="shead"><span class="sname">凱基非投等債</span><span class="scode">00945B.TW</span><span class="hold">★持有</span><span class="stag">債券ETF</span></div>
+  <div class="price-row"><span class="price">14.48 <i>TWD</i></span></div>
+  <div class="lights">
+    <span class="chip mid">水位 🟡 中位 (67%)</span>
+    <span class="chip gray">ETF · 殖利率 —</span>
+    <span class="chip gray">被動追蹤</span>
+  </div>
+  <div class="fund"><span>殖利率 <b>—</b></span><span>類型 <b>債券</b></span></div>
+  <div class="advice">📦 債券ETF：收息型，重點看殖利率與利率風險，長天期對利率較敏感</div>
+</div><div class="scard">
+  <div class="shead"><span class="sname">群益非投等債</span><span class="scode">00953B.TW</span><span class="hold">★持有</span><span class="stag">債券ETF</span></div>
+  <div class="price-row"><span class="price">9.70 <i>TWD</i></span></div>
+  <div class="lights">
+    <span class="chip mid">水位 🟡 中位 (69%)</span>
+    <span class="chip gray">ETF · 殖利率 —</span>
+    <span class="chip gray">被動追蹤</span>
+  </div>
+  <div class="fund"><span>殖利率 <b>—</b></span><span>類型 <b>債券</b></span></div>
+  <div class="advice">📦 債券ETF：收息型，重點看殖利率與利率風險，長天期對利率較敏感</div>
 </div></div>
 
   <div class="sec-title"><span class="bar"></span>📋 同業比較總表</div>
-  <table><thead><tr><th>標的</th><th>代號</th><th>前瞻本益比</th><th>營收年增</th><th>毛利率</th><th>淨利率</th></tr></thead><tbody><tr class="phead"><td colspan="6">🥇 AI 半導體 / 記憶體 / 設備</td></tr><tr><td>NVIDIA 輝達</td><td>NVDA</td><td>16.1</td><td>+85.2%</td><td>+74.1%</td><td>+63.0%</td></tr><tr><td>台積電 ADR</td><td>TSM</td><td>19.1</td><td>+36.0%</td><td>+64.2%</td><td>+49.9%</td></tr><tr><td>美光</td><td>MU</td><td>6.0</td><td>+345.7%</td><td>+72.6%</td><td>+55.9%</td></tr><tr><td>AMD</td><td>AMD</td><td>31.3</td><td>+50.1%</td><td>+55.7%</td><td>+15.6%</td></tr><tr><td>ASML</td><td>ASML</td><td>33.6</td><td>+21.3%</td><td>+52.7%</td><td>+30.1%</td></tr><tr><td>博通</td><td>AVGO</td><td>18.0</td><td>+47.9%</td><td>+76.3%</td><td>+38.8%</td></tr><tr class="phead"><td colspan="6">🥈 Mega Tech / Cloud / AI 平台</td></tr><tr><td>微軟</td><td>MSFT</td><td>21.0</td><td>+17.7%</td><td>+67.9%</td><td>+40.3%</td></tr><tr><td>谷歌</td><td>GOOGL</td><td>23.1</td><td>+24.2%</td><td>+60.9%</td><td>+54.8%</td></tr><tr><td>亞馬遜</td><td>AMZN</td><td>24.9</td><td>+19.6%</td><td>+50.8%</td><td>+17.4%</td></tr><tr><td>Meta</td><td>META</td><td>16.5</td><td>+28.0%</td><td>+81.7%</td><td>+29.8%</td></tr><tr class="phead"><td colspan="6">🥉 AI 資料中心 / 電力 / 基礎建設</td></tr><tr><td>GE Vernova</td><td>GEV</td><td>37.5</td><td>+21.9%</td><td>+20.6%</td><td>+23.0%</td></tr><tr><td>伊頓 Eaton</td><td>ETN</td><td>25.9</td><td>+21.4%</td><td>+36.0%</td><td>+12.8%</td></tr><tr><td>Vistra</td><td>VST</td><td>13.6</td><td>-5.5%</td><td>+38.3%</td><td>+11.6%</td></tr><tr><td>Equinix</td><td>EQIX</td><td>57.7</td><td>+16.7%</td><td>+52.0%</td><td>+15.5%</td></tr><tr class="phead"><td colspan="6">🇹🇼 核心台股</td></tr><tr><td>台積電</td><td>2330.TW</td><td>17.0</td><td>+36.0%</td><td>+64.2%</td><td>+49.9%</td></tr><tr><td>鴻海</td><td>2317.TW</td><td>10.7</td><td>+40.8%</td><td>+6.1%</td><td>+2.3%</td></tr><tr><td>旺宏</td><td>2337.TW</td><td>3.0</td><td>+181.3%</td><td>+43.0%</td><td>+18.3%</td></tr></tbody></table>
+  <table><thead><tr><th>標的</th><th>代號</th><th>前瞻本益比</th><th>營收年增</th><th>毛利率</th><th>淨利率</th></tr></thead><tbody><tr class="phead"><td colspan="6">🥇 AI 半導體 / 記憶體 / 設備</td></tr><tr><td>NVIDIA 輝達</td><td>NVDA</td><td>16.2</td><td>+85.2%</td><td>+74.1%</td><td>+63.0%</td></tr><tr><td>台積電 ADR</td><td>TSM</td><td>19.1</td><td>+36.0%</td><td>+64.2%</td><td>+49.9%</td></tr><tr><td>美光</td><td>MU</td><td>6.1</td><td>+345.7%</td><td>+72.6%</td><td>+55.9%</td></tr><tr><td>AMD</td><td>AMD</td><td>31.4</td><td>+50.1%</td><td>+55.7%</td><td>+15.6%</td></tr><tr><td>ASML</td><td>ASML</td><td>33.8</td><td>+21.3%</td><td>+52.7%</td><td>+30.1%</td></tr><tr><td>博通</td><td>AVGO</td><td>18.1</td><td>+47.9%</td><td>+76.3%</td><td>+38.8%</td></tr><tr class="phead"><td colspan="6">🥈 Mega Tech / Cloud / AI 平台</td></tr><tr><td>微軟</td><td>MSFT</td><td>21.0</td><td>+17.7%</td><td>+67.9%</td><td>+40.3%</td></tr><tr><td>谷歌</td><td>GOOGL</td><td>23.1</td><td>+24.2%</td><td>+60.9%</td><td>+54.8%</td></tr><tr><td>亞馬遜</td><td>AMZN</td><td>25.0</td><td>+19.6%</td><td>+50.8%</td><td>+17.4%</td></tr><tr><td>Meta</td><td>META</td><td>16.8</td><td>+28.0%</td><td>+81.7%</td><td>+29.8%</td></tr><tr class="phead"><td colspan="6">🥉 AI 資料中心 / 電力 / 基礎建設</td></tr><tr><td>GE Vernova</td><td>GEV</td><td>37.6</td><td>+21.9%</td><td>+20.6%</td><td>+23.0%</td></tr><tr><td>伊頓 Eaton</td><td>ETN</td><td>25.9</td><td>+21.4%</td><td>+36.0%</td><td>+12.8%</td></tr><tr><td>Vistra</td><td>VST</td><td>13.6</td><td>-5.5%</td><td>+38.3%</td><td>+11.6%</td></tr><tr><td>Equinix</td><td>EQIX</td><td>57.6</td><td>+16.7%</td><td>+52.0%</td><td>+15.5%</td></tr><tr class="phead"><td colspan="6">🇹🇼 核心台股</td></tr><tr><td>台積電</td><td>2330.TW</td><td>17.0</td><td>+36.0%</td><td>+64.2%</td><td>+49.9%</td></tr><tr><td>鴻海</td><td>2317.TW</td><td>10.7</td><td>+40.8%</td><td>+6.1%</td><td>+2.3%</td></tr><tr><td>旺宏</td><td>2337.TW</td><td>3.0</td><td>+181.3%</td><td>+43.0%</td><td>+18.3%</td></tr><tr><td>台特化</td><td>4772.TWO</td><td>28.3</td><td>+240.0%</td><td>+52.7%</td><td>+35.3%</td></tr><tr><td>湧德</td><td>3689.TWO</td><td>—</td><td>+43.8%</td><td>+30.0%</td><td>+9.9%</td></tr><tr><td>富喬</td><td>1815.TWO</td><td>—</td><td>+49.8%</td><td>+33.6%</td><td>+28.1%</td></tr><tr><td>晶技</td><td>3042.TW</td><td>21.7</td><td>+9.9%</td><td>+32.2%</td><td>+14.2%</td></tr><tr class="phead"><td colspan="6">📦 持有 ETF（指數/債券）</td></tr><tr><td>元大台灣50</td><td>0050.TW</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td>Vanguard S&P500</td><td>VOO</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td>Invesco QQQ</td><td>QQQ</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td>國泰金融債</td><td>00933B.TWO</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td>群益ESG投等債</td><td>00937B.TWO</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td>凱基非投等債</td><td>00945B.TW</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td>群益非投等債</td><td>00953B.TW</td><td>—</td><td>—</td><td>—</td><td>—</td></tr></tbody></table>
 
   <div class="sec-title"><span class="bar"></span>🧭 評判方法論</div>
   <div class="method">

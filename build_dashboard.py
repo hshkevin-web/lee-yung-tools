@@ -17,9 +17,15 @@ GROUPS = [
     ("🥉 AI 資料中心 / 電力 / 基礎建設", "g3", "green",
      ["GEV","ETN","VST","EQIX"], (18, 28)),
     ("🇹🇼 核心台股", "g4", "red",
-     ["2330.TW","2317.TW","2337.TW"], (15, 25)),
+     ["2330.TW","2317.TW","2337.TW","4772.TWO","3689.TWO","1815.TWO","3042.TW"], (15, 25)),
+    ("📦 持有 ETF（指數/債券）", "g5", "teal",
+     ["0050.TW","VOO","QQQ","00933B.TWO","00937B.TWO","00945B.TW","00953B.TW"], (15, 25)),
 ]
-HOLDINGS = {"NVDA","2330.TW","2317.TW","2337.TW","MU","GOOGL","TSM"}
+HOLDINGS = {"NVDA","2330.TW","2317.TW","2337.TW","MU","GOOGL","TSM",
+            "4772.TWO","3689.TWO","1815.TWO","3042.TW",
+            "0050.TW","VOO","QQQ","00933B.TWO","00937B.TWO","00945B.TW","00953B.TW"}
+ETF_SYMBOLS = {"0050.TW","VOO","QQQ","00933B.TWO","00937B.TWO","00945B.TW","00953B.TW"}
+BOND_ETFS = {"00933B.TWO","00937B.TWO","00945B.TW","00953B.TW"}
 
 def fnum(v, d=2):
     if v is None: return "—"
@@ -28,11 +34,13 @@ def fnum(v, d=2):
     return str(v)
 
 def fpct(v):
-    if v is None: return "—"
+    if v is None or not isinstance(v, (int, float)):
+        return "—"
     return f"{v*100:+.1f}%"
 
 def fmt_pe(v):
-    if v is None: return "—"
+    if v is None or not isinstance(v, (int, float)):
+        return "—"
     return f"{v:.1f}"
 
 def pct_str(v):
@@ -48,13 +56,15 @@ def water_light(pos):
 
 def val_light(fpe, low, high):
     """估值燈號（前瞻本益比 vs 板塊合理區間）"""
-    if fpe is None: return ("—", "gray", "無數據")
+    if fpe is None or not isinstance(fpe, (int, float)):
+        return ("—", "gray", "無數據")
     if fpe < low: return ("🟢", "cheap", "偏低")
     if fpe <= high: return ("🟡", "fair", "合理")
     return ("🔴", "rich", "偏高")
 
 def growth_light(g):
-    if g is None: return ("—", "gray", "無數據")
+    if g is None or not isinstance(g, (int, float)):
+        return ("—", "gray", "無數據")
     if g >= 0.30: return ("🟢", "strong", "強勁")
     if g >= 0.10: return ("🟡", "ok", "穩健")
     if g >= 0: return ("🟠", "weak", "平緩")
@@ -62,6 +72,12 @@ def growth_light(g):
 
 def advice(pos, fpe, g, low, high, sym):
     """綜合建議"""
+    if sym in ETF_SYMBOLS:
+        if sym in BOND_ETFS:
+            return "📦 債券ETF：收息型，重點看殖利率與利率風險，長天期對利率較敏感"
+        if sym == "0050.TW":
+            return "📦 台股大盤ETF：追蹤台灣50，看水位＋定期定額，逢低承接"
+        return "📦 指數ETF：長期核心配置，定期定額＋拉回加碼，不因短線波動停扣"
     wl = water_light(pos)[1]
     vl = val_light(fpe, low, high)[1]
     gl = growth_light(g)[1]
@@ -144,8 +160,19 @@ for gtitle, gcls, gcolor, syms, (lo, hi) in GROUPS:
         gm = f.get("grossMargins"); nm = f.get("profitMargins")
         target = f.get("targetMean"); mcap = f.get("marketCap")
         wl, wcls, wtxt = water_light(pos)
-        vl, vcls, vtxt = val_light(fpe, lo, hi)
-        gl, gcls, gtxt = growth_light(g)
+        is_etf = sym in ETF_SYMBOLS
+        is_bond = sym in BOND_ETFS
+        dy = f.get("dividendYield")
+        if is_etf:
+            vl, vcls, vtxt = ("📦", "gray", "ETF")
+            gl, gcls, gtxt = ("—", "gray", "被動")
+            val_chip = f'<span class="chip {vcls}">ETF · 殖利率 {fpct(dy)}</span>'
+            growth_chip = f'<span class="chip {gcls}">被動追蹤</span>'
+        else:
+            vl, vcls, vtxt = val_light(fpe, lo, hi)
+            gl, gcls, gtxt = growth_light(g)
+            val_chip = f'<span class="chip {vcls}">估值 {vl} 本益比 {fmt_pe(fpe)}</span>'
+            growth_chip = f'<span class="chip {gcls}">成長 {gl} {fpct(g)}</span>'
         adv = advice(pos, fpe, g, lo, hi, sym)
         hold = '<span class="hold">★持有</span>' if sym in HOLDINGS else ""
         cur = s.get("currency","")
@@ -157,19 +184,21 @@ for gtitle, gcls, gcolor, syms, (lo, hi) in GROUPS:
         mcap_txt = ""
         if mcap:
             mcap_txt = f"{mcap/1e8:.0f}億{cur}"
+        if is_bond:
+            fund_row = f'<span>殖利率 <b>{fpct(dy)}</b></span><span>類型 <b>債券</b></span>'
+        elif is_etf:
+            fund_row = f'<span>殖利率 <b>{fpct(dy)}</b></span><span>市值 <b>{mcap_txt}</b></span>'
+        else:
+            fund_row = f'<span>毛利率 <b>{fpct(gm)}</b></span><span>淨利率 <b>{fpct(nm)}</b></span><span>市值 <b>{mcap_txt}</b></span>'
         cards += f'''<div class="scard">
   <div class="shead"><span class="sname">{s.get("label",sym)}</span><span class="scode">{sym}</span>{hold}<span class="stag">{s.get("group","")}</span></div>
   <div class="price-row"><span class="price">{fnum(price)} <i>{cur}</i></span>{upside}</div>
   <div class="lights">
     <span class="chip {wcls}">水位 {wl} {wtxt} ({pct_str(pos)})</span>
-    <span class="chip {vcls}">估值 {vl} 本益比 {fmt_pe(fpe)}</span>
-    <span class="chip {gcls}">成長 {gl} {fpct(g)}</span>
+    {val_chip}
+    {growth_chip}
   </div>
-  <div class="fund">
-    <span>毛利率 <b>{fpct(gm)}</b></span>
-    <span>淨利率 <b>{fpct(nm)}</b></span>
-    <span>市值 <b>{mcap_txt}</b></span>
-  </div>
+  <div class="fund">{fund_row}</div>
   <div class="advice">{adv}</div>
 </div>'''
     stock_rows += f'<div class="group {gcls}"><div class="group-title">{gtitle}</div>{cards}</div>'
@@ -226,6 +255,7 @@ HTML_DOC = f'''<!DOCTYPE html>
   .g2 .group-title {{ border-left-color:#a78bfa; background:rgba(167,139,250,.06); }}
   .g3 .group-title {{ border-left-color:#4ade80; background:rgba(74,222,128,.06); }}
   .g4 .group-title {{ border-left-color:#f87171; background:rgba(248,113,113,.06); }}
+  .g5 .group-title {{ border-left-color:#2dd4bf; background:rgba(45,212,191,.06); }}
   .scard {{ background:#101623; border:1px solid rgba(255,255,255,.06); border-radius:14px; padding:15px 16px; margin-bottom:10px; }}
   .shead {{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:8px; }}
   .sname {{ font-size:16px; font-weight:800; color:#fff; }}
@@ -294,7 +324,7 @@ HTML_DOC = f'''<!DOCTYPE html>
   <span class="icon">📊</span>
   <div class="badge">INVESTMENT DASHBOARD · 估值評判</div>
   <h1>投資儀表板<br><span>即時報價 · 水位 · 總經</span></h1>
-  <div class="sub">17 檔核心標的 + 總經/債券/黃金 自動化評判</div>
+  <div class="sub">28 檔標的（台股/美股/ETF）＋ 總經/債券/黃金 自動化評判</div>
   <div class="upd">🕐 最後更新：{GEN}</div>
 </div>
 
