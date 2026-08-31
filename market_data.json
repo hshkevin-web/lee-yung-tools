@@ -1,116 +1,116 @@
 {
-  "generated_at": "2026-08-31 08:01:05",
+  "generated_at": "2026-08-31 22:53:17",
   "macro": {
     "^GSPC": {
-      "price": 7711.76,
-      "prevClose": 7730.99,
+      "price": 7672.81,
+      "prevClose": 7711.76,
       "high52": 7816.7,
       "low52": 6316.91,
       "currency": "USD",
       "label": "S&P 500",
-      "pos52": 93.0
+      "pos52": 90.4
     },
     "^IXIC": {
-      "price": 26402.424,
-      "prevClose": 26541.4,
+      "price": 26272.99,
+      "prevClose": 26402.424,
       "high52": 27190.21,
       "low52": 20690.25,
       "currency": "USD",
       "label": "Nasdaq",
-      "pos52": 87.9
+      "pos52": 85.9
     },
     "^DJI": {
-      "price": 53559.99,
-      "prevClose": 53569.4,
+      "price": 53219.83,
+      "prevClose": 53559.99,
       "high52": 54744.33,
       "low52": 44948.16,
       "currency": "USD",
       "label": "道瓊",
-      "pos52": 87.9
+      "pos52": 84.4
     },
     "^TWII": {
-      "price": 46331.45,
-      "prevClose": 45975.2,
+      "price": 46128.47,
+      "prevClose": 46331.45,
       "high52": 48218.87,
       "low52": 23885.41,
       "currency": "TWD",
       "label": "台灣加權",
-      "pos52": 92.2
+      "pos52": 91.4
     },
     "^VIX": {
-      "price": 14.43,
-      "prevClose": 14.51,
+      "price": 15.26,
+      "prevClose": 14.43,
       "high52": 35.3,
       "low52": 13.38,
       "currency": "USD",
       "label": "VIX恐慌指數",
-      "pos52": 4.8
+      "pos52": 8.6
     },
     "^TNX": {
-      "price": 4.72,
-      "prevClose": 4.672,
-      "high52": 4.747,
-      "low52": 0.0,
+      "price": 4.7599998,
+      "prevClose": 4.7200003,
+      "high52": 4.766,
+      "low52": 3.947,
       "currency": "USD",
       "label": "美10年債殖利率",
-      "pos52": null
+      "pos52": 99.3
     },
     "^TYX": {
-      "price": 5.206,
-      "prevClose": 5.191,
+      "price": 5.2599998,
+      "prevClose": 5.2060003,
       "high52": 5.326,
-      "low52": 0.0,
+      "low52": 4.528,
       "currency": "USD",
       "label": "美30年債殖利率",
-      "pos52": null
+      "pos52": 91.7
     },
     "^FVX": {
-      "price": 4.481,
-      "prevClose": 4.396,
-      "high52": 4.489,
-      "low52": 0.0,
+      "price": 4.498,
+      "prevClose": 4.481,
+      "high52": 4.507,
+      "low52": 3.507,
       "currency": "USD",
       "label": "美5年債殖利率",
-      "pos52": null
+      "pos52": 99.1
     },
     "GC=F": {
-      "price": 4493.4,
+      "price": 4483.4,
       "prevClose": 4529.9,
       "high52": 5586.2,
       "low52": 3485.7,
       "currency": "USD",
       "label": "黃金",
-      "pos52": 48.0
+      "pos52": 47.5
     },
     "CL=F": {
-      "price": 84.5,
+      "price": 85.43,
       "prevClose": 83.4,
       "high52": 119.48,
       "low52": 54.98,
       "currency": "USD",
       "label": "WTI原油",
-      "pos52": 45.8
+      "pos52": 47.2
     },
     "DX-Y.NYB": {
-      "price": 99.654,
+      "price": 99.493,
       "prevClose": 99.702,
       "high52": 101.8,
       "low52": 95.55,
       "currency": "USD",
       "label": "美元指數",
-      "pos52": 65.7
+      "pos52": 63.1
     }
   },
   "stocks": {
     "NVDA": {
       "label": "NVIDIA 輝達",
       "group": "AI半導體",
-      "price": 217.55,
-      "prevClose": 227.98,
+      "price": 219.43,
+      "prevClose": 217.55,
       "high52": 236.54,
       "low52": 164.07,
       "currency": "USD",
-      "pos52": 73.8,
+      "pos52": 76.4,
       "fund": {
         "revenueGrowth": 1.059,
         "grossMargins": 0.74674004,
@@ -121,12 +121,12 @@
         "targetLow": 180.0,
         "recommendation": "strong_buy",
         "trailingPE": null,
-        "forwardPE": 14.213399,
+        "forwardPE": 14.336913,
         "pegRatio": 0.63,
         "psTrailing": {},
         "revQuarterlyGrowth": {},
         "earningsQuarterlyGrowth": 1.259,
-        "marketCap": 5253179637760,
+        "marketCap": 5298829918208,
         "beta": 2.215,
         "dividendYield": 0.0046
       }
@@ -134,12 +134,12 @@
     "TSM": {
       "label": "台積電 ADR",
       "group": "AI半導體",
-      "price": 417.52,
-      "prevClose": 427.3,
+      "price": 419.56,
+      "prevClose": 417.52,
       "high52": 479.0,
       "low52": 225.63,
       "currency": "USD",
-      "pos52": 75.7,
+      "pos52": 76.5,
       "fund": {
         "revenueGrowth": 0.36,
         "grossMargins": 0.6423,
@@ -150,12 +150,12 @@
         "targetLow": 440.0,
         "recommendation": "none",
         "trailingPE": null,
-        "forwardPE": 19.168764,
+        "forwardPE": 19.262423,
         "pegRatio": 1.02,
         "psTrailing": {},
         "revQuarterlyGrowth": {},
         "earningsQuarterlyGrowth": 0.774,
-        "marketCap": 2165456502784,
+        "marketCap": 2176037027840,
         "beta": 1.258,
         "dividendYield": 0.0104
       }
@@ -163,12 +163,12 @@
     "MU": {
       "label": "美光",
       "group": "AI半導體/記憶體",
-      "price": 932.86,
-      "prevClose": 935.39,
+      "price": 945.59,
+      "prevClose": 932.86,
       "high52": 1255.0,
       "low52": 114.25,
       "currency": "USD",
-      "pos52": 71.8,
+      "pos52": 72.9,
       "fund": {
         "revenueGrowth": 3.457,
         "grossMargins": 0.72569,
@@ -179,12 +179,12 @@
         "targetLow": 361.0,
         "recommendation": "strong_buy",
         "trailingPE": null,
-        "forwardPE": 6.017472,
+        "forwardPE": 6.1030383,
         "pegRatio": 0.14,
         "psTrailing": {},
         "revQuarterlyGrowth": {},
         "earningsQuarterlyGrowth": 13.983,
-        "marketCap": 1053565648896,
+        "marketCap": 1068547112960,
         "beta": 2.213,
         "dividendYield": 0.00059999997
       }
@@ -192,12 +192,12 @@
     "AMD": {
       "label": "AMD",
       "group": "AI半導體",
-      "price": 465.58,
-      "prevClose": 476.67,
+      "price": 468.76,
+      "prevClose": 465.58,
       "high52": 584.73,
       "low52": 149.22,
       "currency": "USD",
-      "pos52": 72.6,
+      "pos52": 73.4,
       "fund": {
         "revenueGrowth": 0.501,
         "grossMargins": 0.55724,
@@ -208,12 +208,12 @@
         "targetLow": 365.0,
         "recommendation": "strong_buy",
         "trailingPE": null,
-        "forwardPE": 30.133204,
+        "forwardPE": 30.33902,
         "pegRatio": 1.02,
         "psTrailing": {},
         "revQuarterlyGrowth": {},
         "earningsQuarterlyGrowth": 1.634,
-        "marketCap": 760047665152,
+        "marketCap": 765238968320,
         "beta": 2.489,
         "dividendYield": {}
       }
@@ -221,28 +221,28 @@
     "ASML": {
       "label": "ASML",
       "group": "AI半導體/設備",
-      "price": 1696.16,
-      "prevClose": 1735.01,
+      "price": 1685.64,
+      "prevClose": 1696.16,
       "high52": 1999.96,
       "low52": 716.2,
       "currency": "USD",
-      "pos52": 76.3,
+      "pos52": 75.5,
       "fund": {
         "revenueGrowth": 0.213,
         "grossMargins": 0.52733004,
         "profitMargins": 0.30114,
         "operatingMargins": 0.37057,
-        "targetMean": 2143.8826,
-        "targetHigh": 2878.8855,
-        "targetLow": 896.8699,
+        "targetMean": 2147.8667,
+        "targetHigh": 2884.2356,
+        "targetLow": 898.53656,
         "recommendation": "strong_buy",
         "trailingPE": null,
-        "forwardPE": 32.81453,
+        "forwardPE": 32.611004,
         "pegRatio": 2.07,
         "psTrailing": {},
         "revQuarterlyGrowth": {},
         "earningsQuarterlyGrowth": 0.274,
-        "marketCap": 651495079936,
+        "marketCap": 647454326784,
         "beta": 1.365,
         "dividendYield": 0.0054
       }
@@ -250,12 +250,12 @@
     "AVGO": {
       "label": "博通",
       "group": "AI半導體",
-      "price": 368.79,
-      "prevClose": 371.54,
+      "price": 368.12,
+      "prevClose": 368.79,
       "high52": 495.0,
       "low52": 287.17,
       "currency": "USD",
-      "pos52": 39.3,
+      "pos52": 39.0,
       "fund": {
         "revenueGrowth": 0.479,
         "grossMargins": 0.76284,
@@ -266,12 +266,12 @@
         "targetLow": 215.88,
         "recommendation": "strong_buy",
         "trailingPE": null,
-        "forwardPE": 18.905115,
+        "forwardPE": 18.870768,
         "pegRatio": 0.42,
         "psTrailing": {},
         "revQuarterlyGrowth": {},
         "earningsQuarterlyGrowth": 0.875,
-        "marketCap": 1754548011008,
+        "marketCap": 1751360471040,
         "beta": 1.473,
         "dividendYield": 0.0070999996
       }
@@ -279,12 +279,12 @@
     "MSFT": {
       "label": "微軟",
       "group": "Mega Tech",
-      "price": 513.53,
-      "prevClose": 505.06,
+      "price": 509.75,
+      "prevClose": 513.53,
       "high52": 553.72,
       "low52": 349.2,
       "currency": "USD",
-      "pos52": 80.3,
+      "pos52": 78.5,
       "fund": {
         "revenueGrowth": 0.177,
         "grossMargins": 0.67944,
@@ -295,12 +295,12 @@
         "targetLow": 400.0,
         "recommendation": "strong_buy",
         "trailingPE": null,
-        "forwardPE": 21.78441,
+        "forwardPE": 21.62406,
         "pegRatio": 1.64,
         "psTrailing": {},
         "revQuarterlyGrowth": {},
         "earningsQuarterlyGrowth": 0.313,
-        "marketCap": 3813240733696,
+        "marketCap": 3785171927040,
         "beta": 1.099,
         "dividendYield": 0.0070999996
       }
@@ -308,12 +308,12 @@
     "GOOGL": {
       "label": "谷歌",
       "group": "Mega Tech",
-      "price": 346.59,
-      "prevClose": 340.65,
+      "price": 337.55,
+      "prevClose": 346.59,
       "high52": 408.61,
       "low52": 206.2,
       "currency": "USD",
-      "pos52": 69.4,
+      "pos52": 64.9,
       "fund": {
         "revenueGrowth": 0.242,
         "grossMargins": 0.60897,
@@ -324,12 +324,12 @@
         "targetLow": 340.0,
         "recommendation": "strong_buy",
         "trailingPE": null,
-        "forwardPE": 23.374542,
+        "forwardPE": 22.76487,
         "pegRatio": 0.92,
         "psTrailing": {},
         "revQuarterlyGrowth": {},
         "earningsQuarterlyGrowth": 2.979,
-        "marketCap": 4238773059584,
+        "marketCap": 4128214351872,
         "beta": 1.237,
         "dividendYield": 0.0025
       }
@@ -337,12 +337,12 @@
     "AMZN": {
       "label": "亞馬遜",
       "group": "Mega Tech",
-      "price": 266.43,
-      "prevClose": 256.26,
+      "price": 260.365,
+      "prevClose": 266.43,
       "high52": 287.2,
       "low52": 196.0,
       "currency": "USD",
-      "pos52": 77.2,
+      "pos52": 70.6,
       "fund": {
         "revenueGrowth": 0.196,
         "grossMargins": 0.5077,
@@ -353,12 +353,12 @@
         "targetLow": 230.0,
         "recommendation": "strong_buy",
         "trailingPE": null,
-        "forwardPE": 25.641668,
+        "forwardPE": 25.049782,
         "pegRatio": 1.36,
         "psTrailing": {},
         "revQuarterlyGrowth": {},
         "earningsQuarterlyGrowth": 2.449,
-        "marketCap": 2873797378048,
+        "marketCap": 2807461576704,
         "beta": 1.454,
         "dividendYield": {}
       }
@@ -366,12 +366,12 @@
     "META": {
       "label": "Meta",
       "group": "Mega Tech",
-      "price": 578.02,
-      "prevClose": 571.1,
+      "price": 570.13,
+      "prevClose": 578.02,
       "high52": 790.8,
       "low52": 520.26,
       "currency": "USD",
-      "pos52": 21.3,
+      "pos52": 18.4,
       "fund": {
         "revenueGrowth": 0.28,
         "grossMargins": 0.81747,
@@ -382,12 +382,12 @@
         "targetLow": 580.0,
         "recommendation": "strong_buy",
         "trailingPE": null,
-        "forwardPE": 16.533915,
+        "forwardPE": 16.308226,
         "pegRatio": 0.85,
         "psTrailing": {},
         "revQuarterlyGrowth": {},
         "earningsQuarterlyGrowth": -0.136,
-        "marketCap": 1472509509632,
+        "marketCap": 1452409749504,
         "beta": 1.243,
         "dividendYield": 0.0036000002
       }
@@ -395,12 +395,12 @@
     "GEV": {
       "label": "GE Vernova",
       "group": "資料中心/電力",
-      "price": 911.93,
-      "prevClose": 953.83,
+      "price": 889.0,
+      "prevClose": 911.93,
       "high52": 1195.94,
       "low52": 530.16,
       "currency": "USD",
-      "pos52": 57.3,
+      "pos52": 53.9,
       "fund": {
         "revenueGrowth": 0.219,
         "grossMargins": 0.2057,
@@ -411,12 +411,12 @@
         "targetLow": 940.0,
         "recommendation": "buy",
         "trailingPE": null,
-        "forwardPE": 36.276806,
+        "forwardPE": 35.364647,
         "pegRatio": 1.57,
         "psTrailing": {},
         "revQuarterlyGrowth": {},
         "earningsQuarterlyGrowth": 0.3,
-        "marketCap": 242877579264,
+        "marketCap": 236770557952,
         "beta": 1.033,
         "dividendYield": 0.0022
       }
@@ -424,12 +424,12 @@
     "ETN": {
       "label": "伊頓 Eaton",
       "group": "資料中心/電力",
-      "price": 402.78,
-      "prevClose": 416.04,
+      "price": 400.515,
+      "prevClose": 402.78,
       "high52": 478.0,
       "low52": 311.92,
       "currency": "USD",
-      "pos52": 54.7,
+      "pos52": 53.3,
       "fund": {
         "revenueGrowth": 0.214,
         "grossMargins": 0.36022,
@@ -440,12 +440,12 @@
         "targetLow": 333.0,
         "recommendation": "buy",
         "trailingPE": null,
-        "forwardPE": 25.068743,
+        "forwardPE": 24.92777,
         "pegRatio": 2.98,
         "psTrailing": {},
         "revQuarterlyGrowth": {},
         "earningsQuarterlyGrowth": -0.164,
-        "marketCap": 156399468544,
+        "marketCap": 155519975424,
         "beta": 1.177,
         "dividendYield": 0.0109
       }
@@ -453,12 +453,12 @@
     "VST": {
       "label": "Vistra",
       "group": "資料中心/電力",
-      "price": 137.09,
-      "prevClose": 139.81,
+      "price": 136.28,
+      "prevClose": 137.09,
       "high52": 219.82,
       "low52": 132.66,
       "currency": "USD",
-      "pos52": 5.1,
+      "pos52": 4.2,
       "fund": {
         "revenueGrowth": -0.055,
         "grossMargins": 0.38309,
@@ -469,12 +469,12 @@
         "targetLow": 106.0,
         "recommendation": "strong_buy",
         "trailingPE": null,
-        "forwardPE": 13.225463,
+        "forwardPE": 13.147321,
         "pegRatio": 0.4,
         "psTrailing": {},
         "revQuarterlyGrowth": {},
         "earningsQuarterlyGrowth": -0.067,
-        "marketCap": 46012227584,
+        "marketCap": 45740363776,
         "beta": 1.433,
         "dividendYield": 0.0067000003
       }
@@ -482,12 +482,12 @@
     "EQIX": {
       "label": "Equinix",
       "group": "資料中心/REIT",
-      "price": 1044.41,
-      "prevClose": 1076.45,
+      "price": 1031.69,
+      "prevClose": 1044.41,
       "high52": 1128.68,
       "low52": 720.62,
       "currency": "USD",
-      "pos52": 79.3,
+      "pos52": 76.2,
       "fund": {
         "revenueGrowth": 0.167,
         "grossMargins": 0.51979,
@@ -498,12 +498,12 @@
         "targetLow": 1060.0,
         "recommendation": "buy",
         "trailingPE": null,
-        "forwardPE": 55.87214,
+        "forwardPE": 55.191658,
         "pegRatio": 3.47,
         "psTrailing": {},
         "revQuarterlyGrowth": {},
         "earningsQuarterlyGrowth": 0.302,
-        "marketCap": 103053697024,
+        "marketCap": 101798584320,
         "beta": 0.972,
         "dividendYield": 0.0198
       }
@@ -511,12 +511,12 @@
     "2330.TW": {
       "label": "台積電",
       "group": "核心台股",
-      "price": 2420.0,
-      "prevClose": 2410.0,
+      "price": 2405.0,
+      "prevClose": 2420.0,
       "high52": 2535.0,
       "low52": 1145.0,
       "currency": "TWD",
-      "pos52": 91.7,
+      "pos52": 90.6,
       "fund": {
         "revenueGrowth": 0.36,
         "grossMargins": 0.6423,
@@ -527,12 +527,12 @@
         "targetLow": 2650.0,
         "recommendation": "strong_buy",
         "trailingPE": null,
-        "forwardPE": 17.026775,
+        "forwardPE": 16.921236,
         "pegRatio": 0.91,
         "psTrailing": {},
         "revQuarterlyGrowth": {},
         "earningsQuarterlyGrowth": 0.774,
-        "marketCap": 62756334075904,
+        "marketCap": 62367350128640,
         "beta": 1.258,
         "dividendYield": 0.0116
       }
@@ -540,12 +540,12 @@
     "2317.TW": {
       "label": "鴻海",
       "group": "核心台股",
-      "price": 253.0,
-      "prevClose": 252.0,
+      "price": 250.0,
+      "prevClose": 253.0,
       "high52": 314.0,
       "low52": 187.5,
       "currency": "TWD",
-      "pos52": 51.8,
+      "pos52": 49.4,
       "fund": {
         "revenueGrowth": 0.408,
         "grossMargins": 0.06118,
@@ -556,12 +556,12 @@
         "targetLow": 260.0,
         "recommendation": "strong_buy",
         "trailingPE": null,
-        "forwardPE": 10.939665,
+        "forwardPE": 10.809946,
         "pegRatio": 0.83,
         "psTrailing": {},
         "revQuarterlyGrowth": {},
         "earningsQuarterlyGrowth": 0.352,
-        "marketCap": 3548497838080,
+        "marketCap": 3506420842496,
         "beta": 0.878,
         "dividendYield": 0.028299998
       }
@@ -569,12 +569,12 @@
     "2337.TW": {
       "label": "旺宏",
       "group": "核心台股/記憶體",
-      "price": 126.5,
-      "prevClose": 127.5,
+      "price": 126.0,
+      "prevClose": 126.5,
       "high52": 192.0,
       "low52": 19.6,
       "currency": "TWD",
-      "pos52": 62.0,
+      "pos52": 61.7,
       "fund": {
         "revenueGrowth": 1.813,
         "grossMargins": 0.4298,
@@ -585,12 +585,12 @@
         "targetLow": 89.0,
         "recommendation": "buy",
         "trailingPE": null,
-        "forwardPE": 3.040595,
+        "forwardPE": 3.0285769,
         "pegRatio": {},
         "psTrailing": {},
         "revQuarterlyGrowth": {},
         "earningsQuarterlyGrowth": {},
-        "marketCap": 244034437120,
+        "marketCap": 243069878272,
         "beta": 1.668,
         "dividendYield": {}
       }
@@ -598,12 +598,12 @@
     "4772.TWO": {
       "label": "台特化",
       "group": "核心台股",
-      "price": 265.0,
-      "prevClose": 265.5,
+      "price": 258.0,
+      "prevClose": 265.0,
       "high52": 396.0,
       "low52": 205.0,
       "currency": "TWD",
-      "pos52": 31.4,
+      "pos52": 27.7,
       "fund": {
         "revenueGrowth": 2.4,
         "grossMargins": 0.5272,
@@ -614,12 +614,12 @@
         "targetLow": 280.0,
         "recommendation": "strong_buy",
         "trailingPE": null,
-        "forwardPE": 28.726286,
+        "forwardPE": 27.967478,
         "pegRatio": {},
         "psTrailing": {},
         "revQuarterlyGrowth": {},
         "earningsQuarterlyGrowth": 0.897,
-        "marketCap": 39135612928,
+        "marketCap": 38101839872,
         "beta": 1.449,
         "dividendYield": 0.0113
       }
@@ -627,12 +627,12 @@
     "3689.TWO": {
       "label": "湧德",
       "group": "核心台股",
-      "price": 116.5,
-      "prevClose": 115.5,
+      "price": 118.5,
+      "prevClose": 116.5,
       "high52": 146.0,
       "low52": 90.1,
       "currency": "TWD",
-      "pos52": 47.2,
+      "pos52": 50.8,
       "fund": {
         "revenueGrowth": 0.438,
         "grossMargins": 0.29999,
@@ -648,7 +648,7 @@
         "psTrailing": {},
         "revQuarterlyGrowth": {},
         "earningsQuarterlyGrowth": 0.54,
-        "marketCap": 10427777024,
+        "marketCap": 10606794752,
         "beta": 1.23,
         "dividendYield": 0.0313
       }
@@ -656,12 +656,12 @@
     "1815.TWO": {
       "label": "富喬",
       "group": "核心台股",
-      "price": 125.5,
-      "prevClose": 116.5,
+      "price": 126.5,
+      "prevClose": 125.5,
       "high52": 129.5,
       "low52": 58.3,
       "currency": "TWD",
-      "pos52": 94.4,
+      "pos52": 95.8,
       "fund": {
         "revenueGrowth": 0.498,
         "grossMargins": 0.33626997,
@@ -677,7 +677,7 @@
         "psTrailing": {},
         "revQuarterlyGrowth": {},
         "earningsQuarterlyGrowth": {},
-        "marketCap": 73399861248,
+        "marketCap": 73984720896,
         "beta": 0.847,
         "dividendYield": 0.004
       }
@@ -685,12 +685,12 @@
     "0050.TW": {
       "label": "元大台灣50",
       "group": "ETF",
-      "price": 106.95,
-      "prevClose": 106.05,
+      "price": 106.25,
+      "prevClose": 106.95,
       "high52": 112.3,
       "low52": 51.75,
       "currency": "TWD",
-      "pos52": 91.2,
+      "pos52": 90.0,
       "fund": {
         "revenueGrowth": null,
         "grossMargins": null,
@@ -714,12 +714,12 @@
     "009816.TW": {
       "label": "凱基台灣TOP50",
       "group": "ETF",
-      "price": 15.59,
-      "prevClose": 15.46,
+      "price": 15.56,
+      "prevClose": 15.59,
       "high52": 16.32,
       "low52": 9.95,
       "currency": "TWD",
-      "pos52": 88.5,
+      "pos52": 88.1,
       "fund": {
         "revenueGrowth": null,
         "grossMargins": null,
@@ -743,12 +743,12 @@
     "VOO": {
       "label": "Vanguard S&P500",
       "group": "ETF",
-      "price": 707.24,
-      "prevClose": 708.75,
+      "price": 703.7,
+      "prevClose": 707.24,
       "high52": 716.39,
       "low52": 578.46,
       "currency": "USD",
-      "pos52": 93.4,
+      "pos52": 90.8,
       "fund": {
         "revenueGrowth": null,
         "grossMargins": null,
@@ -772,12 +772,12 @@
     "QQQ": {
       "label": "Invesco QQQ",
       "group": "ETF",
-      "price": 716.43,
-      "prevClose": 721.11,
+      "price": 714.255,
+      "prevClose": 716.43,
       "high52": 748.65,
       "low52": 555.6,
       "currency": "USD",
-      "pos52": 83.3,
+      "pos52": 82.2,
       "fund": {
         "revenueGrowth": null,
         "grossMargins": null,
@@ -801,12 +801,12 @@
     "00933B.TWO": {
       "label": "國泰金融債",
       "group": "債券ETF",
-      "price": 15.6,
-      "prevClose": 15.69,
+      "price": 15.59,
+      "prevClose": 15.6,
       "high52": 16.63,
       "low52": 15.52,
       "currency": "TWD",
-      "pos52": 7.2,
+      "pos52": 6.3,
       "fund": {
         "revenueGrowth": null,
         "grossMargins": null,
@@ -830,12 +830,12 @@
     "00937B.TWO": {
       "label": "群益ESG投等債",
       "group": "債券ETF",
-      "price": 14.34,
-      "prevClose": 14.41,
+      "price": 14.36,
+      "prevClose": 14.34,
       "high52": 15.37,
       "low52": 14.14,
       "currency": "TWD",
-      "pos52": 16.3,
+      "pos52": 17.9,
       "fund": {
         "revenueGrowth": null,
         "grossMargins": null,
@@ -859,12 +859,12 @@
     "00945B.TW": {
       "label": "凱基非投等債",
       "group": "債券ETF",
-      "price": 14.38,
-      "prevClose": 14.44,
+      "price": 14.39,
+      "prevClose": 14.38,
       "high52": 14.77,
       "low52": 13.88,
       "currency": "TWD",
-      "pos52": 56.2,
+      "pos52": 57.3,
       "fund": {
         "revenueGrowth": null,
         "grossMargins": null,
@@ -888,12 +888,12 @@
     "00953B.TW": {
       "label": "群益非投等債",
       "group": "債券ETF",
-      "price": 9.63,
-      "prevClose": 9.68,
+      "price": 9.64,
+      "prevClose": 9.63,
       "high52": 9.85,
       "low52": 9.36,
       "currency": "TWD",
-      "pos52": 55.1,
+      "pos52": 57.1,
       "fund": {
         "revenueGrowth": null,
         "grossMargins": null,
