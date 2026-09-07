@@ -289,11 +289,11 @@ HTML_DOC = f'''<!DOCTYPE html>
   .method ul {{ padding-left:18px; }}
   .footer {{ text-align:center; padding:30px 20px 30px; color:#44536e; font-size:12px; }}
   .back-link {{ display:block; text-align:center; margin-top:14px; padding:12px; border-radius:12px; background:rgba(255,255,255,.03); color:#7c8ba3; font-size:13px; text-decoration:none; }}
-  @media (prefers-color-scheme: light) {{
-    body {{ background:#f5f7fb; color:#1d2333; }}
-    .hero {{ background:radial-gradient(ellipse at 50% -20%,#dbe9ff 0%,#f5f7fb 65%); border-color:rgba(37,99,235,.12); }}
-    .hero h1 {{ color:#1d2333; }}
-    .hero h1 span {{ background:linear-gradient(135deg,#1d2333,#2563eb); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }}
+  @media (prefers-color-scheme: light), print {{
+    body {{ background:#ffffff; color:#000000; }}
+    .hero {{ background:#ffffff; border-color:rgba(37,99,235,.15); }}
+    .hero h1 {{ color:#000000; }}
+    .hero h1 span {{ background:none; -webkit-text-fill-color:#000000; color:#000000; }}
     .hero .sub {{ color:#5a6478; }}
     .hero .upd {{ color:#8892a8; }}
     .disclaimer {{ background:rgba(220,38,38,.04); border-color:rgba(220,38,38,.2); color:#dc2626; }}
