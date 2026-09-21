@@ -16,7 +16,7 @@ GROUPS = [
      ["MSFT","GOOGL","AMZN","META"], (18, 26)),
     ("🥉 AI 資料中心 / 電力 / 基礎建設", "g3", "green",
      ["GEV","ETN","VST","EQIX"], (18, 28)),
-    ("🇹🇼 核心台股", "g4", "red",
+    ("TW 核心台股", "g4", "red",
      ["2330.TW","2317.TW","2337.TW","4772.TWO","3689.TWO","1815.TWO"], (15, 25)),
     ("📦 持有 ETF（指數/債券）", "g5", "teal",
      ["0050.TW","009816.TW","VOO","QQQ","00933B.TWO","00937B.TWO","00945B.TW","00953B.TW"], (15, 25)),
@@ -315,6 +315,25 @@ HTML_DOC = f'''<!DOCTYPE html>
     .method h4 {{ color:#2563eb; }}
     .method p,.method li {{ color:#3d4757; }}
     .back-link {{ background:rgba(0,0,0,.03); color:#4a5468; }}
+    .msub-title {{ color:#1d4ed8; }}
+    .badge {{ color:#1d4ed8; background:rgba(37,99,235,.08); border-color:rgba(37,99,235,.2); }}
+    .scode {{ color:#1d4ed8; background:rgba(37,99,235,.08); }}
+    .stag {{ color:#8892a8; }}
+    .hold {{ color:#b45309; background:rgba(217,119,6,.08); border-color:rgba(217,119,6,.25); }}
+    .sec-title .bar {{ background:#2563eb; }}
+    .chip.high,.chip.rich,.chip.neg {{ background:rgba(220,38,38,.08); color:#dc2626; }}
+    .chip.low,.chip.cheap,.chip.strong {{ background:rgba(22,163,74,.08); color:#16a34a; }}
+    .chip.mid,.chip.fair,.chip.ok {{ background:rgba(217,119,6,.08); color:#d97706; }}
+    .chip.weak {{ background:rgba(234,88,12,.08); color:#ea580c; }}
+    .chip.gray {{ background:rgba(100,116,139,.08); color:#64748b; }}
+    .light.high,.light.rich,.light.neg {{ color:#dc2626; }}
+    .light.low,.light.cheap,.light.strong {{ color:#16a34a; }}
+    .light.mid,.light.fair,.light.ok {{ color:#d97706; }}
+    .light.weak {{ color:#ea580c; }}
+    .light.gray {{ color:#64748b; }}
+    .up.pos {{ color:#16a34a; }}
+    .up.neg {{ color:#dc2626; }}
+    .price i {{ color:#6b7280; }}
   }}
 </style>
 </head>
